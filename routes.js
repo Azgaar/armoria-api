@@ -9,7 +9,7 @@ const SHIELD_DEFAULT = "heater";
 // basic route, format, then size and then optional seed params
 router.get('/:format/:size/:seed?', async function(req, res) {
   const format = req.params.format || FORMAT_DEFAULT;
-  const size = req.params.size || SIZE_DEFAULT;
+  const size = parseInt(req.params.size) || SIZE_DEFAULT;
   const seed = req.params.seed || Math.floor(Math.random() * 1e9);
   const shield = req.query.shield || SHIELD_DEFAULT;
 
@@ -43,7 +43,7 @@ router.get('/', async function(req, res, next) {
   const coa = req.query.coa;
   if (!seed && !coa) next();
 
-  const size = req.query.size || SIZE_DEFAULT;
+  const size = parseInt(req.query.size) || SIZE_DEFAULT;
   const format = req.query.get || req.query.format || FORMAT_DEFAULT;
   const shield = req.query.shield || SHIELD_DEFAULT;
 
