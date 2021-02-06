@@ -1,6 +1,9 @@
 const express = require('express');
+const http = require('http');
 const app = express();
 const routes = require('./routes');
+
+const PORT = process.env.PORT || '3000';
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*"); // set origin
@@ -10,6 +13,8 @@ app.use(function(req, res, next) {
 
 app.use('/', routes);
 
-app.listen(3000, function () {
+app.set('port', PORT);
+const server = http.createServer(app);
+server.listen(PORT, function () {
   console.log(`App listening at http://localhost:3000`);
 });
