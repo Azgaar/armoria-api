@@ -16,5 +16,5 @@ app.use('/', routes);
 app.set('port', PORT);
 const server = http.createServer(app);
 server.listen(PORT, function () {
-  console.log(`App listening at http://localhost:3000`);
+  console.log(`App listening at port ${PORT}`);
 });

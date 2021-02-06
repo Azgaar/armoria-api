@@ -39,7 +39,6 @@ router.get('/:format/:size/:seed?', async function(req, res) {
 
 // extended route, queries
 router.get('/', async function(req, res, next) {
-  console.log(req.query);
   const seed = req.query.seed;
   const coa = req.query.coa;
   if (!seed && !coa) next();
@@ -65,7 +64,7 @@ router.get('/', async function(req, res, next) {
       res.writeHead(200, {'Content-Type': 'image/png', 'Content-Length': buffer.length});
       res.end(buffer);
     });
-  } else if (format === "jpg" || get === "jpeg") {
+  } else if (format === "jpg" || format === "jpeg") {
     const svg2img = require('svg2img');
 
     svg2img(svg, {format: 'jpg', quality: 75}, function(error, buffer) {
@@ -79,7 +78,10 @@ router.get('/', async function(req, res, next) {
 
 // exception route, error
 router.use(function(req, res) {
-  res.status(404).send("Cannot get responce for this URL");
+  res.status(404).send(`<h1>Armoria API</h1>
+  <p>API for generating and retrieving heraldry images from server.</p>
+  <img src="https://raw.githubusercontent.com/Azgaar/Armoria/master/public/preview.png" alt="preview"/>
+  <p>See <a href="https://github.com/Azgaar/armoria-api#readme" target="_blank">README</a> for guidance.</p>`);
 });
 
 module.exports = router;
