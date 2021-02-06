@@ -57,16 +57,20 @@ Armoria supports >40 shield shapes. Any ot them can be used via API if exact nam
 
 ## Examples
 
-Coat of arms generated for seed `123456789`, rendered in `svg`, size is `400px`: [armoria.herokuapp.com/svg/400px/123456789](http://armoria.herokuapp.com/svg/400px/123456789)
+Coat of arms generated for seed `123456789`, rendered in `svg`, size is `400px`:
+> [armoria.herokuapp.com/svg/400px/123456789](http://armoria.herokuapp.com/svg/400px/123456789)
 
-Coat of arms generated for seed `Armortown`, rendered in `jpg`, size is `800`px: [armoria.herokuapp.com/jpg/800/Armortown](http://armoria.herokuapp.com/jpg/800/Armortown)
+Coat of arms generated for seed `Armortown`, rendered in `jpg`, size is `800`px:
+> [armoria.herokuapp.com/jpg/800/Armortown](http://armoria.herokuapp.com/jpg/800/Armortown)
 
 Random coat of arms in `png`, size `200`px:
 [armoria.herokuapp.com/png/200](http://armoria.herokuapp.com/png/200)
 
-Coat of arms manually created in Armoria GUI, default format (`svg`) and size (`500px`): [armoria.herokuapp.com/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]}](http://armoria.herokuapp.com/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]})
+Coat of arms manually created in Armoria GUI, default format (`svg`) and size (`500px`):
+> [armoria.herokuapp.com/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]}](http://armoria.herokuapp.com/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]})
 
-Coat of arms manually created in Armoria GUI, rendered in `png` with size `200`px: [armoria.herokuapp.com/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]}&format=png&size=200](http://armoria.herokuapp.com/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]}&format=png&size=200)
+Coat of arms manually created in Armoria GUI, rendered in `png` with size `200`px:
+> [armoria.herokuapp.com/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]}&format=png&size=200](http://armoria.herokuapp.com/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]}&format=png&size=200)
 
 ## License
 
