@@ -156,10 +156,3 @@ const blacklight = `<radialGradient id="backlight" cx="100%" cy="100%" r="150%">
   </radialGradient>`
 
 module.exports = {shieldPaths, lines, templates, patterns, blacklight}
-
-
-
-
-
-
-
