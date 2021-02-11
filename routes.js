@@ -39,9 +39,8 @@ router.get('/:format/:size/:seed?', async function(req, res) {
 
 // extended route, queries
 router.get('/', async function(req, res, next) {
-  const seed = req.query.seed;
+  const seed = req.query.seed || Math.floor(Math.random() * 1e9);
   const coa = req.query.coa;
-  if (!seed && !coa) next();
 
   const size = parseInt(req.query.size) || SIZE_DEFAULT;
   const format = req.query.get || req.query.format || FORMAT_DEFAULT;
