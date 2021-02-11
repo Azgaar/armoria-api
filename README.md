@@ -6,7 +6,7 @@ The API allows to `GET` random or predefined vector and raster heraldic images o
 
 API is hosted on _Heroku_ for free, so downtime and slow first response are expected. I will considered scaling in case of active API usage. Please [contact me directly](mailto:maxganiev@yandex.com) if you needs API for production.
 
-URL: [armoria.herokuapp.com](https://armoria.herokuapp.com)
+Try it: [armoria.herokuapp.com/?size=500&format=svg&size=500&seed=123](https://armoria.herokuapp.com/?size=500&format=svg&size=500&seed=123)
 
 ## Usage
 
