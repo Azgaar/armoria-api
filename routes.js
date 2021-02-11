@@ -12,10 +12,11 @@ router.get('/:format/:size/:seed?', async function(req, res) {
   const size = parseInt(req.params.size) || SIZE_DEFAULT;
   const seed = req.params.seed || Math.floor(Math.random() * 1e9);
   const shield = req.query.shield || SHIELD_DEFAULT;
+  const colors = getColors(req.query);
 
   const coa = require('./app/generator')(seed);
   const id = "coa" + seed;
-  const svg = await render(id, coa, shield, size);
+  const svg = await render(id, coa, shield, size, colors);
 
   if (format === "png") {
     const svg2img = require('svg2img');
@@ -45,6 +46,7 @@ router.get('/', async function(req, res, next) {
   const size = parseInt(req.query.size) || SIZE_DEFAULT;
   const format = req.query.get || req.query.format || FORMAT_DEFAULT;
   const shield = req.query.shield || SHIELD_DEFAULT;
+  const colors = getColors(req.query);
 
   let coaObj, id;
   if (coa) {
@@ -55,7 +57,7 @@ router.get('/', async function(req, res, next) {
     id = "coa" + seed;
   }
 
-  const svg = await render(id, coaObj, shield, size);
+  const svg = await render(id, coaObj, shield, size, colors);
   if (format === "png") {
     const svg2img = require('svg2img');
 
@@ -82,5 +84,22 @@ router.use(function(req, res) {
   <img src="https://raw.githubusercontent.com/Azgaar/Armoria/master/public/preview.png" alt="preview"/>
   <p>See <a href="https://github.com/Azgaar/armoria-api#readme" target="_blank">README</a> for guidance.</p>`);
 });
+
+function getColors(query) {
+  const getColor = color => query[color] && query[color].length === 6 ? "#" + query[color] : null;
+
+  return {
+    argent: getColor("argent") || "#fafafa",
+    or: getColor("or") || "#ffe066",
+    gules: getColor("gules") || "#d7374a",
+    sable: getColor("sable") || "#333333",
+    azure: getColor("azure") || "#377cd7",
+    vert: getColor("vert") || "#26c061",
+    purpure: getColor("purpure") || "#522d5b",
+    murrey: getColor("murrey") || "#85185b",
+    sanguine: getColor("sanguine") || "#b63a3a",
+    tenné: getColor("tenné") || "#cc7f19"
+  }
+}
 
 module.exports = router;

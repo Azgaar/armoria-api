@@ -8,19 +8,6 @@ const tinctures = {
   patterns: { semy: 1, vair: 2, vairInPale: 1, vairEnPointe: 2, ermine: 2, chequy: 5, lozengy: 2, fusily: 1, pally: 4, barry: 4, gemelles: 1, bendy: 3, bendySinister: 2, palyBendy: 1, pappellony: 2, masoned: 3, fretty: 2 }
 }
 
-const colors = {
-  argent: "#fafafa",
-  or: "#ffe066",
-  gules: "#d7374a",
-  sable: "#333333",
-  azure: "#377cd7",
-  vert: "#26c061",
-  purpure: "#522d5b",
-  murrey: "#85185b",
-  sanguine: "#b63a3a",
-  tenné: "#cc7f19"
-}
-
 const shields = {
   types: {basic: 10, regional: 2, historical: 1, specific: 1, banner: 1, simple: 2, fantasy: 1, middleEarth: 0},
   basic: {heater: 12, spanish: 6, french: 1},
@@ -867,4 +854,4 @@ const shieldBox = {
   moriaOrc: "0 0 200 200"
 }
 
-module.exports = {charges, divisions, lines, ordinaries, positions, tinctures, colors, shields, shieldPositions, shieldSize, shieldBox};
+module.exports = {charges, divisions, lines, ordinaries, positions, tinctures, shields, shieldPositions, shieldSize, shieldBox};

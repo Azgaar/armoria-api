@@ -67,40 +67,40 @@ Armoria has 10 [tinctures](https://en.wikipedia.org/wiki/Tincture_(heraldry)) (c
 
 | Tincture | Type   | Сhance | Color                                                                                      |
 |----------|--------|--------|--------------------------------------------------------------------------------------------|
-| argent   | metal  |  ~25%  |![argent](http://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"argent"}) #fafafa     |
-| or       | metal  |  ~16%  |![or](http://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"or"}) #ffe066             |
-| gules    | colour |  ~17%  |![gules](http://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"gules"}) #d7374a       |
-| sable    | colour |  ~14%  |![sable](http://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"sable"}) #333333       |
-| azure    | colour |  ~14%  |![azure](http://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"azure"}) #377cd7       |
-| vert     | colour |  ~7%   |![vert](http://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"vert"}) #26c061         |
-| purpure  | colour |  ~13%  |![purpure](http://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"purpure"}) #522d5b   |
-| murrey   | stain  |  ~1%   |![murrey](http://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"murrey"}) #85185b     |
-| sanguine | stain  |  ~1%   |![sanguine](http://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"sanguine"}) #b63a3a |
-| tenné    | stain  |  ~1%   |![tenné](http://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"tenné"}) #cc7f19       |
+| argent   | metal  |  ~25%  |![argent](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"argent"}) #fafafa     |
+| or       | metal  |  ~16%  |![or](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"or"}) #ffe066             |
+| gules    | colour |  ~17%  |![gules](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"gules"}) #d7374a       |
+| sable    | colour |  ~14%  |![sable](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"sable"}) #333333       |
+| azure    | colour |  ~14%  |![azure](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"azure"}) #377cd7       |
+| vert     | colour |  ~7%   |![vert](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"vert"}) #26c061         |
+| purpure  | colour |  ~13%  |![purpure](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"purpure"}) #522d5b   |
+| murrey   | stain  |  ~1%   |![murrey](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"murrey"}) #85185b     |
+| sanguine | stain  |  ~1%   |![sanguine](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"sanguine"}) #b63a3a |
+| tenné    | stain  |  ~1%   |![tenné](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"tenné"}) #cc7f19       |
 
 It is possible to use custom tinctures or redefine color of default tinctures using query attributes.
 
-Exact color can be set as a part of `coa` attribute. You can replace tincture name with color hex code, e.g. turn `{"t1": "azure"}` into hurting eyes blue with `{"t1": "#0000ff"}`. URL must be [encoded](https://meyerweb.com/eric/tools/dencoder/), so the link would be like `http://armoria.herokuapp.com/?coa={%22t1%22:%22%230000ff%22}`.
+Exact color can be set as a part of `coa` attribute. You can replace tincture name with color hex code, e.g. turn `{"t1": "azure"}` into hurting eyes blue with `{"t1": "#0000ff"}`. URL must be [encoded](https://meyerweb.com/eric/tools/dencoder/), so the link would be like [armoria.herokuapp.com/?coa={%22t1%22:%22%230000ff%22}](https://armoria.herokuapp.com/?coa={%22t1%22:%22%230000ff%22}).
 
-The resulting link is not readable, so you can also define colors using specific attributes for each of them like `http://armoria.herokuapp.com/svg/500/?azure=0000ff`. Hash symbol must be dropped.
+The resulting link is not readable, so you can also define colors using specific attributes for each of them like [armoria.herokuapp.com/svg/500/1?gules=bb1100&or=FFD700&azure=00aaff](https://armoria.herokuapp.com/svg/500/1?gules=bb1100&or=FFD700&azure=00aaff)`. Hash symbol must be dropped.
 
 
 ## Examples
 
 Coat of arms generated for seed `123456789`, rendered in `svg`, size is `400px`:
-> [armoria.herokuapp.com/svg/400px/123456789](http://armoria.herokuapp.com/svg/400px/123456789)
+> [armoria.herokuapp.com/svg/400px/123456789](https://armoria.herokuapp.com/svg/400px/123456789)
 
 Coat of arms generated for seed `Armortown`, rendered in `jpg`, size is `800`px:
-> [armoria.herokuapp.com/jpg/800/Armortown](http://armoria.herokuapp.com/jpg/800/Armortown)
+> [armoria.herokuapp.com/jpg/800/Armortown](https://armoria.herokuapp.com/jpg/800/Armortown)
 
 Random coat of arms in `png`, size `200`px:
-> [armoria.herokuapp.com/png/200](http://armoria.herokuapp.com/png/200)
+> [armoria.herokuapp.com/png/200](https://armoria.herokuapp.com/png/200)
 
 Coat of arms manually created in Armoria GUI, default format (`svg`) and size (`500px`):
-> [armoria.herokuapp.com/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]}](http://armoria.herokuapp.com/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]})
+> [armoria.herokuapp.com/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]}](https://armoria.herokuapp.com/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]})
 
 Coat of arms manually created in Armoria GUI, rendered in `png` with size `200`px:
-> [armoria.herokuapp.com/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]}&format=png&size=200](http://armoria.herokuapp.com/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]}&format=png&size=200)
+> [armoria.herokuapp.com/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]}&format=png&size=200](https://armoria.herokuapp.com/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]}&format=png&size=200)
 
 ## License
 

@@ -1,8 +1,8 @@
 const HTMLParser = require("node-html-parser");
-const {colors, shieldPositions, shieldSize, shieldBox} = require("./dataModel");
+const {shieldPositions, shieldSize, shieldBox} = require("./dataModel");
 const {shieldPaths, blacklight} = require("./templates");
 
-async function draw(id, coa, shield, size) {
+async function draw(id, coa, shield, size, colors) {
   const {division, ordinaries = [], charges = []} = coa;
   logCOAdetails(coa, shield, division, ordinaries, charges);
 
@@ -121,6 +121,13 @@ async function draw(id, coa, shield, size) {
       return `translate(${x} ${y}) scale(${scale})`;
     }
   }
+
+  // get color or link to pattern
+  function clr(tincture) {
+    if (colors[tincture]) return colors[tincture];
+    if (tincture[0] === "#") return tincture;
+    return `url(#${tincture})`;
+  }
 }
 
 async function getCharges(coa, id, shieldPath) {
@@ -187,13 +194,6 @@ function getTemplate(templateId, lineId) {
   if (!lineId) return templates[templateId]();
   const line = lines[lineId] || lines.straight;
   return templates[templateId](line);
-}
-
-// get color or link to pattern
-function clr(tincture) {
-  if (colors[tincture]) return colors[tincture];
-  if (tincture[0] === "#") return tincture;
-  return `url(#${tincture})`;
 }
 
 // get charge is string starts with "semy"
