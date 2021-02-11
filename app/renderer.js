@@ -93,7 +93,7 @@ async function draw(id, coa, shield, size) {
     const fill = clr(tincture);
     let svg = `<g fill="${fill}" stroke="none">`;
     if (ordinary.ordinary === "bordure") svg += `<path d="${shieldPath}" fill="none" stroke="${fill}" stroke-width="16.7%"/>`;
-    else if (ordinary.ordinary === "orle") svg += `<path d="${shieldPath}" fill="none" stroke="${fill}" stroke-width="5%" transform="scale(.85)" transform-origin="center">`;
+    else if (ordinary.ordinary === "orle") svg += `<path d="${shieldPath}" fill="none" stroke="${fill}" stroke-width="5%" transform="scale(.85)" transform-origin="center"/>`;
     else svg += getTemplate(ordinary.ordinary, ordinary.line);
     return svg + `</g>`;
   }
