@@ -122,6 +122,25 @@ async function draw(id, coa, shield, size, colors) {
     }
   }
 
+  function getPatterns(coa, id) {
+    const isPattern = string => string.includes("-");
+    let patternsToAdd = [];
+    if (coa.t1.includes("-")) patternsToAdd.push(coa.t1); // add field pattern
+    if (coa.division && isPattern(coa.division.t)) patternsToAdd.push(coa.division.t); // add division pattern
+    if (coa.ordinaries) coa.ordinaries.filter(ordinary => isPattern(ordinary.t)).forEach(ordinary => patternsToAdd.push(ordinary.t)); // add ordinaries pattern
+    if (coa.charges) coa.charges.filter(charge => isPattern(charge.t)).forEach(charge => patternsToAdd.push(charge.t)); // add charges pattern
+  
+    if (!patternsToAdd.length) return "";
+    const {patterns} = require("./templates");
+  
+    return [...new Set(patternsToAdd)].map(patternString => {
+      const [pattern, t1, t2, size] = patternString.split("-");
+      const charge = semy(patternString);
+      if (charge) return patterns.semy(patternString, clr(t1), clr(t2), getSizeMod(size), charge + "_" + id);
+      return patterns[pattern](patternString, clr(t1), clr(t2), getSizeMod(size), charge);
+    }).join("");
+  }
+
   // get color or link to pattern
   function clr(tincture) {
     if (colors[tincture]) return colors[tincture];
@@ -162,25 +181,6 @@ async function fetchCharge(charge, id) {
   return fetched;
 }
 
-function getPatterns(coa, id) {
-  const isPattern = string => string.includes("-");
-  let patternsToAdd = [];
-  if (coa.t1.includes("-")) patternsToAdd.push(coa.t1); // add field pattern
-  if (coa.division && isPattern(coa.division.t)) patternsToAdd.push(coa.division.t); // add division pattern
-  if (coa.ordinaries) coa.ordinaries.filter(ordinary => isPattern(ordinary.t)).forEach(ordinary => patternsToAdd.push(ordinary.t)); // add ordinaries pattern
-  if (coa.charges) coa.charges.filter(charge => isPattern(charge.t)).forEach(charge => patternsToAdd.push(charge.t)); // add charges pattern
-
-  if (!patternsToAdd.length) return "";
-  const {patterns} = require("./templates");
-
-  return [...new Set(patternsToAdd)].map(patternString => {
-    const [pattern, t1, t2, size] = patternString.split("-");
-    const charge = semy(patternString);
-    if (charge) return patterns.semy(patternString, clr(t1), clr(t2), getSizeMod(size), charge + "_" + id);
-    return patterns[pattern](patternString, clr(t1), clr(t2), getSizeMod(size), charge);
-  }).join("");
-}
-
 function getSizeMod(size) {
   if (size === "small") return .5;
   if (size === "smaller") return .25;
@@ -209,7 +209,6 @@ function logCOAdetails(coa, shield, division, ordinaries, charges) {
   if (division) console.log("Division:", division);
   if (ordinaries.length) ordinaries.forEach(ordinary => console.log("Ordinary:", ordinary));
   if (charges.length) charges.forEach(charge => console.log("Charge:", charge));
-  console.log("---------------");
 }
 
 module.exports = draw;

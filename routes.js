@@ -77,6 +77,11 @@ router.get('/', async function(req, res, next) {
   }
 });
 
+// home page, not implemented
+router.get('/home', async function(req, res) {
+  next();
+});
+
 // exception route, error
 router.use(function(req, res) {
   res.status(404).send(`<h1>Armoria API</h1>
