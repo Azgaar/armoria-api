@@ -6,9 +6,14 @@ The API allows to `GET` random or predefined vector and raster heraldic images o
 
 API is hosted on _Heroku_ for free, so downtime and slow first response are expected. I will considered scaling in case of active API usage. Please [contact me directly](mailto:maxganiev@yandex.com) if you needs API for production.
 
-![example](https://armoria.herokuapp.com/?size=500&format=png)
+![example1](https://armoria.herokuapp.com/png/100.0001)
+![example2](https://armoria.herokuapp.com/png/100.0002)
+![example3](https://armoria.herokuapp.com/png/100.0003)
+![example4](https://armoria.herokuapp.com/png/100.0004)
+![example5](https://armoria.herokuapp.com/png/100.0005)
 
-Try it: [armoria.herokuapp.com/?size=500&format=svg&seed=123](https://armoria.herokuapp.com/?size=500&format=svg&seed=123)
+Try it: [armoria.herokuapp.com/?size=500&format=svg&seed=123](https://armoria.herokuapp.com/?size=500&format=svg&seed=123).
+Remove seed to generate random coat or arms: [armoria.herokuapp.com/?size=500&format=svg](https://armoria.herokuapp.com/?size=500&format=svg)
 
 ## Usage
 
