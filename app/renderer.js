@@ -192,6 +192,7 @@ function getTemplate(templateId, lineId) {
 // get color or link to pattern
 function clr(tincture) {
   if (colors[tincture]) return colors[tincture];
+  if (tincture[0] === "#") return tincture;
   return `url(#${tincture})`;
 }
 

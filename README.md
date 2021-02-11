@@ -6,7 +6,9 @@ The API allows to `GET` random or predefined vector and raster heraldic images o
 
 API is hosted on _Heroku_ for free, so downtime and slow first response are expected. I will considered scaling in case of active API usage. Please [contact me directly](mailto:maxganiev@yandex.com) if you needs API for production.
 
-Try it: [armoria.herokuapp.com/?size=500&format=svg&size=500&seed=123](https://armoria.herokuapp.com/?size=500&format=svg&size=500&seed=123)
+![example](https://armoria.herokuapp.com/?size=500&format=png)
+
+Try it: [armoria.herokuapp.com/?size=500&format=svg&seed=123](https://armoria.herokuapp.com/?size=500&format=svg&seed=123)
 
 ## Usage
 
@@ -53,6 +55,29 @@ API can skip procedural generation and render specific coat of arms (`coa`). Att
 Armoria supports >40 shield shapes. Any ot them can be used via API if exact names is passed as `shield` attribute. Available shapes: 
 
 `heater` | `spanish` | `french` | `horsehead` | `horsehead2` | `polish` | `hessen` | `swiss` | `boeotian` | `roman` | `kite` | `oldFrench` | `renaissance` | `baroque` | `targe` | `targe2` | `pavise` | `wedged` | `round` | `oval` | `vesicaPiscis` | `square` | `diamond` | `no` | `flag` | `pennon` | `guidon` | `banner` | `dovetail` | `gonfalon` | `pennant` | `fantasy1` | `fantasy2` | `fantasy3` | `fantasy4` | `fantasy5` | `noldor` | `gondor` | `easterling` | `erebor` | `ironHills` | `urukHai` | `moriaOrc`
+
+### Custom colors
+
+Armoria has 10 [tinctures](https://en.wikipedia.org/wiki/Tincture_(heraldry)) (colors) available by default:
+
+| Tincture | Type   | Сhance | Color                                                                                      |
+|----------|--------|--------|--------------------------------------------------------------------------------------------|
+| argent   | metal  |  ~25%  |![argent](http://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"argent"}) #fafafa     |
+| or       | metal  |  ~16%  |![or](http://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"or"}) #ffe066             |
+| gules    | colour |  ~17%  |![gules](http://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"gules"}) #d7374a       |
+| sable    | colour |  ~14%  |![sable](http://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"sable"}) #333333       |
+| azure    | colour |  ~14%  |![azure](http://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"azure"}) #377cd7       |
+| vert     | colour |  ~7%   |![vert](http://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"vert"}) #26c061         |
+| purpure  | colour |  ~13%  |![purpure](http://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"purpure"}) #522d5b   |
+| murrey   | stain  |  ~1%   |![murrey](http://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"murrey"}) #85185b     |
+| sanguine | stain  |  ~1%   |![sanguine](http://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"sanguine"}) #b63a3a |
+| tenné    | stain  |  ~1%   |![tenné](http://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"tenné"}) #cc7f19       |
+
+It is possible to use custom tinctures or redefine color of default tinctures using query attributes.
+
+Exact color can be set as a part of `coa` attribute. You can replace tincture name with color hex code, e.g. turn `{"t1": "azure"}` into hurting eyes blue with `{"t1": "#0000ff"}`. URL must be [encoded](https://meyerweb.com/eric/tools/dencoder/), so the link would be like `http://armoria.herokuapp.com/?coa={%22t1%22:%22%230000ff%22}`.
+
+The resulting link is not readable, so you can also define colors using specific attributes for each of them like `http://armoria.herokuapp.com/svg/500/?azure=0000ff`. Hash symbol must be dropped.
 
 
 ## Examples
