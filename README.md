@@ -2,9 +2,9 @@
 
 _API for **[Armoria](https://github.com/Azgaar/Armoria)** — procedural heraldry generator and editor._
 
-The API allows to `GET` random or predefined vector and raster heraldic images of a given size.  
+The API allows to `GET` random or predefined vector and raster heraldic images of a given size.
 
-API is hosted on _Heroku_ for free, so downtime and slow first response are expected. I will considered scaling in case of active API usage. Please [contact me directly](mailto:maxganiev@yandex.com) if you needs API for production.
+API is hosted on _Heroku_ for free, so downtime and slow first response are expected. I will consider scaling in case of active API usage. Please [contact me directly](mailto:maxganiev@yandex.com) if you want to use this API for your projects.
 
 ![example1](https://armoria.herokuapp.com/png/100.0001)
 ![example2](https://armoria.herokuapp.com/png/100.0002)
@@ -13,31 +13,32 @@ API is hosted on _Heroku_ for free, so downtime and slow first response are expe
 ![example5](https://armoria.herokuapp.com/png/100.0005)
 
 Try it: [armoria.herokuapp.com/?size=500&format=svg&seed=123](https://armoria.herokuapp.com/?size=500&format=svg&seed=123).
+
 Remove seed to generate random coat or arms: [armoria.herokuapp.com/?size=500&format=svg](https://armoria.herokuapp.com/?size=500&format=svg)
 
 ## Usage
 
 #### Parameters
 
-Basic usage is to request image generation with URL parameters:
+Basic usage is to request coat of arms generation with URL parameters:
 
 > armoria.herokuapp.com/`format`/`size`/`seed`
 
 * **format:** `svg` | `png` | `jpg` | <small>default:</small> `svg`
 
-Armoria generates all images in `svg` by default. But as there are cases, where `svg` cannot be used, the tool can also convert images to `png` and `jpg`. Raster images quality depends on size, but relatively big images has significant file size and may be slow to get. There can be also conversion issues, so `svg` is preferable.
+Armoria generates all images in `svg` by default. But as there are cases where `svg` cannot be used, the tool can convert images to `png` and `jpg`. Raster images quality depends on size, but relatively big images may be slow to get. There can be also conversion issues, so `svg` is preferable.
 
 The main differences between `png` and `jpg` (also known as `jpeg`) are that `png` is lossless format and it supports transparency, while `jpg` is more compressed and has solid background. Out of this two  I would recommend to use `png`.
 
-* **size:** `integer` | <small>default:</small> `500`
+* **size:** `number` | <small>default:</small> `500`
 
-Size in pixels. Can be any integer set as `200` or `200px`. For `svg` it just sets `width` and `height`, raster images are getting actually rescaled and it defines their quality and file size.
+Size in pixels. Can be any number set as `200` or `200px`. For `svg` it just sets `width` and `height`, raster images are getting actually rescaled and it defines their quality and file size.
 
 * **seed:** `string` | <small>optional</small>
 
-Seed is a string (e.g. `123` considered as `"123"`) that defines procedural coat of arms generation. The same string will produce the same coat of arms irrespective of size and image format. This statement is only valid if generation code remains the same, so seed must not be used as a saving method.
+Seed is a string (i.e. `123` is considered as `"123"`) that defines procedural coat of arms generation. The same string will produce the same coat of arms irrespective of size and image format. This statement is only valid if generation code remains the same, so seed must not be used as a saving method.
 
-If `seed` is not provided, the tool generates random 9-digits value. So omit `seed` parameter if you want to get random coat of arms for each request.
+If `seed` is not provided, the tool generates random 9-digits value. Omit `seed` parameter if you want to get random coat of arms for each request.
 
 #### Query attributes
 
@@ -45,7 +46,7 @@ The same parameters (`format`, `size`, `seed`) can be used as query attributes. 
 
 > armoria.herokuapp.com/?`format=svg`&`size=200`&`seed=123456789`
 
-Attributes that are supported as query attributes only are `coa` and `shield`.
+Attributes that are supported only in query format are `coa` and `shield`.
 
 * **coa:** `json` | <small>supersedes `seed`</small>
   * `t1`: field tincture or pattern (fur)
@@ -53,7 +54,7 @@ Attributes that are supported as query attributes only are `coa` and `shield`.
   * `ordinaries`: array with `ordinary`, `t`, `line` and `size` attributes
   * `charges`: array with `charge`, `t`, `p`, `size`, `sinister` and `reversed` attributes
 
-API can skip procedural generation and render specific coat of arms (`coa`). Attribute accepts json object, _escaped_ for URL usage. The value can be retrieved from Armoria GUI: edit coat of arms as you wish and press `Shape` to get its URL. Then copy coa attribute and use as query attribute for API rendering and embedding.
+API can skip procedural generation and render specific coat of arms (`coa`). Attribute accepts json object, [encoded](https://meyerweb.com/eric/tools/dencoder/) for URL usage. The value can be retrieved from Armoria GUI: edit coat of arms as you wish and press `Shape` to get its URL. Then copy coa attribute and use as query attribute for API rendering and embedding.
 
 * **shield:** `string` | <small>default:</small> `heater`
 
@@ -67,23 +68,22 @@ Armoria has 10 [tinctures](https://en.wikipedia.org/wiki/Tincture_(heraldry)) (c
 
 | Tincture | Type   | Сhance | Color                                                                                      |
 |----------|--------|--------|--------------------------------------------------------------------------------------------|
-| argent   | metal  |  ~25%  |![argent](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"argent"}) #fafafa     |
-| or       | metal  |  ~16%  |![or](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"or"}) #ffe066             |
-| gules    | colour |  ~17%  |![gules](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"gules"}) #d7374a       |
-| sable    | colour |  ~14%  |![sable](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"sable"}) #333333       |
-| azure    | colour |  ~14%  |![azure](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"azure"}) #377cd7       |
-| vert     | colour |  ~7%   |![vert](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"vert"}) #26c061         |
-| purpure  | colour |  ~13%  |![purpure](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"purpure"}) #522d5b   |
-| murrey   | stain  |  ~1%   |![murrey](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"murrey"}) #85185b     |
-| sanguine | stain  |  ~1%   |![sanguine](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"sanguine"}) #b63a3a |
-| tenné    | stain  |  ~1%   |![tenné](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"tenné"}) #cc7f19       |
+| argent   | metal  |  ~25%  |![argent](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"argent"}) #fafafa    |
+| or       | metal  |  ~16%  |![or](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"or"}) #ffe066            |
+| gules    | colour |  ~17%  |![gules](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"gules"}) #d7374a      |
+| sable    | colour |  ~14%  |![sable](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"sable"}) #333333      |
+| azure    | colour |  ~14%  |![azure](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"azure"}) #377cd7      |
+| vert     | colour |  ~7%   |![vert](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"vert"}) #26c061        |
+| purpure  | colour |  ~13%  |![purpure](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"purpure"}) #522d5b  |
+| murrey   | stain  |  ~1%   |![murrey](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"murrey"}) #85185b    |
+| sanguine | stain  |  ~1%   |![sanguine](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"sanguine"}) #b63a3a|
+| tenné    | stain  |  ~1%   |![tenné](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"tenné"}) #cc7f19      |
 
-It is possible to use custom tinctures or redefine color of default tinctures using query attributes.
+It is possible to use custom tinctures or redefine default colors using query attributes.
 
-Exact color can be set as a part of `coa` attribute. You can replace tincture name with color hex code, e.g. turn `{"t1": "azure"}` into hurting eyes blue with `{"t1": "#0000ff"}`. URL must be [encoded](https://meyerweb.com/eric/tools/dencoder/), so the link would be like [armoria.herokuapp.com/?coa={%22t1%22:%22%230000ff%22}](https://armoria.herokuapp.com/?coa={%22t1%22:%22%230000ff%22}).
+Exact color can be set as a part of `coa` attribute. You can replace tincture name with color hex code, e.g. turn `{"t1": "azure"}` into hurting-eyes blue with `{"t1": "#0000ff"}`. URL must be encoded, so the link would be like [armoria.herokuapp.com/?coa={%22t1%22:%22%230000ff%22}](https://armoria.herokuapp.com/?coa={%22t1%22:%22%230000ff%22}).
 
-The resulting link is not readable, so you can also define colors using specific attributes for each of them like [armoria.herokuapp.com/svg/500/1?gules=bb1100&or=FFD700&azure=00aaff](https://armoria.herokuapp.com/svg/500/1?gules=bb1100&or=FFD700&azure=00aaff)`. Hash symbol must be dropped.
-
+The resulting link is not readable, so you can also define colors using specific attributes for each of them like [armoria.herokuapp.com/svg/500/1?gules=bb1100&or=FFD700&azure=00aaff](https://armoria.herokuapp.com/svg/500/1?gules=bb1100&or=FFD700&azure=00aaff). Hash symbol must be dropped.
 
 ## Examples
 
