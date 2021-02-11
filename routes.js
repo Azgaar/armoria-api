@@ -78,7 +78,7 @@ router.get('/', async function(req, res, next) {
 });
 
 // home page, not implemented
-router.get('/home', async function(req, res) {
+router.get('/home', async function(req, res, next) {
   next();
 });
 
