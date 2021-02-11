@@ -17,6 +17,7 @@
   "author": "Azgaar (Max Haniyeu)",
   "license": "MIT",
   "dependencies": {
+    "compression": "^1.7.4",
     "express": "^4.17.1",
     "minify-xml": "^2.5.0",
     "node-fetch": "^2.6.1",

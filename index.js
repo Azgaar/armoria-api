@@ -2,6 +2,7 @@ const express = require('express');
 const http = require('http');
 const app = express();
 const routes = require('./routes');
+const compression = require('compression');
 
 const PORT = process.env.PORT || '3000';
 
@@ -11,6 +12,7 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use(compression());
 app.use('/', routes);
 
 app.set('port', PORT);
