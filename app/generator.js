@@ -1,4 +1,4 @@
-const {charges, divisions, lines, ordinaries, positions, tinctures} = require("./dataModel");
+const {shields, charges, divisions, lines, ordinaries, positions, tinctures} = require("./dataModel");
 
 // main generation routine
 const generate = function(seed) {
@@ -7,7 +7,7 @@ const generate = function(seed) {
   // reset parameters to default
   let usedPattern = null, usedTinctures = [];
 
-  const coa = {t1: getTincture("field")};
+  const coa = {t1: getTincture("field"), shield: rw(shields[rw(shields.types)])};
 
   let charge = P(usedPattern ? .5 : .93) ? true : false; // 80% for charge
   const linedOrdinary = charge && P(.3) || P(.5) ? rw(ordinaries.lined) : null;
@@ -220,7 +220,7 @@ const generate = function(seed) {
   return coa;
 }
 
-const getSize = (p, o = null, d = null) => {
+const getSize = function(p, o = null, d = null) {
   if (p === "e" && (o === "bordure" || o === "orle")) return 1.1;
   if (p === "e") return 1.5;
   if (p === "jln" || p === "jlh") return .7;

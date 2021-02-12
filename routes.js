@@ -11,12 +11,13 @@ router.get('/:format/:size/:seed?', async function(req, res) {
   const format = req.params.format || FORMAT_DEFAULT;
   const size = parseInt(req.params.size) || SIZE_DEFAULT;
   const seed = req.params.seed || Math.floor(Math.random() * 1e9);
-  const shield = req.query.shield || SHIELD_DEFAULT;
+  const shield = req.query.shield || null;
   const colors = getColors(req.query);
 
   const coa = require('./app/generator')(seed);
+  if (shield) coa.shield = shield; // overwrite random selection
   const id = "coa" + seed;
-  const svg = await render(id, coa, shield, size, colors);
+  const svg = await render(id, coa, size, colors);
 
   if (format === "png") {
     const svg2img = require('svg2img');
@@ -41,23 +42,27 @@ router.get('/:format/:size/:seed?', async function(req, res) {
 // extended route, queries
 router.get('/', async function(req, res, next) {
   const seed = req.query.seed || Math.floor(Math.random() * 1e9);
-  const coa = req.query.coa;
+  const coaString = req.query.coa;
 
   const size = parseInt(req.query.size) || SIZE_DEFAULT;
   const format = req.query.get || req.query.format || FORMAT_DEFAULT;
-  const shield = req.query.shield || SHIELD_DEFAULT;
+  const shield = req.query.shield || null;
   const colors = getColors(req.query);
 
-  let coaObj, id;
-  if (coa) {
-    coaObj = JSON.parse(coa);
+  let coa, id;
+  if (coaString) {
+    coa = JSON.parse(coaString);
     id = "coa" + Math.floor(Math.random() * 1e6);
   } else {
-    coaObj = require('./app/generator')(seed);
+    coa = require('./app/generator')(seed);
     id = "coa" + seed;
   }
 
-  const svg = await render(id, coaObj, shield, size, colors);
+  // overwhite shield
+  if (shield) coa.shield = shield;
+  if (!coa.shield) coa.shield = SHIELD_DEFAULT;
+
+  const svg = await render(id, coa, size, colors);
   if (format === "png") {
     const svg2img = require('svg2img');
 

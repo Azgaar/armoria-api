@@ -56,7 +56,7 @@ Attributes that are supported only in query format are `coa` and `shield`.
 
 API can skip procedural generation and render specific coat of arms (`coa`). Attribute accepts json object, [encoded](https://meyerweb.com/eric/tools/dencoder/) for URL usage. The value can be retrieved from Armoria GUI: edit coat of arms as you wish and press `Shape` to get its URL. Then copy coa attribute and use as query attribute for API rendering and embedding.
 
-* **shield:** `string` | <small>default:</small> `heater`
+* **shield:** `string` | <small>default:</small> `random`
 
 Armoria supports >40 shield shapes. Any ot them can be used via API if exact names is passed as `shield` attribute. Available shapes: 
 

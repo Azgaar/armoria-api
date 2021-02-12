@@ -9,7 +9,7 @@ const tinctures = {
 }
 
 const shields = {
-  types: {basic: 10, regional: 2, historical: 1, specific: 1, banner: 1, simple: 2, fantasy: 1, middleEarth: 0},
+  types: {basic: 10, regional: 2, historical: 1, specific: 1, banner: 1, simple: 2, fantasy: 1, middleEarth: 1},
   basic: {heater: 12, spanish: 6, french: 1},
   regional: {horsehead: 1, horsehead2: 1, polish: 1, hessen: 1, swiss: 1},
   historical: {boeotian: 1, roman: 2, kite: 1, oldFrench: 5, renaissance: 2, baroque: 2},

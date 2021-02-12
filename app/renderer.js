@@ -2,8 +2,8 @@ const HTMLParser = require("node-html-parser");
 const {shieldPositions, shieldSize, shieldBox} = require("./dataModel");
 const {shieldPaths, blacklight} = require("./templates");
 
-async function draw(id, coa, shield, size, colors) {
-  const {division, ordinaries = [], charges = []} = coa;
+async function draw(id, coa, size, colors) {
+  const {division, ordinaries = [], charges = [], shield} = coa;
   logCOAdetails(coa, shield, division, ordinaries, charges);
 
   const ordinariesRegular = ordinaries.filter(o => !o.above);
@@ -159,7 +159,7 @@ async function getCharges(coa, id, shieldPath) {
     uniqueCharges.map(async charge => {
       if (charge === "inescutcheon") return `<g id="inescutcheon_${id}"><path transform="translate(66 66) scale(.34)" d="${shieldPath}"/></g>`;
       const fetched = await fetchCharge(charge, id);
-      return fetched;
+      return fetched || "";
     })
   );
   return fetchedCharges.join("");
@@ -167,17 +167,16 @@ async function getCharges(coa, id, shieldPath) {
 
 async function fetchCharge(charge, id) {
   const fetch = require("node-fetch");
-  const fetched = fetch("https://azgaar.github.io/Armoria/charges/" + charge + ".svg")
+  const fetched = await fetch("http://localhost:3000/charges/" + charge + ".svg")
     .then(res => {
       if (res.ok) return res.text();
       else throw new Error("Cannot fetch charge");
-    })
-    .then(text => {
+    }).then(text => {
       const root = HTMLParser.parse(text);
       const g = root.querySelector("g");
       g.setAttribute("id", charge + "_" + id);
       return g.outerHTML;
-    });
+    }).catch(error => console.error(error));
   return fetched;
 }
 
