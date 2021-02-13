@@ -1,4 +1,5 @@
 const HTMLParser = require("node-html-parser");
+const fs = require('fs');
 const {shieldPositions, shieldSize, shieldBox} = require("./dataModel");
 const {shieldPaths, blacklight} = require("./templates");
 
@@ -166,6 +167,13 @@ async function getCharges(coa, id, shieldPath) {
 }
 
 async function fetchCharge(charge, id) {
+  const text = fs.readFileSync("public/charges/" + charge + ".svg", "utf8");
+  const root = HTMLParser.parse(text);
+  const g = root.querySelector("g");
+  g.setAttribute("id", charge + "_" + id);
+  return g.outerHTML;
+
+  // old way via featch
   const fetch = require("node-fetch");
   const fetched = await fetch("http://localhost:3000/charges/" + charge + ".svg")
     .then(res => {
