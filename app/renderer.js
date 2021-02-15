@@ -172,20 +172,6 @@ async function fetchCharge(charge, id) {
   const g = root.querySelector("g");
   g.setAttribute("id", charge + "_" + id);
   return g.outerHTML;
-
-  // old way via featch
-  const fetch = require("node-fetch");
-  const fetched = await fetch("http://localhost:3000/charges/" + charge + ".svg")
-    .then(res => {
-      if (res.ok) return res.text();
-      else throw new Error("Cannot fetch charge");
-    }).then(text => {
-      const root = HTMLParser.parse(text);
-      const g = root.querySelector("g");
-      g.setAttribute("id", charge + "_" + id);
-      return g.outerHTML;
-    }).catch(error => console.error(error));
-  return fetched;
 }
 
 function getSizeMod(size) {
