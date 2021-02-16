@@ -80,53 +80,90 @@ const lines = {
   archedReversed: "m 0,85 c 0,0 60,20.2 100,20 40,-0.2 100,-20 100,-20 v 30 H 0 Z"
 }
 
+// from: translate(10 50) rotate(90 100 100) scale(1 1)
+// to: translate(210 50) rotate(90 -100 100) scale(-1 1)
+function transform(obj) {
+  let {x = 0, y = 0, angle = 0, orX = 100, orY = 100, scaleX = 1, scaleY = 1} = obj;
+  x = x + 100 - scaleX * 100;
+  y = y + 100 - scaleY * 100;
+  orX = scaleX * 100;
+  orY = scaleY * 100;
+  return `translate(${x} ${y}) rotate(${angle} ${orX} ${orY}) scale(${scaleX} ${scaleY})`;
+}
+
 const templates = {
-  // divisions
-  perFess: line => `<path d="${line}"/><rect x="0" y="114.5" width="200" height="86"/>`,
-  perPale: line => `<path d="${line}" transform="translate(.5 0) rotate(-90)" transform-origin="center"/><rect x="114.75" y="0" width="85.5" height="200"/>`,
-  perBend: line => `<path d="${line}" transform="translate(-.5 0) rotate(45) scale(1.1)" transform-origin="center"/><rect x="0" y="114.5" width="200" height="86" transform="rotate(45) scale(1.1)" transform-origin="center"/>`,
-  perBendSinister: line => `<path d="${line}" transform="translate(.5 0) rotate(-45) scale(1.1)" transform-origin="center"/><rect x="0" y="114.5" width="200" height="86" transform="rotate(-45) scale(1.1)" transform-origin="center"/>`,
-  perChevron: line => `<path d="${line}" transform="translate(-70.7,70.7) rotate(-45) scale(-1,1)" transform-origin="center"/><polygon points="20,200 100,120 180,200"/><path d="${line}" transform="translate(70.7,70.7) rotate(45)" transform-origin="center"/>`,
-  perChevronReversed: line => `<path d="${line}" transform="translate(-70.7,-70.7) rotate(225) scale(1,1)" transform-origin="center"/><polygon points="20,0 100,80 180,0"/><path d="${line}" transform="translate(70.7,-70.7) rotate(-225) scale(-1,1)" transform-origin="center"/>`,
-  perCross: line => `<rect x="100" y="0" width="100" height="93.5"/><rect x="0" y="107.5" width="100" height="92.5"/><path d="${line}" transform="translate(0,51) scale(.5001,.5001)"/><path d="${line}" transform="translate(50,0) scale(-.5001,-.5001)" transform-origin="center"/>`,
-  perPile: line => `<path d="${line}" transform="translate(-35,15) rotate(66.8) scale(-1,1)" transform-origin="center"/><path d="${line}" transform="translate(35,15) rotate(-66.8)" transform-origin="center"/><polygon points="0,0 86,200 114,200 200,0 200,200 0,200"/>`,
-  perSaltire: () => `<polygon points="0,0 0,200 200,0 200,200"/>`,
-  gyronny: () => `<polygon points="0,0 200,200 200,100 0,100"/><polygon points="200,0 0,200 100,200 100,0"/>`,
-  chevronny: () => `<path d="M0,80 100,-15 200,80 200,120 100,25 0,120z M0,160 100,65 200,160 200,200 100,105 0,200z M0,240 100,145 200,240 0,240z"/>`,
-  // oprinaries
-  fess: line => `<path d="${line}" transform="translate(0,-25)"/><path d="${line}" transform="translate(0,25) rotate(180.00001)" transform-origin="center"/><rect x="0" y="88" width="200" height="24" stroke="none"/>`,
-  pale: line => `<path d="${line}" transform="rotate(-90) translate(0,-25)" transform-origin="center"/><path d="${line}" transform="rotate(90) translate(0,-25)" transform-origin="center"/><rect x="88" y="0" width="24" height="200" stroke="none"/>`,
-  bend: line => `<path d="${line}" transform="rotate(45) translate(0,-25) scale(1.1,1)" transform-origin="center"/><path d="${line}" transform="rotate(225) translate(0,-25) scale(1.1,1)" transform-origin="center"/><rect x="0" y="88" width="200" height="24" transform="rotate(45) scale(1.1,1)" transform-origin="center" stroke="none"/>`,
-  bendSinister: line => `<path d="${line}" transform="rotate(-45) translate(0,-25) scale(1.1,1)" transform-origin="center"/><path d="${line}" transform="rotate(-225) translate(0,-25) scale(1.1,1)" transform-origin="center"/><rect x="0" y="88" width="200" height="24" transform="rotate(-45) scale(1.1,1)" transform-origin="center" stroke="none"/>`,
-  chief: line => `<path d="${line}" transform="translate(0,-25) rotate(180.00001)" transform-origin="center"/><rect x="0" y="0" width="200" height="62" stroke="none"/>`,
-  bar: line => `<path d="${line}" transform="translate(0,-12.5)" transform-origin="center"/><path d="${line}" transform="translate(0,12.5) rotate(180.00001)" transform-origin="center"/><rect x="0" y="94" width="200" height="12" stroke="none"/>`,
-  gemelle: line => `<path d="${line}" transform="translate(0,-22.5)"/><path d="${line}" transform="translate(0,22.5) rotate(180.00001)" transform-origin="center"/>`,
-  fessCotissed: line => `<path d="${line}" transform="translate(0,-35) scale(1,.5)" transform-origin="center"/><path d="${line}" transform="translate(0,35) rotate(180.0001) scale(1,.5)" transform-origin="center"/><rect x="0" y="80" width="200" height="40"/>`,
-  fessDoubleCotissed: line => `<rect x="0" y="85" width="200" height="30"/><rect x="0" y="72.5" width="200" height="7.5"/><rect x="0" y="120" width="200" height="7.5"/><path d="${line}" transform="translate(0,-40) scale(1,.5)" transform-origin="center"/><path d="${line}" transform="translate(0,40) rotate(180.0001) scale(1,.5)" transform-origin="center"/>`,
-  bendlet: line => `<path d="${line}" transform="rotate(45) translate(0,-16) scale(1.1,1)" transform-origin="center"/><path d="${line}" transform="rotate(225) translate(0,-16) scale(1.1,1)" transform-origin="center"/><rect x="0" y="94" width="200" height="12" transform="rotate(45) scale(1.1,1)" transform-origin="center" stroke="none"/>`,
-  bendletSinister: line => `<path d="${line}" transform="rotate(-45) translate(0,-16) scale(1.1,1)" transform-origin="center"/><path d="${line}" transform="rotate(-225) translate(0,-16) scale(1.1,1)" transform-origin="center"/><rect x="0" y="94" width="200" height="12" transform="rotate(-45) scale(1.1,1)" transform-origin="center" stroke="none"/>`,
-  terrace: line => `<path d="${line}" transform="translate(0,50)"/><rect x="0" y="164" width="200" height="36" stroke="none"/>`,
-  cross: line => `<path d="${line}" transform="translate(0,-14.5)" transform-origin="center"/><path d="${line}" transform="rotate(180) translate(0,-14.5)" transform-origin="center"/><path d="${line}" transform="rotate(-90) translate(0,-14.5)" transform-origin="center"/><path d="${line}" transform="rotate(-270) translate(0,-14.5)" transform-origin="center"/>`,
-  crossParted: line => `<path d="${line}" transform="translate(0,-20)" transform-origin="center"/><path d="${line}" transform="rotate(180) translate(0,-20)" transform-origin="center"/><path d="${line}" transform="rotate(-90) translate(0,-20)" transform-origin="center"/><path d="${line}" transform="rotate(-270) translate(0,-20)" transform-origin="center"/>`,
-  saltire: line => `<path d="${line}" transform="rotate(45) translate(0,-14.5) scale(1.1,1)" transform-origin="center"/><path d="${line}" transform="rotate(225) translate(0,-14.5) scale(1.1,1)" transform-origin="center"/><path d="${line}" transform="rotate(-45) translate(0,-14.5) scale(1.1,1)" transform-origin="center"/><path d="${line}" transform="rotate(-225) translate(0,-14.5) scale(1.1,1)" transform-origin="center"/>`,
-  saltireParted: line => `<path d="${line}" transform="rotate(45) translate(0,-20) scale(1.1,1)" transform-origin="center"/><path d="${line}" transform="rotate(225) translate(0,-20) scale(1.1,1)" transform-origin="center"/><path d="${line}" transform="rotate(-45) translate(0,-20) scale(1.1,1)" transform-origin="center"/><path d="${line}" transform="rotate(-225) translate(0,-20) scale(1.1,1)" transform-origin="center"/>`,
-  mount: () => `<path d="m0,250 a100,100,0,0,1,200,0"/>`,
-  point: () => `<path d="M0,200 Q80,180 100,135 Q120,180 200,200"/>`,
-  flaunches: () => `<path d="M0,0 q120,100 0,200 M200,0 q-120,100 0,200"/>`,
-  gore: () => `<path d="M20,0 Q30,75 100,100 Q80,150 100,200 L0,200 L0,0 Z"/>`,
-  pall: () => `<polygon points="0,0 30,0 100,70 170,0 200,0 200,30 122,109 122,200 78,200 78,109 0,30"/>`,
-  pallReversed: () => `<polygon points="0,200 0,170 78,91 78,0 122,0 122,91 200,170 200,200 170,200 100,130 30,200"/>`,
-  chevron: () => `<polygon points="0,125 100,60 200,125 200,165 100,100 0,165"/>`,
-  chevronReversed: () => `<polygon points="0,75 100,140 200,75 200,35 100,100 0,35"/>`,
-  gyron: () => `<polygon points="0,0 100,100 0,100"/>`,
-  quarter: () => `<rect x="0" y="0" width="50%" height="50%"/>`,
-  canton: () => `<rect x="0" y="0" width="37.5%" height="37.5%"/>`,
-  pile: () => `<polygon points="70,0 100,175 130,0"/>`,
-  pileInBend: () => `<polygon points="200,200 200,144 25,25 145,200"/>`,
-  pileInBendSinister: () => `<polygon points="0,200 0,144 175,25 55,200"/>`,
-  piles: () => `<polygon points="46,0 75,175 103,0"/><polygon points="95,0 125,175 154,0"/>`,
-  pilesInPoint: () => `<path d="M15,0 100,200 60,0Z M80,0 100,200 120,0Z M140,0 100,200 185,0Z"/>`,
-  label: () => `<path d="m 46,54.8 6.6,-15.6 95.1,0 5.9,15.5 -16.8,0.1 4.5,-11.8 L 104,43 l 4.3,11.9 -16.8,0 4.3,-11.8 -37.2,0 4.5,11.8 -16.9,0 z"/>`
+  // straight divisions
+  perFess: `<rect x="0" y="100" width="200" height="100"/>`,
+  perPale: `<rect x="100" y="0" width="100" height="200"/>`,
+  perBend: `<polygon points="0,0 200,200 0,200"/>`,
+  perBendSinister: `<polygon points="200,0 0,200 200,200"/>`,
+  perChevron: `<polygon points="0,200 100,100 200,200"/>`,
+  perChevronReversed: `<polygon points="0,0 100,100 200,0"/>`,
+  perCross: `<rect x="100" y="0" width="100" height="100"/><rect x="0" y="100" width="100" height="100"/>`,
+  perPile: `<polygon points="0,0 15,0 100,200 185,0 200,0 200,200 0,200"/>`,
+  perSaltire: `<polygon points="0,0 0,200 200,0 200,200"/>`,
+  gyronny: `<polygon points="0,0 200,200 200,100 0,100"/><polygon points="200,0 0,200 100,200 100,0"/>`,
+  chevronny: `<path d="M0,80 100,-15 200,80 200,120 100,25 0,120z M0,160 100,65 200,160 200,200 100,105 0,200z M0,240 100,145 200,240 0,240z"/>`,
+  // lined divisions
+  perFessLined: line => `<path d="${line}"/><rect x="0" y="115" width="200" height="85" shape-rendering="crispedges"/>`,
+  perPaleLined: line => `<path d="${line}" transform="rotate(-90 100 100)"/><rect x="115" y="0" width="85" height="200" shape-rendering="crispedges"/>`,
+  perBendLined: line => `<path d="${line}" transform="translate(-10 -10) rotate(45 110 110) scale(1.1)"/><rect x="0" y="115" width="200" height="85" transform="translate(-10 -10) rotate(45 110 110) scale(1.1)" shape-rendering="crispedges"/>`,
+  perBendSinisterLined: line => `<path d="${line}" transform="translate(-10 -10) rotate(-45 110 110) scale(1.1)"/><rect x="0" y="115" width="200" height="85" transform="translate(-10 -10) rotate(-45 110 110) scale(1.1)" shape-rendering="crispedges"/>`,
+  perChevronLined: line => `<rect x="15" y="115" width="200" height="200" transform="translate(70 70) rotate(45 100 100)"/><path d="${line}" transform="translate(129 71) rotate(-45 -100 100) scale(-1 1)"/><path d="${line}" transform="translate(71 71) rotate(45 100 100)"/>`,
+  perChevronReversedLined: line => `<rect x="15" y="115" width="200" height="200" transform="translate(-70 -70) rotate(225 100 100)"/><path d="${line}" transform="translate(-70.7 -70.7) rotate(225 100 100) scale(1 1)"/><path d="${line}" transform="translate(270.7 -70.7) rotate(-225 -100 100) scale(-1 1)"/>`,
+  perCrossLined: line => `<rect x="100" y="0" width="100" height="92.5"/><rect x="0" y="107.5" width="100" height="92.5"/><path d="${line}" transform="translate(0 50) scale(.5)"/><path d="${line}" transform="translate(200 150) scale(-.5)"/>`,
+  perPileLined: line => `<path d="${line}" transform="translate(161.66 10) rotate(66.66 -100 100) scale(-1 1)"/><path d="${line}" transform="translate(38.33 10) rotate(-66.66 100 100)"/><polygon points="-2.15,0 84.15,200 115.85,200 202.15,0 200,200 0,200"/>`,
+  // straight ordinaries
+  fess: `<rect x="0" y="75" width="200" height="50"/>`,
+  pale: `<rect x="75" y="0" width="50" height="200"/>`,
+  bend: `<polygon points="35,0 200,165 200,200 165,200 0,35 0,0"/>`,
+  bendSinister: `<polygon points="0,165 165,0 200,0 200,35 35,200 0,200"/>`,
+  chief: `<rect x="0" y="0" width="200" height="75"/>`,
+  bar: `<rect x="0" y="87.5" width="200" height="25"/>`,
+  gemelle: `<rect x="0" y="76" width="200" height="16"/><rect x="0" y="108" width="200" height="16"/>`,
+  fessCotissed: `<rect x="0" y="67" width="200" height="8"/><rect x="0" y="83" width="200" height="34"/><rect x="0" y="125" width="200" height="8"/>`,
+  fessDoubleCotissed: `<rect x="0" y="57" width="200" height="7.5"/><rect x="0" y="71" width="200" height="7.5"/><rect x="0" y="85" width="200" height="30"/><rect x="0" y="121.5" width="200" height="7.5"/><rect x="0" y="135.5" width="200" height="7.5"/>`,
+  bendlet: `<polygon points="18,0 200,182 200,200 182,200 0,18 0,0"/>`,
+  bendletSinister: `<polygon points="0,182 182,0 200,0 200,18 18,200 0,200"/>`,
+  terrace: `<rect x="0" y="145" width="200" height="55"/>`,
+  cross: `<polygon points="85,0 85,85 0,85 0,115 85,115 85,200 115,200 115,115 200,115 200,85 115,85 115,0"/>`,
+  crossParted: `<path d="M 80 0 L 80 80 L 0 80 L 0 95 L 80 95 L 80 105 L 0 105 L 0 120 L 80 120 L 80 200 L 95 200 L 95 120 L 105 120 L 105 200 L 120 200 L 120 120 L 200 120 L 200 105 L 120 105 L 120 95 L 200 95 L 200 80 L 120 80 L 120 0 L 105 0 L 105 80 L 95 80 L 95 0 L 80 0 z M 95 95 L 105 95 L 105 105 L 95 105 L 95 95 z"/>`,
+  saltire: `<path d="M 0,21 79,100 0,179 0,200 21,200 100,121 179,200 200,200 200,179 121,100 200,21 200,0 179,0 100,79 21,0 0,0 Z"/>`,
+  saltireParted: `<path d="M 7 0 L 89 82 L 82 89 L 0 7 L 0 28 L 72 100 L 0 172 L 0 193 L 82 111 L 89 118 L 7 200 L 28 200 L 100 128 L 172 200 L 193 200 L 111 118 L 118 111 L 200 193 L 200 172 L 128 100 L 200 28 L 200 7 L 118 89 L 111 82 L 193 0 L 172 0 L 100 72 L 28 0 L 7 0 z M 100 93 L 107 100 L 100 107 L 93 100 L 100 93 z"/>`,
+  mount: `<path d="m0,250 a100,100,0,0,1,200,0"/>`,
+  point: `<path d="M0,200 Q80,180 100,135 Q120,180 200,200"/>`,
+  flaunches: `<path d="M0,0 q120,100 0,200 M200,0 q-120,100 0,200"/>`,
+  gore: `<path d="M20,0 Q30,75 100,100 Q80,150 100,200 L0,200 L0,0 Z"/>`,
+  pall: `<polygon points="0,0 30,0 100,70 170,0 200,0 200,30 122,109 122,200 78,200 78,109 0,30"/>`,
+  pallReversed: `<polygon points="0,200 0,170 78,91 78,0 122,0 122,91 200,170 200,200 170,200 100,130 30,200"/>`,
+  chevron: `<polygon points="0,125 100,60 200,125 200,165 100,100 0,165"/>`,
+  chevronReversed: `<polygon points="0,75 100,140 200,75 200,35 100,100 0,35"/>`,
+  gyron: `<polygon points="0,0 100,100 0,100"/>`,
+  quarter: `<rect x="0" y="0" width="50%" height="50%"/>`,
+  canton: `<rect x="0" y="0" width="37.5%" height="37.5%"/>`,
+  pile: `<polygon points="70,0 100,175 130,0"/>`,
+  pileInBend: `<polygon points="200,200 200,144 25,25 145,200"/>`,
+  pileInBendSinister: `<polygon points="0,200 0,144 175,25 55,200"/>`,
+  piles: `<polygon points="46,0 75,175 103,0"/><polygon points="95,0 125,175 154,0"/>`,
+  pilesInPoint: `<path d="M15,0 100,200 60,0Z M80,0 100,200 120,0Z M140,0 100,200 185,0Z"/>`,
+  label: `<path d="m 46,54.8 6.6,-15.6 95.1,0 5.9,15.5 -16.8,0.1 4.5,-11.8 L 104,43 l 4.3,11.9 -16.8,0 4.3,-11.8 -37.2,0 4.5,11.8 -16.9,0 z"/>`,
+  // lined ordinaries
+  fessLined: line => `<path d="${line}" transform="translate(0 -25)"/><path d="${line}" transform="translate(0 25) rotate(180 100 100)"/><rect x="0" y="88" width="200" height="24" stroke="none"/>`,
+  paleLined: line => `<path d="${line}" transform="rotate(-90 100 100) translate(0 -25)"/><path d="${line}" transform="rotate(90 100 100) translate(0 -25)"/><rect x="88" y="0" width="24" height="200" stroke="none"/>`,
+  bendLined: line => `<path d="${line}" transform="rotate(45 100 100) translate(0,-25) scale(1.1,1)"/><path d="${line}" transform="rotate(225 100 100) translate(0,-25) scale(1.1,1)"/><rect x="0" y="88" width="200" height="24" transform="rotate(45 100 100) scale(1.1,1)" stroke="none"/>`,
+  bendSinisterLined: line => `<path d="${line}" transform="rotate(-45 100 100) translate(0,-25) scale(1.1,1)"/><path d="${line}" transform="rotate(-225 100 100) translate(0,-25) scale(1.1,1)"/><rect x="0" y="88" width="200" height="24" transform="rotate(-45 100 100) scale(1.1,1)" stroke="none"/>`,
+  chiefLined: line => `<path d="${line}" transform="translate(0,-25) rotate(180.00001 100 100)"/><rect x="0" y="0" width="200" height="62" stroke="none"/>`,
+  barLined: line => `<path d="${line}" transform="translate(0,-12.5)"/><path d="${line}" transform="translate(0,12.5) rotate(180.00001 100 100)"/><rect x="0" y="94" width="200" height="12" stroke="none"/>`,
+  gemelleLined: line => `<path d="${line}" transform="translate(0,-22.5)"/><path d="${line}" transform="translate(0,22.5) rotate(180.00001 100 100)"/>`,
+  fessCotissedLined: line => `<path d="${line}" transform="translate(0 15) scale(1 .5)"/><path d="${line}" transform="translate(0 85) rotate(180 100 50) scale(1 .5)"/><rect x="0" y="80" width="200" height="40"/>`,
+  fessDoubleCotissedLined: line => `<rect x="0" y="85" width="200" height="30"/><rect x="0" y="72.5" width="200" height="7.5"/><rect x="0" y="120" width="200" height="7.5"/><path d="${line}" transform="translate(0 10) scale(1 .5)"/><path d="${line}" transform="translate(0 90) rotate(180 100 50) scale(1 .5)"/>`,
+  bendletLined: line => `<path d="${line}" transform="rotate(45 100 100) translate(0,-16) scale(1.1,1)"/><path d="${line}" transform="rotate(225 100 100) translate(0,-16) scale(1.1,1)"/><rect x="0" y="94" width="200" height="12" transform="rotate(45 100 100) scale(1.1,1)" stroke="none"/>`,
+  bendletSinisterLined: line => `<path d="${line}" transform="rotate(-45 100 100) translate(0,-16) scale(1.1,1)"/><path d="${line}" transform="rotate(-225 100 100) translate(0,-16) scale(1.1,1)"/><rect x="0" y="94" width="200" height="12" transform="rotate(-45 100 100) scale(1.1,1)" stroke="none"/>`,
+  terraceLined: line => `<path d="${line}" transform="translate(0,50)"/><rect x="0" y="164" width="200" height="36" stroke="none"/>`,
+  crossLined: line => `<path d="${line}" transform="translate(0,-14.5)"/><path d="${line}" transform="rotate(180 100 100) translate(0,-14.5)"/><path d="${line}" transform="rotate(-90 100 100) translate(0,-14.5)"/><path d="${line}" transform="rotate(-270 100 100) translate(0,-14.5)"/>`,
+  crossPartedLined: line => `<path d="${line}" transform="translate(0,-20)"/><path d="${line}" transform="rotate(180 100 100) translate(0,-20)"/><path d="${line}" transform="rotate(-90 100 100) translate(0,-20)"/><path d="${line}" transform="rotate(-270 100 100) translate(0,-20)"/>`,
+  saltireLined: line => `<path d="${line}" transform="rotate(45 100 100) translate(0,-14.5) scale(1.1,1)"/><path d="${line}" transform="rotate(225 100 100) translate(0,-14.5) scale(1.1,1)"/><path d="${line}" transform="rotate(-45 100 100) translate(0,-14.5) scale(1.1,1)"/><path d="${line}" transform="rotate(-225 100 100) translate(0,-14.5) scale(1.1,1)"/>`,
+  saltirePartedLined: line => `<path d="${line}" transform="rotate(45 100 100) translate(0,-20) scale(1.1,1)"/><path d="${line}" transform="rotate(225 100 100) translate(0,-20) scale(1.1,1)"/><path d="${line}" transform="rotate(-45 100 100) translate(0,-20) scale(1.1,1)"/><path d="${line}" transform="rotate(-225 100 100) translate(0,-20) scale(1.1,1)"/>`
 }
 
 const patterns = {
@@ -141,12 +178,12 @@ const patterns = {
   pally: (p, c1, c2, size) => `<pattern id="${p}" width="${size * .5}" height="${size * .125}" viewBox="0 0 100 25"><rect x="0" y="0" width="100" height="25" fill="${c1}"/><rect x="25" y="0" width="25" height="25" fill="${c2}"/><rect x="75" y="0" width="25" height="25" fill="${c2}"/></pattern>`,
   barry: (p, c1, c2, size) => `<pattern id="${p}" width="${size * .125}" height="${size * .5}" viewBox="0 0 25 100"><rect x="0" y="0" width="25" height="100" fill="${c2}"/><rect x="0" y="25" width="25" height="25" fill="${c1}"/><rect x="0" y="75" width="25" height="25" fill="${c1}"/></pattern>`,
   gemelles: (p, c1, c2, size) => `<pattern id="${p}" width="${size * .125}" height="${size * .5}" viewBox="0 0 25 100"><rect x="0" y="0" width="25" height="100" fill="${c2}"/><rect x="0" y="35" width="25" height="10" fill="${c1}"/><rect x="0" y="55" width="25" height="10" fill="${c1}"/></pattern>`,
-  bendy: (p, c1, c2, size) => `<pattern id="${p}" width="${size * .36}" height="${size * .36}" viewBox="0 0 50 50" patternTransform="rotate(45)"><rect x="0" y="0" width="50" height="50" fill="${c2}"/><line x1="0" y1="37.5" x2="50" y2="37.5" stroke="${c1}" stroke-width="25"/></pattern>`,
-  bendySinister: (p, c1, c2, size) => `<pattern id="${p}" width="${size * .36}" height="${size * .36}" viewBox="0 0 50 50" patternTransform="rotate(-45)"><rect x="0" y="0" width="50" height="50" fill="${c2}"/><line x1="0" y1="37.5" x2="50" y2="37.5" stroke="${c1}" stroke-width="25"/></pattern>`,
-  palyBendy: (p, c1, c2, size) => `<pattern id="${p}" width="${size * .125}" height="${size * .25}" viewBox="0 0 50 100" patternTransform="translate(22,44) rotate(-26.5)"><rect x="0" y="0" width="50" height="100" fill="${c1}"/><polygon points="25,0 50,50 25,100 0,50" fill="${c2}"/></pattern>`,
+  bendy: (p, c1, c2, size) => `<pattern id="${p}" width="${size * .36}" height="${size * .36}" viewBox="0 0 50 50" patternTransform="rotate(45 100 100)"><rect x="0" y="0" width="50" height="50" fill="${c2}"/><line x1="0" y1="37.5" x2="50" y2="37.5" stroke="${c1}" stroke-width="25"/></pattern>`,
+  bendySinister: (p, c1, c2, size) => `<pattern id="${p}" width="${size * .36}" height="${size * .36}" viewBox="0 0 50 50" patternTransform="rotate(-45 100 100)"><rect x="0" y="0" width="50" height="50" fill="${c2}"/><line x1="0" y1="37.5" x2="50" y2="37.5" stroke="${c1}" stroke-width="25"/></pattern>`,
+  palyBendy: (p, c1, c2, size) => `<pattern id="${p}" width="${size * .125}" height="${size * .25}" viewBox="0 0 50 100" patternTransform="translate(22,44) rotate(-26.5 100 100)"><rect x="0" y="0" width="50" height="100" fill="${c1}"/><polygon points="25,0 50,50 25,100 0,50" fill="${c2}"/></pattern>`,
   pappellony: (p, c1, c2, size) => `<pattern id="${p}" width="${size * .125}" height="${size * .125}" viewBox="0 0 100 100"><rect x="0" y="0" width="100" height="100" fill="${c1}"/><circle cx="0" cy="51" r="45" stroke="${c2}" fill="${c1}" stroke-width="10"/><circle cx="100" cy="51" r="45" stroke="${c2}" fill="${c1}" stroke-width="10"/><circle cx="50" cy="1" r="45" stroke="${c2}" fill="${c1}" stroke-width="10"/></pattern>`,
   masoned: (p, c1, c2, size) => `<pattern id="${p}" width="${size * .125}" height="${size * .125}" viewBox="0 0 100 100" fill="none"><rect x="0" y="0" width="100" height="100" fill="${c1}"/><rect x="0" y="0" width="100" height="50" stroke="${c2}" stroke-width="4"/><line x1="50" y1="50" x2="50" y2="100" stroke="${c2}" stroke-width="5"/></pattern>`,
-  fretty: (p, c1, c2, size) => `<pattern id="${p}" width="${size * .28}" height="${size * .28}" viewBox="0 0 200 200" patternTransform="translate(-19,21) rotate(45)" stroke="#000" stroke-width="2"><rect x="0" y="0" width="200" height="200" stroke="none" fill="${c1}"/><rect x="0" y="35" width="200" height="30" stroke="none" fill="${c2}"/><rect x="0" y="135" width="200" height="30" stroke="none" fill="${c2}"/><rect x="35" y="0" width="30" height="200" stroke="none" fill="${c2}"/><rect x="135" y="0" width="30" height="200" stroke="none" fill="${c2}"/><line x1="0" y1="35" x2="35" y2="35"/><line x1="0" y1="65" x2="35" y2="65"/><line x1="35" y1="165" x2="35" y2="200"/><line x1="65" y1="165" x2="65" y2="200"/><line x1="135" y1="0" x2="135" y2="35"/><line x1="165" y1="0" x2="165" y2="35"/><line x1="135" y1="65" x2="135" y2="200"/><line x1="165" y1="65" x2="165" y2="200"/><line x1="35" y1="0" x2="35" y2="135"/><line x1="65" y1="0" x2="65" y2="135"/><line x1="65" y1="35" x2="200" y2="35"/><line x1="65" y1="65" x2="200" y2="65"/><line x1="0" y1="135" x2="135" y2="135"/><line x1="0" y1="165" x2="135" y2="165"/><line x1="165" y1="135" x2="200" y2="135"/><line x1="165" y1="165" x2="200" y2="165"/></pattern>`
+  fretty: (p, c1, c2, size) => `<pattern id="${p}" width="${size * .28}" height="${size * .28}" viewBox="0 0 200 200" patternTransform="translate(-19,21) rotate(45 100 100)" stroke="#000" stroke-width="2"><rect x="0" y="0" width="200" height="200" stroke="none" fill="${c1}"/><rect x="0" y="35" width="200" height="30" stroke="none" fill="${c2}"/><rect x="0" y="135" width="200" height="30" stroke="none" fill="${c2}"/><rect x="35" y="0" width="30" height="200" stroke="none" fill="${c2}"/><rect x="135" y="0" width="30" height="200" stroke="none" fill="${c2}"/><line x1="0" y1="35" x2="35" y2="35"/><line x1="0" y1="65" x2="35" y2="65"/><line x1="35" y1="165" x2="35" y2="200"/><line x1="65" y1="165" x2="65" y2="200"/><line x1="135" y1="0" x2="135" y2="35"/><line x1="165" y1="0" x2="165" y2="35"/><line x1="135" y1="65" x2="135" y2="200"/><line x1="165" y1="65" x2="165" y2="200"/><line x1="35" y1="0" x2="35" y2="135"/><line x1="65" y1="0" x2="65" y2="135"/><line x1="65" y1="35" x2="200" y2="35"/><line x1="65" y1="65" x2="200" y2="65"/><line x1="0" y1="135" x2="135" y2="135"/><line x1="0" y1="165" x2="135" y2="165"/><line x1="165" y1="135" x2="200" y2="135"/><line x1="165" y1="165" x2="200" y2="165"/></pattern>`
 }
 
 const blacklight = `<radialGradient id="backlight" cx="100%" cy="100%" r="150%">

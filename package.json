@@ -1,13 +1,14 @@
 {
   "name": "armoria-api",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Heraldry generator API",
   "engines": {
     "node": "v14.15.3"
   },
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "SET NODE_ENV=production & node index.js",
+    "dev": "SET NODE_ENV=development & node-dev index.js"
   },
   "keywords": [
     "heraldry",
@@ -23,5 +24,9 @@
     "node-fetch": "^2.6.1",
     "node-html-parser": "^2.1.0",
     "svg2img": "^0.9.1"
+  },
+  "devDependencies": {
+    "easy-livereload": "^1.4.3",
+    "node-dev": "^6.2.0"
   }
 }

@@ -182,11 +182,11 @@ function getSizeMod(size) {
   return 1;
 }
 
-function getTemplate(templateId, lineId) {
+function getTemplate(template, line) {
   const {lines, templates} = require("./templates");
-  if (!lineId) return templates[templateId]();
-  const line = lines[lineId] || lines.straight;
-  return templates[templateId](line);
+  if (!line || line === "straight") return templates[template];
+  const templateId = template+"Lined", linePath = lines[line];
+  return templates[templateId](linePath);
 }
 
 // get charge is string starts with "semy"
