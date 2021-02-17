@@ -5,7 +5,7 @@ const tinctures = {
   metals: { argent: 3, or: 2 },
   colours: { gules: 5, azure: 4, sable: 3, purpure: 3, vert: 2 },
   stains: { murrey: 1, sanguine: 1, tenné: 1 },
-  patterns: { semy: 1, vair: 2, vairInPale: 1, vairEnPointe: 2, ermine: 2, chequy: 5, lozengy: 2, fusily: 1, pally: 4, barry: 4, gemelles: 1, bendy: 3, bendySinister: 2, palyBendy: 1, barryBendy:1, pappellony: 2, masoned: 3, fretty: 2 }
+  patterns: { semy: 1, vair: 2, vairInPale: 1, vairEnPointe: 2, ermine: 2, chequy: 5, lozengy: 2, fusily: 1, pally: 4, barry: 4, gemelles: 1, bendy: 3, bendySinister: 2, palyBendy: 1, barryBendy:1, pappellony: 2, masoned: 3, fretty: 2, chainy: 1 }
 }
 
 const shields = {
