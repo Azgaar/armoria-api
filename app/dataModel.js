@@ -12,7 +12,7 @@ const tinctures = {
     chequy: 8, lozengy: 5, fusily: 2, pally: 8, barry: 10, gemelles: 1,
     bendy: 8, bendySinister: 4, palyBendy: 2, barryBendy: 1,
     pappellony: 2, pappellony2: 3, scaly: 1, plumetty: 1,
-    masoned: 6, fretty: 3, grillage: 1, chainy: 1, maily: 2 }
+    masoned: 6, fretty: 3, grillage: 1, chainy: 1, maily: 2, honeycombed: 1 }
 }
 
 const shields = {
