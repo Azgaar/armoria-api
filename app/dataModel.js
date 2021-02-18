@@ -11,7 +11,7 @@ const tinctures = {
     potent: 2, counterPotent: 1, potentInPale: 1, potentEnPointe: 1,
     chequy: 8, lozengy: 5, fusily: 2, pally: 8, barry: 10, gemelles: 1,
     bendy: 8, bendySinister: 4, palyBendy: 2, barryBendy: 1,
-    pappellony: 2, pappellony2: 3, masoned: 6, fretty: 3, grillage: 1, chainy: 1, maily: 2 }
+    pappellony: 2, pappellony2: 3, scaly: 1, masoned: 6, fretty: 3, grillage: 1, chainy: 1, maily: 2 }
 }
 
 const shields = {
