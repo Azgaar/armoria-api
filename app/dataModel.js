@@ -6,9 +6,10 @@ const tinctures = {
   colours: { gules: 5, azure: 4, sable: 3, purpure: 3, vert: 2 },
   stains: { murrey: 1, sanguine: 1, tenné: 1 },
   patterns: { 
-    semy: 8, vair: 5, vairInPale: 1, vairEnPointe: 3, ermine: 6,
+    semy: 8, ermine: 6,
+    vair: 4, counterVair: 1, vairInPale: 1, vairEnPointe: 2, vairAncien: 2,
     potent: 2, counterPotent: 1, potentInPale: 1, potentEnPointe: 1,
-    chequy: 10, lozengy: 6, fusily: 2, pally: 8, barry: 10, gemelles: 2,
+    chequy: 8, lozengy: 5, fusily: 2, pally: 8, barry: 10, gemelles: 1,
     bendy: 8, bendySinister: 4, palyBendy: 2, barryBendy: 1,
     pappellony: 4, masoned: 6, fretty: 3, grillage: 1, chainy: 1, mailly: 2 }
 }
