@@ -171,7 +171,7 @@ const generate = function(seed) {
     let t1 = null, t2 = null;
     if (P(.1)) size = "-small";
     else if (P(.1)) size = "-smaller";
-    else if (P(.01)) size = "-big";
+    else if (P(.03)) size = "-big";
     else if (P(.005)) size = "-smallest";
 
     // apply standard tinctures

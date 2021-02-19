@@ -179,6 +179,7 @@ function getSizeMod(size) {
   if (size === "smaller") return .5;
   if (size === "smallest") return .25;
   if (size === "big") return 1.6;
+  if (size === "bigger") return 2;
   return 1;
 }
 
