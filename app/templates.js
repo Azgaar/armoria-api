@@ -110,8 +110,8 @@ const templates = {
   perBendLined: line => `<path d="${line}" transform="translate(-10 -10) rotate(45 110 110) scale(1.1)"/><rect x="0" y="115" width="200" height="85" transform="translate(-10 -10) rotate(45 110 110) scale(1.1)" shape-rendering="crispedges"/>`,
   perBendSinisterLined: line => `<path d="${line}" transform="translate(-10 -10) rotate(-45 110 110) scale(1.1)"/><rect x="0" y="115" width="200" height="85" transform="translate(-10 -10) rotate(-45 110 110) scale(1.1)" shape-rendering="crispedges"/>`,
   perChevronLined: line => `<rect x="15" y="115" width="200" height="200" transform="translate(70 70) rotate(45 100 100)"/><path d="${line}" transform="translate(129 71) rotate(-45 -100 100) scale(-1 1)"/><path d="${line}" transform="translate(71 71) rotate(45 100 100)"/>`,
-  perChevronReversedLined: line => `<rect x="15" y="115" width="200" height="200" transform="translate(-70 -70) rotate(225 100 100)"/><path d="${line}" transform="translate(-70.7 -70.7) rotate(225 100 100) scale(1 1)"/><path d="${line}" transform="translate(270.7 -70.7) rotate(-225 -100 100) scale(-1 1)"/>`,
-  perCrossLined: line => `<rect x="100" y="0" width="100" height="92.5"/><rect x="0" y="107.5" width="100" height="92.5"/><path d="${line}" transform="translate(0 50) scale(.5)"/><path d="${line}" transform="translate(200 150) scale(-.5)"/>`,
+  perChevronReversedLined: line => `<rect x="15" y="115" width="200" height="200" transform="translate(-70 -70) rotate(225.001 100 100)"/><path d="${line}" transform="translate(-70.7 -70.7) rotate(225 100 100) scale(1 1)"/><path d="${line}" transform="translate(270.7 -70.7) rotate(-225 -100 100) scale(-1 1)"/>`,
+  perCrossLined: line => `<rect x="100" y="0" width="100" height="92.5"/><rect x="0" y="107.5" width="100" height="92.5"/><path d="${line}" transform="translate(0 50) scale(.5001)"/><path d="${line}" transform="translate(200 150) scale(-.5)"/>`,
   perPileLined: line => `<path d="${line}" transform="translate(161.66 10) rotate(66.66 -100 100) scale(-1 1)"/><path d="${line}" transform="translate(38.33 10) rotate(-66.66 100 100)"/><polygon points="-2.15,0 84.15,200 115.85,200 202.15,0 200,200 0,200"/>`,
   // straight ordinaries
   fess: `<rect x="0" y="75" width="200" height="50"/>`,
@@ -122,9 +122,9 @@ const templates = {
   bar: `<rect x="0" y="87.5" width="200" height="25"/>`,
   gemelle: `<rect x="0" y="76" width="200" height="16"/><rect x="0" y="108" width="200" height="16"/>`,
   fessCotissed: `<rect x="0" y="67" width="200" height="8"/><rect x="0" y="83" width="200" height="34"/><rect x="0" y="125" width="200" height="8"/>`,
-  fessDoubleCotissed: `<rect x="0" y="57" width="200" height="7.5"/><rect x="0" y="71" width="200" height="7.5"/><rect x="0" y="85" width="200" height="30"/><rect x="0" y="121.5" width="200" height="7.5"/><rect x="0" y="135.5" width="200" height="7.5"/>`,
-  bendlet: `<polygon points="18,0 200,182 200,200 182,200 0,18 0,0"/>`,
-  bendletSinister: `<polygon points="0,182 182,0 200,0 200,18 18,200 0,200"/>`,
+  fessDoubleCotissed: `<rect x="0" y="60" width="200" height="7.5"/><rect x="0" y="72.5" width="200" height="7.5"/><rect x="0" y="85" width="200" height="30"/><rect x="0" y="120" width="200" height="7.5"/><rect x="0" y="132.5" width="200" height="7.5"/>`,
+  bendlet: `<polygon points="22,0 200,178 200,200 178,200 0,22 0,0"/>`,
+  bendletSinister: `<polygon points="0,178 178,0 200,0 200,22 22,200 0,200"/>`,
   terrace: `<rect x="0" y="145" width="200" height="55"/>`,
   cross: `<polygon points="85,0 85,85 0,85 0,115 85,115 85,200 115,200 115,115 200,115 200,85 115,85 115,0"/>`,
   crossParted: `<path d="M 80 0 L 80 80 L 0 80 L 0 95 L 80 95 L 80 105 L 0 105 L 0 120 L 80 120 L 80 200 L 95 200 L 95 120 L 105 120 L 105 200 L 120 200 L 120 120 L 200 120 L 200 105 L 120 105 L 120 95 L 200 95 L 200 80 L 120 80 L 120 0 L 105 0 L 105 80 L 95 80 L 95 0 L 80 0 z M 95 95 L 105 95 L 105 105 L 95 105 L 95 95 z"/>`,
@@ -150,20 +150,20 @@ const templates = {
   // lined ordinaries
   fessLined: line => `<path d="${line}" transform="translate(0 -25)"/><path d="${line}" transform="translate(0 25) rotate(180 100 100)"/><rect x="0" y="88" width="200" height="24" stroke="none"/>`,
   paleLined: line => `<path d="${line}" transform="rotate(-90 100 100) translate(0 -25)"/><path d="${line}" transform="rotate(90 100 100) translate(0 -25)"/><rect x="88" y="0" width="24" height="200" stroke="none"/>`,
-  bendLined: line => `<path d="${line}" transform="rotate(45 100 100) translate(0,-25) scale(1.1,1)"/><path d="${line}" transform="rotate(225 100 100) translate(0,-25) scale(1.1,1)"/><rect x="0" y="88" width="200" height="24" transform="rotate(45 100 100) scale(1.1,1)" stroke="none"/>`,
-  bendSinisterLined: line => `<path d="${line}" transform="rotate(-45 100 100) translate(0,-25) scale(1.1,1)"/><path d="${line}" transform="rotate(-225 100 100) translate(0,-25) scale(1.1,1)"/><rect x="0" y="88" width="200" height="24" transform="rotate(-45 100 100) scale(1.1,1)" stroke="none"/>`,
+  bendLined: line => `<path d="${line}" transform="translate(8 -18) rotate(45 110 100) scale(1.1 1)"/><path d="${line}" transform="translate(-28 18) rotate(225 110 100) scale(1.1 1)"/><rect x="0" y="88" width="200" height="24" transform="translate(-10 0) rotate(45 110 100) scale(1.1 1)" stroke="none"/>`,
+  bendSinisterLined: line => `<path d="${line}" transform="translate(-28 -18) rotate(-45 110 100) scale(1.1 1)"/><path d="${line}" transform="translate(8 18) rotate(-225 110 100) scale(1.1 1)"/><rect x="0" y="88" width="200" height="24" transform="translate(-10 0) rotate(-45 110 100) scale(1.1 1)" stroke="none"/>`,
   chiefLined: line => `<path d="${line}" transform="translate(0,-25) rotate(180.00001 100 100)"/><rect width="200" height="62" stroke="none"/>`,
   barLined: line => `<path d="${line}" transform="translate(0,-12.5)"/><path d="${line}" transform="translate(0,12.5) rotate(180.00001 100 100)"/><rect x="0" y="94" width="200" height="12" stroke="none"/>`,
   gemelleLined: line => `<path d="${line}" transform="translate(0,-22.5)"/><path d="${line}" transform="translate(0,22.5) rotate(180.00001 100 100)"/>`,
   fessCotissedLined: line => `<path d="${line}" transform="translate(0 15) scale(1 .5)"/><path d="${line}" transform="translate(0 85) rotate(180 100 50) scale(1 .5)"/><rect x="0" y="80" width="200" height="40"/>`,
   fessDoubleCotissedLined: line => `<rect x="0" y="85" width="200" height="30"/><rect x="0" y="72.5" width="200" height="7.5"/><rect x="0" y="120" width="200" height="7.5"/><path d="${line}" transform="translate(0 10) scale(1 .5)"/><path d="${line}" transform="translate(0 90) rotate(180 100 50) scale(1 .5)"/>`,
-  bendletLined: line => `<path d="${line}" transform="rotate(45 100 100) translate(0,-16) scale(1.1,1)"/><path d="${line}" transform="rotate(225 100 100) translate(0,-16) scale(1.1,1)"/><rect x="0" y="94" width="200" height="12" transform="rotate(45 100 100) scale(1.1,1)" stroke="none"/>`,
-  bendletSinisterLined: line => `<path d="${line}" transform="rotate(-45 100 100) translate(0,-16) scale(1.1,1)"/><path d="${line}" transform="rotate(-225 100 100) translate(0,-16) scale(1.1,1)"/><rect x="0" y="94" width="200" height="12" transform="rotate(-45 100 100) scale(1.1,1)" stroke="none"/>`,
+  bendletLined: line => `<path d="${line}" transform="translate(2 -12) rotate(45 110 100) scale(1.1 1)"/><path d="${line}" transform="translate(-22 12) rotate(225 110 100) scale(1.1 1)"/><rect x="0" y="94" width="200" height="12" transform="translate(-10 0) rotate(45 110 100) scale(1.1 1)" stroke="none"/>`,
+  bendletSinisterLined: line => `<path d="${line}" transform="translate(-22 -12) rotate(-45 110 100) scale(1.1 1)"/><path d="${line}" transform="translate(2 12) rotate(-225 110 100) scale(1.1 1)"/><rect x="0" y="94" width="200" height="12" transform="translate(-10 0) rotate(-45 110 100) scale(1.1 1)" stroke="none"/>`,
   terraceLined: line => `<path d="${line}" transform="translate(0,50)"/><rect x="0" y="164" width="200" height="36" stroke="none"/>`,
   crossLined: line => `<path d="${line}" transform="translate(0,-14.5)"/><path d="${line}" transform="rotate(180 100 100) translate(0,-14.5)"/><path d="${line}" transform="rotate(-90 100 100) translate(0,-14.5)"/><path d="${line}" transform="rotate(-270 100 100) translate(0,-14.5)"/>`,
   crossPartedLined: line => `<path d="${line}" transform="translate(0,-20)"/><path d="${line}" transform="rotate(180 100 100) translate(0,-20)"/><path d="${line}" transform="rotate(-90 100 100) translate(0,-20)"/><path d="${line}" transform="rotate(-270 100 100) translate(0,-20)"/>`,
-  saltireLined: line => `<path d="${line}" transform="rotate(45 100 100) translate(0,-14.5) scale(1.1,1)"/><path d="${line}" transform="rotate(225 100 100) translate(0,-14.5) scale(1.1,1)"/><path d="${line}" transform="rotate(-45 100 100) translate(0,-14.5) scale(1.1,1)"/><path d="${line}" transform="rotate(-225 100 100) translate(0,-14.5) scale(1.1,1)"/>`,
-  saltirePartedLined: line => `<path d="${line}" transform="rotate(45 100 100) translate(0,-20) scale(1.1,1)"/><path d="${line}" transform="rotate(225 100 100) translate(0,-20) scale(1.1,1)"/><path d="${line}" transform="rotate(-45 100 100) translate(0,-20) scale(1.1,1)"/><path d="${line}" transform="rotate(-225 100 100) translate(0,-20) scale(1.1,1)"/>`
+  saltireLined: line => `<path d="${line}" transform="translate(0 -10) rotate(45 110 100) scale(1.1 1)"/><path d="${line}" transform="translate(-20 10) rotate(225 110 100) scale(1.1 1)"/><path d="${line}" transform="translate(-20 -10) rotate(-45 110 100) scale(1.1 1)"/><path d="${line}" transform="translate(0 10) rotate(-225 110 100) scale(1.1 1)"/>`,
+  saltirePartedLined: line => `<path d="${line}" transform="translate(3 -13) rotate(45 110 100) scale(1.1 1)"/><path d="${line}" transform="translate(-23 13) rotate(225 110 100) scale(1.1 1)"/><path d="${line}" transform="translate(-23 -13) rotate(-45 110 100) scale(1.1 1)"/><path d="${line}" transform="translate(3 13) rotate(-225 110 100) scale(1.1 1)"/>`
 }
 
 const patterns = {
