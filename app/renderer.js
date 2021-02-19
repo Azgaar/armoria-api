@@ -175,10 +175,10 @@ async function fetchCharge(charge, id) {
 }
 
 function getSizeMod(size) {
-  if (size === "small") return .5;
-  if (size === "smaller") return .25;
-  if (size === "smallest") return .125;
-  if (size === "big") return 2;
+  if (size === "small") return .8;
+  if (size === "smaller") return .5;
+  if (size === "smallest") return .25;
+  if (size === "big") return 1.6;
   return 1;
 }
 

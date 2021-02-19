@@ -170,9 +170,9 @@ const generate = function(seed) {
   function definePattern(pattern, element, size = "") {
     let t1 = null, t2 = null;
     if (P(.1)) size = "-small";
-    else if (P(.02)) size = "-smaller";
-    else if (P(.005)) size = "-big";
-    else if (P(.001)) size = "-smallest";
+    else if (P(.1)) size = "-smaller";
+    else if (P(.01)) size = "-big";
+    else if (P(.005)) size = "-smallest";
 
     // apply standard tinctures
     if (P(.5) && ["vair", "vairInPale", "vairEnPointe"].includes(pattern)) {t1 = "azure"; t2 = "argent";}
