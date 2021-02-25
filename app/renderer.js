@@ -92,7 +92,7 @@ async function draw(id, coa, size, colors) {
 
   function templateOrdinary(ordinary, tincture) {
     const fill = clr(tincture);
-    let svg = `<g fill="${fill}" stroke="none" transform="${transform(ordinary)}">`;
+    let svg = `<g fill="${fill}" stroke="none" transform=${transform(ordinary)}>`;
     if (ordinary.ordinary === "bordure") svg += `<path d="${shieldPath}" fill="none" stroke="${fill}" stroke-width="16.7%"/>`;
     else if (ordinary.ordinary === "orle") svg += `<path d="${shieldPath}" fill="none" stroke="${fill}" stroke-width="5%" transform="translate(15 15) scale(.85)"/>`;
     else svg += getTemplate(ordinary.ordinary, ordinary.line);
@@ -104,7 +104,7 @@ async function draw(id, coa, size, colors) {
     const chargePositions = [...new Set(charge.p)].filter(position => positions[position]);
 
     let svg = "";
-    svg += `<g fill="${fill}" stroke="#000" transform="${transform(charge)}">`;
+    svg += `<g fill="${fill}" stroke="#000" transform=${transform(charge)}>`;
     for (const p of chargePositions) {
       const transform = getElTransform(charge, p);
       svg += `<use xlink:href="#${charge.charge}_${id}" transform="${transform}"/>`;
@@ -125,7 +125,7 @@ async function draw(id, coa, size, colors) {
     y = round(y - 100 * (sy - 1));
 
     const translate = x || y ? `translate(${x} ${y})` : null;
-    const scale = sx !== 1 || sy !== 1 ? sx === sy ? `scale(${s})` : `scale(${sx} ${sy})` : null;
+    const scale = sx !== 1 || sy !== 1 ? sx === sy ? `scale(${sx})` : `scale(${sx} ${sy})` : null;
     return translate && scale ? `${translate} ${scale}` : translate ? translate : scale ? scale : null;
   }
 
