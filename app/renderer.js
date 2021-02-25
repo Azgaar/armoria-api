@@ -24,7 +24,7 @@ async function draw(id, coa, size, colors) {
   const divisionGroup = division ? templateDivision() : "";
   const overlay = `<path d="${shieldPath}" fill="url(#backlight)" stroke="#333"/>`;
 
-  return `<svg id="${id}" xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="${viewBox}">
+  return `<svg id="${id}" width="${size}" height="${size}" viewBox="${viewBox}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <defs>${shieldClip}${divisionClip}${loadedCharges}${loadedPatterns}${blacklight}</defs>
       <g clip-path="url(#${shield}_${id})">${field}${divisionGroup}${templateAboveAll()}</g>
       ${overlay}</svg>`;
@@ -107,7 +107,7 @@ async function draw(id, coa, size, colors) {
     svg += `<g fill="${fill}" stroke="#000">`;
     for (const p of chargePositions) {
       const transform = getElTransform(charge, p);
-      svg += `<use href="#${charge.charge}_${id}" transform="${transform}"></use>`;
+      svg += `<use xlink:href="#${charge.charge}_${id}" transform="${transform}"></use>`;
     }
     return svg + `</g>`;
 
