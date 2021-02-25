@@ -112,7 +112,7 @@ async function draw(id, coa, size, colors) {
     return svg + `</g>`;
 
     function getElTransform(c, p) {
-      const s = (c.size || 1) * sizeModifier;
+      const s = Math.round((c.size || 1) * sizeModifier * 100) / 100;
       const sx = c.sinister ? -s : s;
       const sy = c.reversed ? -s : s;
       let [x, y] = positions[p];
