@@ -97,19 +97,9 @@ router.use(function(req, res) {
 
 function getColors(query) {
   const getColor = color => query[color] && query[color].length === 6 ? "#" + query[color] : null;
-
-  return {
-    argent: getColor("argent") || "#fafafa",
-    or: getColor("or") || "#ffe066",
-    gules: getColor("gules") || "#d7374a",
-    sable: getColor("sable") || "#333333",
-    azure: getColor("azure") || "#377cd7",
-    vert: getColor("vert") || "#26c061",
-    purpure: getColor("purpure") || "#522d5b",
-    murrey: getColor("murrey") || "#85185b",
-    sanguine: getColor("sanguine") || "#b63a3a",
-    tenné: getColor("tenné") || "#cc7f19"
-  }
+  const {colors} = require('./app/dataModel');
+  Object.keys(colors).forEach(color => colors[color] = getColor(color) || colors[color]);
+  return colors;
 }
 
 module.exports = router;

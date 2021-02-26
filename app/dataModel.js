@@ -15,6 +15,19 @@ const tinctures = {
     masoned: 6, fretty: 3, grillage: 1, chainy: 1, maily: 2, honeycombed: 1 }
 }
 
+const colors = {
+  argent: "#fafafa",
+  or: "#ffe066",
+  gules: "#d7374a",
+  sable: "#333333",
+  azure: "#377cd7",
+  vert: "#26c061",
+  purpure: "#522d5b",
+  murrey: "#85185b",
+  sanguine: "#b63a3a",
+  tenné: "#cc7f19"
+}
+
 const shields = {
   types: {basic: 10, regional: 2, historical: 1, specific: 1, banner: 1, simple: 2, fantasy: 1, middleEarth: 1},
   basic: {heater: 12, spanish: 6, french: 1},
@@ -861,4 +874,4 @@ const shieldBox = {
   moriaOrc: "0 0 200 200"
 }
 
-module.exports = {charges, divisions, lines, ordinaries, positions, tinctures, shields, shieldPositions, shieldSize, shieldBox};
+module.exports = {charges, divisions, lines, ordinaries, positions, tinctures, colors, shields, shieldPositions, shieldSize, shieldBox};
