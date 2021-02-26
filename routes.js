@@ -26,7 +26,7 @@ router.get('/:format/:size/:seed?', async function(req, res) {
       res.writeHead(200, {'Content-Type': 'image/png', 'Content-Length': buffer.length});
       res.end(buffer);
     });
-  } else if (format === "jpg" || format === "jpeg") { 
+  } else if (format === "jpg" || format === "jpeg") {
     const svg2img = require('svg2img');
 
     svg2img(svg, {format: 'jpg', quality: 75}, function(error, buffer) {
@@ -78,7 +78,8 @@ router.get('/', async function(req, res, next) {
       res.end(buffer);
     });
   } else {
-    res.type('application/xml').send(svg);
+    const svgMinified = require("minify-xml").minify(svg);
+    res.type('application/xml').send(svgMinified);
   }
 });
 
