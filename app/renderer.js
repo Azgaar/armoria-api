@@ -92,7 +92,7 @@ async function draw(id, coa, size, colors) {
 
   function templateOrdinary(ordinary, tincture) {
     const fill = clr(tincture);
-    let svg = `<g fill="${fill}" stroke="none" transform="${transform(ordinary)}">`;
+    let svg = `<g fill="${fill}" stroke="none"${tr(transform(ordinary))}>`;
     if (ordinary.ordinary === "bordure") svg += `<path d="${shieldPath}" fill="none" stroke="${fill}" stroke-width="16.7%"/>`;
     else if (ordinary.ordinary === "orle") svg += `<path d="${shieldPath}" fill="none" stroke="${fill}" stroke-width="5%" transform="translate(15 15) scale(.85)"/>`;
     else svg += getTemplate(ordinary.ordinary, ordinary.line);
@@ -103,47 +103,12 @@ async function draw(id, coa, size, colors) {
     const fill = clr(tincture);
     const chargePositions = [...new Set(charge.p)].filter(position => positions[position]);
 
-    let svg = "";
-    svg += `<g fill="${fill}" stroke="#000" transform="${transform(charge)}">`;
+    let svg = `<g fill="${fill}" stroke="#000"${tr(transform(charge))}>`;
     for (const p of chargePositions) {
-      const transform = getElTransform(charge, p);
-      svg += `<use xlink:href="#${charge.charge}_${id}" transform="${transform}"/>`;
+      const transformAttr = tr(getElTransform(charge, p, sizeModifier, positions));
+      svg += `<use xlink:href="#${charge.charge}_${id}"${transformAttr}/>`;
     }
     return svg + `</g>`;
-  }
-
-  function round(n) {
-    return Math.round(n * 100) / 100;
-  }
-
-  function getElTransform(c, p) {
-    const s = round((c.size || 1) * sizeModifier);
-    const sx = c.sinister ? -s : s;
-    const sy = c.reversed ? -s : s;
-    let [x, y] = positions[p];
-    x = round(x - 100 * (sx - 1));
-    y = round(y - 100 * (sy - 1));
-
-    const translate = x || y ? `translate(${x} ${y})` : null;
-    const scale = sx !== 1 || sy !== 1 ? sx === sy ? `scale(${sx})` : `scale(${sx} ${sy})` : null;
-    return translate && scale ? `${translate} ${scale}` : translate ? translate : scale ? scale : "";
-  }
-
-  function transform(charge) {
-    let {x = 0, y = 0, angle = 0, size = 1, p} = charge;
-    if (p) size = 1; // size is defined on use element level
-  
-    if (size !== 1) {
-      x = round(x + 100 - size * 100);
-      y = round(y + 100 - size * 100);
-    }
-  
-    let transform = "";
-    if (x || y) transform += `translate(${x} ${y})`;
-    if (angle) transform += ` rotate(${angle} ${size * 100} ${size * 100})`;
-    if (size !== 1) transform += ` scale(${size})`;
-  
-    return transform ? transform.trim() : "";
   }
 
   function getPatterns(coa, id) {
@@ -218,6 +183,44 @@ function semy(string) {
   const isSemy = /^semy/.test(string);
   if (!isSemy) return false;
   return string.match(/semy_of_(.*?)-/)[1];
+}
+
+function round(n) {
+  return Math.round(n * 100) / 100;
+}
+
+function tr(value) {
+  return value ? ` transform="${value}"` : "";
+}
+
+function getElTransform(c, p, sizeModifier, positions) {
+  const s = round((c.size || 1) * sizeModifier);
+  const sx = c.sinister ? -s : s;
+  const sy = c.reversed ? -s : s;
+  let [x, y] = positions[p];
+  x = round(x - 100 * (sx - 1));
+  y = round(y - 100 * (sy - 1));
+
+  const translate = x || y ? `translate(${x} ${y})` : null;
+  const scale = sx !== 1 || sy !== 1 ? sx === sy ? `scale(${sx})` : `scale(${sx} ${sy})` : null;
+  return translate && scale ? `${translate} ${scale}` : translate ? translate : scale ? scale : null;
+}
+
+function transform(charge) {
+  let {x = 0, y = 0, angle = 0, size = 1, p} = charge;
+  if (p) size = 1; // size is defined on use element level
+
+  if (size !== 1) {
+    x = round(x + 100 - size * 100);
+    y = round(y + 100 - size * 100);
+  }
+
+  let transform = "";
+  if (x || y) transform += `translate(${x} ${y})`;
+  if (angle) transform += ` rotate(${angle} ${size * 100} ${size * 100})`;
+  if (size !== 1) transform += ` scale(${size})`;
+
+  return transform ? transform.trim() : null;
 }
 
 function logCOAdetails(coa, shield, division, ordinaries, charges) {
