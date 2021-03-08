@@ -10,7 +10,7 @@ const SHIELD_DEFAULT = "heater";
 router.get('/:format/:size/:seed?', async function(req, res) {
   const format = req.params.format || FORMAT_DEFAULT;
   const size = parseInt(req.params.size) || SIZE_DEFAULT;
-  const seed = req.params.seed || Math.floor(Math.random() * 1e9);
+  const seed = req.params.seed ? parseSeed(req.params.seed) : Math.floor(Math.random() * 1e9);
   const shield = req.query.shield || null;
   const colors = getColors(req.query);
 
@@ -41,7 +41,7 @@ router.get('/:format/:size/:seed?', async function(req, res) {
 
 // extended route, queries
 router.get('/', async function(req, res, next) {
-  const seed = req.query.seed || Math.floor(Math.random() * 1e9);
+  const seed = req.query.seed ? parseSeed(req.query.seed) : Math.floor(Math.random() * 1e9);
   const coaString = req.query.coa;
 
   const size = parseInt(req.query.size) || SIZE_DEFAULT;
@@ -101,6 +101,10 @@ function getColors(query) {
   const {colors} = require('./app/dataModel');
   Object.keys(colors).forEach(color => colors[color] = getColor(color) || colors[color]);
   return colors;
+}
+
+function parseSeed(query) {
+  return query.toLowerCase().replace(/#| |'/g, "_");
 }
 
 module.exports = router;
