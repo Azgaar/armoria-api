@@ -146,7 +146,11 @@ async function getCharges(coa, id, shieldPath) {
   const uniqueCharges = [...new Set(charges)];
   const fetchedCharges = await Promise.all(
     uniqueCharges.map(async charge => {
-      if (charge === "inescutcheon") return `<g id="inescutcheon_${id}"><path transform="translate(66 66) scale(.34)" d="${shieldPath}"/></g>`;
+      if (charge.slice(0, 12) === "inescutcheon") {
+        const path = charge.length > 12 ? shieldPaths[charge.slice(12, 13).toLowerCase() + charge.slice(13)] : shieldPath;
+        return `<g id="${charge}_${id}"><path transform="translate(66 66) scale(.34)" d="${path}"/></g>`;
+      }
+
       const fetched = await fetchCharge(charge, id);
       return fetched || "";
     })
