@@ -26,6 +26,7 @@
     "svg2img": "^0.9.1"
   },
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "easy-livereload": "^1.4.3",
     "node-dev": "^6.2.0"
   }
