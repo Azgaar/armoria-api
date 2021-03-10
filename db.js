@@ -6,7 +6,7 @@ function initialize(app, dbName, collectionName) {
   const MONGO_URL = `mongodb+srv://${MONGO_ID}:${MONGO_PASS}@cluster0.auhmw.mongodb.net/armoria_api?retryWrites=true&w=majority`;
 
   MongoClient.connect(MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true}, function (err, client) {
-    if (err) return console.log(err);
+    if (err) return console.error(err);
     app.locals.collection = client.db(dbName).collection(collectionName);
   });
 }

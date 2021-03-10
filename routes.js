@@ -15,7 +15,7 @@ router.get('/claim/:seed/:coa/:key?', async function(req, res, next) {
     res.status(403).send(`<h1>Armoria API</h1>
     <p>Numeric name <code>${seed}</code> cannot be claimed. Please provide alphabetic or alphanumerical name.</p>
     <p>See <a href="https://github.com/Azgaar/armoria-api#readme" target="_blank">README</a> for guidance.</p>`);
-    console.warn(`Cannot claim numerical name ${seed}`);
+    console.error(`Cannot claim numerical name ${seed}`);
     return;
   }
 
@@ -24,7 +24,7 @@ router.get('/claim/:seed/:coa/:key?', async function(req, res, next) {
 
   if (!collection) {
     res.status(400).send(`<h1>Armoria API</h1><p>Cannot connect to the database</p>`);
-    console.warn(`DB error: undefined collection`);
+    console.error(`Cannot claim as database connection is down`);
     return;
   }
 
@@ -35,7 +35,7 @@ router.get('/claim/:seed/:coa/:key?', async function(req, res, next) {
     res.status(403).send(`<h1>Armoria API</h1>
     <p>Name <code>${seed}</code> is already claimed. Please provide correct password to update the claim.</p>
     <p>See <a href="https://github.com/Azgaar/armoria-api#readme" target="_blank">README</a> for guidance.</p>`);
-    console.warn(`Cannot reclaim ${seed}. Key expected: ${claim.key}. Key provided: ${key}`);
+    console.error(`Cannot reclaim ${seed}. Key expected: ${claim.key}. Key provided: ${key}`);
     return;
   }
 
@@ -52,11 +52,11 @@ router.get('/claim/:seed/:coa/:key?', async function(req, res, next) {
     else await setClaim(collection, {name:seed, coa, key});
 
     res.status(200).send(`<h1>Armoria API: <i>${seed}</i> is ${claim ? "reclaimed" : "claimed"}</h1>
-    <p>Now use it as <a href=${link}>${link}</a></p>
+    <p>Now use it like <a href=${link}>${link}</a></p>
     ${svg}${key ? `<p>Password: <code>${key}</code></p>` : ""}
     <p>COA: <code>${coaString}</code></p>
     <p>See <a href="https://github.com/Azgaar/armoria-api#readme" target="_blank">README</a> for guidance.</p>`);
-    console.warn(`${seed} is ${claim ? "reclaimed" : "claimed"}. COA: ${coaString}. Key: ${key}`);
+    console.log(`${seed} is ${claim ? "reclaimed" : "claimed"}. COA: ${coaString}. Key: ${key}`);
   } catch (error) {
     return next(error);
   }
@@ -71,7 +71,7 @@ router.get('/unclaim/:seed/:key?', async function(req, res, next) {
 
   if (!collection) {
     res.status(400).send(`<h1>Armoria API</h1><p>Cannot connect to the database</p>`);
-    console.warn(`DB error: undefined collection`);
+    console.warn(`Cannot unclaim as database connection is down`);
     return;
   }
 
@@ -91,7 +91,7 @@ router.get('/unclaim/:seed/:key?', async function(req, res, next) {
     res.status(403).send(`<h1>Armoria API</h1>
     <p><code>${seed}</code> claim is password protected. Please provide correct password to unclaim.</p>
     <p>See <a href="https://github.com/Azgaar/armoria-api#readme" target="_blank">README</a> for guidance.</p>`);
-    console.warn(`Cannot unclaim ${seed}. Key expected: ${claim.key}. Key provided: ${key}`);
+    console.error(`Cannot unclaim ${seed}. Key expected: ${claim.key}. Key provided: ${key}`);
     return;
   }
 
@@ -99,7 +99,7 @@ router.get('/unclaim/:seed/:key?', async function(req, res, next) {
     await unclaim(collection, seed);
     res.status(200).send(`<h1>Armoria API: <i>${seed}</i> is unclaimed</h1>
     <p>See <a href="https://github.com/Azgaar/armoria-api#readme" target="_blank">README</a> for guidance.</p>`);
-    console.warn(`${seed} is unclaimed`);
+    console.log(`${seed} is unclaimed`);
   } catch (error) {
     return next(error);
   }
