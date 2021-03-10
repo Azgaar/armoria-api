@@ -56,7 +56,9 @@ Attributes that are supported only in query format are `coa`, `shield` and color
   * `ordinaries`: array with `ordinary`, `t`, `line` and `size` attributes
   * `charges`: array with `charge`, `t`, `p`, `size`, `sinister` and `reversed` attributes
 
-API can skip procedural generation and render specific coat of arms (`coa`). Attribute accepts json object, [encoded](https://meyerweb.com/eric/tools/dencoder/) for URL usage. The value can be retrieved from Armoria GUI: edit coat of arms as you wish and press `Shape` to get its URL. Then copy coa attribute and use as query attribute for API rendering and embedding.
+API can skip procedural generation and render specific coat of arms (`coa`). Attribute accepts json object, [encoded](https://meyerweb.com/eric/tools/dencoder/) for URL usage. 
+
+To get coa json open [Armoria GUI](https://github.com/Azgaar/Armoria), edit coat of arms as you want and then click on `Save` → `Copy API Link`. It will copy an API link to your clipboard. The link can be used for embedding or claiming.
 
 * **shield:** `string` | <small>default:</small> `random`
 
@@ -103,7 +105,7 @@ Name is a string to be associated with a specific coat of arms, not the one auto
 
 * **coa:** `json`
 
-Coat of arms object: json [encoded](https://meyerweb.com/eric/tools/dencoder/) for URL usage. See in details above.
+Coat of arms object: json [encoded](https://meyerweb.com/eric/tools/dencoder/) for URL usage. See in details [above](#query-attributes).
 
 * **key:** `string` | <small>optional</small>
 
