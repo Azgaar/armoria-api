@@ -197,10 +197,11 @@ function send(format, svg, res) {
     res.status(400).type("image/svg+xml").send(svgMinified);
   } else {
     const svg2img = require('svg2img');
-    const options = format !== "png" ? {} : {format: "jpg", quality: 75};
+    const content = format !== "png" ? "image/jpeg" : "image/png";
+    const options = format !== "png" ? {format: "jpeg", quality: 75} : {format: "png"};
 
     svg2img(svg, options, function(error, buffer) {
-      res.writeHead(200, {'Content-Type': 'image/png', 'Content-Length': buffer.length});
+      res.writeHead(200, {"Content-Type": content, "Content-Length": buffer.length});
       res.end(buffer);
     });
   }
