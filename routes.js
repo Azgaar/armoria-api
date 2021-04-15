@@ -194,7 +194,7 @@ async function unclaim(collection, name) {
 function send(format, svg, res) {
   if (format === "svg") {
     const svgMinified = require("minify-xml").minify(svg);
-    res.status(400).type("image/svg+xml").send(svgMinified);
+    res.status(200).type("image/svg+xml").send(svgMinified);
   } else {
     const svg2img = require('svg2img');
     const content = format !== "png" ? "image/jpeg" : "image/png";
