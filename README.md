@@ -70,18 +70,18 @@ Armoria supports >40 shield shapes. Any ot them can be used via API if exact nam
 
 Armoria has 10 [tinctures](https://en.wikipedia.org/wiki/Tincture_(heraldry)) (colors) available by default:
 
-| Tincture | Type   | Chance | Color                                                                                      |
-|----------|--------|--------|--------------------------------------------------------------------------------------------|
-| argent   | metal  |  ~25%  |![argent](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"argent"}) #fafafa    |
-| or       | metal  |  ~16%  |![or](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"or"}) #ffe066            |
-| gules    | colour |  ~17%  |![gules](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"gules"}) #d7374a      |
-| sable    | colour |  ~14%  |![sable](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"sable"}) #333333      |
-| azure    | colour |  ~14%  |![azure](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"azure"}) #377cd7      |
-| vert     | colour |  ~7%   |![vert](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"vert"}) #26c061        |
-| purpure  | colour |  ~13%  |![purpure](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"purpure"}) #522d5b  |
-| murrey   | stain  |  ~1%   |![murrey](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"murrey"}) #85185b    |
-| sanguine | stain  |  ~1%   |![sanguine](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"sanguine"}) #b63a3a|
-| tenné    | stain  |  ~1%   |![tenné](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"tenné"}) #cc7f19      |
+| Tincture | Type   | Represents   | Chance | Color                                                                                      |
+|----------|--------|--------------|--------|--------------------------------------------------------------------------------------------|
+| argent   | metal  | silver       |  ~25%  |![argent](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"argent"}) #fafafa    |
+| or       | metal  | gold         |  ~16%  |![or](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"or"}) #ffe066            |
+| gules    | colour | red          |  ~17%  |![gules](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"gules"}) #d7374a      |
+| sable    | colour | black        |  ~14%  |![sable](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"sable"}) #333333      |
+| azure    | colour | blue         |  ~14%  |![azure](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"azure"}) #377cd7      |
+| vert     | colour | green        |  ~7%   |![vert](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"vert"}) #26c061        |
+| purpure  | colour | purple       |  ~13%  |![purpure](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"purpure"}) #522d5b  |
+| murrey   | stain  | mulberry     |  ~1%   |![murrey](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"murrey"}) #85185b    |
+| sanguine | stain  |	blood red    |  ~1%   |![sanguine](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"sanguine"}) #b63a3a|
+| tenné    | stain  | tawny        |  ~1%   |![tenné](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"tenné"}) #cc7f19      |
 
 It is possible to use custom tinctures or redefine default colors using query attributes.
 
