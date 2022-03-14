@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Heraldry generator API",
   "engines": {
-    "node": "v14.15.3"
+    "node": "16.9.1"
   },
   "main": "index.js",
   "scripts": {
@@ -19,15 +19,15 @@
   "license": "MIT",
   "dependencies": {
     "compression": "^1.7.4",
-    "express": "^4.17.1",
-    "minify-xml": "^2.5.0",
-    "mongodb": "^3.6.4",
-    "node-fetch": "^2.6.1",
-    "node-html-parser": "^2.1.0",
-    "svg2img": "^0.9.1"
+    "express": "^4.17.3",
+    "minify-xml": "^3.3.1",
+    "mongodb": "^4.4.1",
+    "node-fetch": "^3.2.3",
+    "node-html-parser": "^5.3.3",
+    "svg2img": "^0.9.4"
   },
   "devDependencies": {
-    "dotenv": "^8.2.0",
-    "node-dev": "^6.2.0"
+    "dotenv": "^16.0.0",
+    "node-dev": "^7.2.0"
   }
 }
