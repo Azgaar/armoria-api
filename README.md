@@ -158,6 +158,31 @@ brew install pkg-config cairo pango libpng jpeg giflib
 ``` 
 Then run `npm install --save` to install packages. To start the API server run `npm start`
 
+## Running it with Docker
+
+1. Build the image
+
+```bash
+docker build . -t safaa1001/node-armoria-api
+```
+
+and double check it's pushed by running `docker images`
+Note that safaa1001 is my own account. 
+
+2. Run a container of that image  
+
+```bash
+docker run -p 49160:3000 -d safaa1001/node-armoria-api
+```
+and double check it's pushed by running `docker ps` 
+
+3. Check the logs by running `docker logs container-id`
+
+```bash
+docker logs 330cb53ce96f                                
+API listening at port http://localhost:3000
+```
+
 ## License
 
 The code is distributed under [MIT](https://opensource.org/licenses/MIT).
