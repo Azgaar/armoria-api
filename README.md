@@ -149,7 +149,7 @@ Claim or reclaim name `test2` with password `secret123`:
 Unclaim name `test2` using password `secret123`:
 > [armoria.herokuapp.com/unclaim/test2/secret123](https://armoria.herokuapp.com/unclaim/test2/secret123)
 
-## Local devlopment
+## Local development
 
 Make sure you have the following packages installed
 
