@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "description": "Heraldry generator API",
   "engines": {
-    "node": "v14.15.3"
+    "node": "v18.0.0",
+    "npm": "9.5.1"
   },
   "main": "index.js",
   "scripts": {
-    "start": "SET NODE_ENV=production&NODE_VERBOSE=true&node index.js",
-    "dev": "SET NODE_ENV=development&node-dev index.js"
+    "start": "NODE_ENV=production&NODE_VERBOSE=true&node index.js",
+    "dev": "NODE_ENV=development&node-dev index.js"
   },
   "keywords": [
     "heraldry",
