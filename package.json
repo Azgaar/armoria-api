@@ -7,7 +7,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "SET NODE_ENV=production&node index.js",
+    "start": "SET NODE_ENV=production&NODE_VERBOSE=true&node index.js",
     "dev": "SET NODE_ENV=development&node-dev index.js"
   },
   "keywords": [
