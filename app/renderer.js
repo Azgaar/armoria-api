@@ -1,5 +1,5 @@
 const HTMLParser = require("node-html-parser");
-const fs = require('fs');
+const fs = require("fs");
 const {shieldPositions, shieldSize, shieldBox} = require("./dataModel");
 const {shieldPaths, blacklight} = require("./templates");
 
@@ -18,14 +18,20 @@ async function draw(id, coa, size, colors) {
   const loadedCharges = await getCharges(coa, id, shieldPath);
   const loadedPatterns = getPatterns(coa, id);
   const shieldClip = `<clipPath id="${shield}_${id}"><path d="${shieldPath}"/></clipPath>`;
-  const divisionClip = division ? `<clipPath id="divisionClip_${id}">${getTemplate(division.division, division.line)}</clipPath>` : "";
+  const divisionClip = division
+    ? `<clipPath id="divisionClip_${id}">${getTemplate(division.division, division.line)}</clipPath>`
+    : "";
   const field = `<rect x="0" y="0" width="200" height="200" fill="${clr(coa.t1)}"/>`;
+  const style = `<style>
+    g.secondary,path.secondary {fill: var(--secondary);}
+    g.tertiary,path.tertiary {fill: var(--tertiary);}
+  </style>`;
 
   const divisionGroup = division ? templateDivision() : "";
   const overlay = `<path d="${shieldPath}" fill="url(#backlight)" stroke="#333"/>`;
 
   return `<svg id="${id}" width="${size}" height="${size}" viewBox="${viewBox}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-      <defs>${shieldClip}${divisionClip}${loadedCharges}${loadedPatterns}${blacklight}</defs>
+      <defs>${shieldClip}${divisionClip}${loadedCharges}${loadedPatterns}${blacklight}${style}</defs>
       <g clip-path="url(#${shield}_${id})">${field}${divisionGroup}${templateAboveAll()}</g>
       ${overlay}</svg>`;
 
@@ -49,7 +55,9 @@ async function draw(id, coa, size, colors) {
     }
 
     // In division part
-    svg += `<g clip-path="url(#divisionClip_${id})"><rect x="0" y="0" width="200" height="200" fill="${clr(division.t)}"/>`;
+    svg += `<g clip-path="url(#divisionClip_${id})"><rect x="0" y="0" width="200" height="200" fill="${clr(
+      division.t
+    )}"/>`;
 
     for (const ordinary of ordinariesRegular) {
       if (ordinary.divided === "division") svg += templateOrdinary(ordinary, ordinary.t);
@@ -72,17 +80,20 @@ async function draw(id, coa, size, colors) {
   function templateAboveAll() {
     let svg = "";
 
-    ordinariesRegular.filter(o => !o.divided)
+    ordinariesRegular
+      .filter(o => !o.divided)
       .forEach(ordinary => {
         svg += templateOrdinary(ordinary, ordinary.t);
       });
 
-    charges.filter(o => !o.divided || !division)
+    charges
+      .filter(o => !o.divided || !division)
       .forEach(charge => {
-        svg += templateCharge(charge, charge.t);
+        svg += templateCharge(charge, charge.t, charge.t2, charge.t3);
       });
 
-    ordinariesAboveCharges.filter(o => !o.divided)
+    ordinariesAboveCharges
+      .filter(o => !o.divided)
       .forEach(ordinary => {
         svg += templateOrdinary(ordinary, ordinary.t);
       });
@@ -93,22 +104,31 @@ async function draw(id, coa, size, colors) {
   function templateOrdinary(ordinary, tincture) {
     const fill = clr(tincture);
     let svg = `<g fill="${fill}" stroke="none"${tr(transform(ordinary))}>`;
-    if (ordinary.ordinary === "bordure") svg += `<path d="${shieldPath}" fill="none" stroke="${fill}" stroke-width="16.7%"/>`;
-    else if (ordinary.ordinary === "orle") svg += `<path d="${shieldPath}" fill="none" stroke="${fill}" stroke-width="5%" transform="translate(15 15) scale(.85)"/>`;
+    if (ordinary.ordinary === "bordure")
+      svg += `<path d="${shieldPath}" fill="none" stroke="${fill}" stroke-width="16.7%"/>`;
+    else if (ordinary.ordinary === "orle")
+      svg += `<path d="${shieldPath}" fill="none" stroke="${fill}" stroke-width="5%" transform="translate(15 15) scale(.85)"/>`;
     else svg += getTemplate(ordinary.ordinary, ordinary.line);
-    return svg + `</g>`;
+    return svg + "</g>";
   }
 
-  function templateCharge(charge, tincture) {
-    const fill = clr(tincture);
+  function templateCharge(charge, tincture, secondaryTincture, tertiaryTincture) {
+    const primary = clr(tincture);
+    const secondary = clr(secondaryTincture || tincture);
+    const tertiary = clr(tertiaryTincture || tincture);
+    const stroke = charge.stroke || "#000";
+
     const chargePositions = [...new Set(charge.p)].filter(position => positions[position]);
 
-    let svg = `<g fill="${fill}" stroke="#000"${tr(transform(charge))}>`;
+    let svg = `<g fill="${primary}" style="--secondary: ${secondary}; --tertiary: ${tertiary}" stroke="${stroke}"${tr(
+      transform(charge)
+    )}>`;
+
     for (const p of chargePositions) {
       const transformAttr = tr(getElTransform(charge, p, sizeModifier, positions));
       svg += `<use xlink:href="#${charge.charge}_${id}"${transformAttr}/>`;
     }
-    return svg + `</g>`;
+    return svg + "</g>";
   }
 
   function getPatterns(coa, id) {
@@ -116,18 +136,21 @@ async function draw(id, coa, size, colors) {
     let patternsToAdd = [];
     if (coa.t1.includes("-")) patternsToAdd.push(coa.t1); // add field pattern
     if (coa.division && isPattern(coa.division.t)) patternsToAdd.push(coa.division.t); // add division pattern
-    if (coa.ordinaries) coa.ordinaries.filter(ordinary => isPattern(ordinary.t)).forEach(ordinary => patternsToAdd.push(ordinary.t)); // add ordinaries pattern
+    if (coa.ordinaries)
+      coa.ordinaries.filter(ordinary => isPattern(ordinary.t)).forEach(ordinary => patternsToAdd.push(ordinary.t)); // add ordinaries pattern
     if (coa.charges) coa.charges.filter(charge => isPattern(charge.t)).forEach(charge => patternsToAdd.push(charge.t)); // add charges pattern
-  
+
     if (!patternsToAdd.length) return "";
     const {patterns} = require("./templates");
-  
-    return [...new Set(patternsToAdd)].map(patternString => {
-      const [pattern, t1, t2, size] = patternString.split("-");
-      const charge = semy(patternString);
-      if (charge) return patterns.semy(patternString, clr(t1), clr(t2), getSizeMod(size), charge + "_" + id);
-      return patterns[pattern](patternString, clr(t1), clr(t2), getSizeMod(size), charge);
-    }).join("");
+
+    return [...new Set(patternsToAdd)]
+      .map(patternString => {
+        const [pattern, t1, t2, size] = patternString.split("-");
+        const charge = semy(patternString);
+        if (charge) return patterns.semy(patternString, clr(t1), clr(t2), getSizeMod(size), charge + "_" + id);
+        return patterns[pattern](patternString, clr(t1), clr(t2), getSizeMod(size), charge);
+      })
+      .join("");
   }
 
   // get color or link to pattern
@@ -147,7 +170,8 @@ async function getCharges(coa, id, shieldPath) {
   const fetchedCharges = await Promise.all(
     uniqueCharges.map(async charge => {
       if (charge.slice(0, 12) === "inescutcheon") {
-        const path = charge.length > 12 ? shieldPaths[charge.slice(12, 13).toLowerCase() + charge.slice(13)] : shieldPath;
+        const path =
+          charge.length > 12 ? shieldPaths[charge.slice(12, 13).toLowerCase() + charge.slice(13)] : shieldPath;
         return `<g id="${charge}_${id}"><path transform="translate(66 66) scale(.34)" d="${path}"/></g>`;
       }
 
@@ -167,9 +191,9 @@ async function fetchCharge(charge, id) {
 }
 
 function getSizeMod(size) {
-  if (size === "small") return .8;
-  if (size === "smaller") return .5;
-  if (size === "smallest") return .25;
+  if (size === "small") return 0.8;
+  if (size === "smaller") return 0.5;
+  if (size === "smallest") return 0.25;
   if (size === "big") return 1.6;
   if (size === "bigger") return 2;
   return 1;
@@ -178,7 +202,8 @@ function getSizeMod(size) {
 function getTemplate(template, line) {
   const {lines, templates} = require("./templates");
   if (!line || line === "straight") return templates[template];
-  const templateId = template+"Lined", linePath = lines[line];
+  const templateId = template + "Lined",
+    linePath = lines[line];
   return templates[templateId](linePath);
 }
 
@@ -206,7 +231,7 @@ function getElTransform(c, p, sizeModifier, positions) {
   y = round(y - 100 * (sy - 1));
 
   const translate = x || y ? `translate(${x} ${y})` : null;
-  const scale = sx !== 1 || sy !== 1 ? sx === sy ? `scale(${sx})` : `scale(${sx} ${sy})` : null;
+  const scale = sx !== 1 || sy !== 1 ? (sx === sy ? `scale(${sx})` : `scale(${sx} ${sy})`) : null;
   return translate && scale ? `${translate} ${scale}` : translate ? translate : scale ? scale : null;
 }
 
