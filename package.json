@@ -19,13 +19,12 @@
   "author": "Azgaar (Max Haniyeu)",
   "license": "MIT",
   "dependencies": {
+    "@resvg/resvg-js": "^2.4.1",
     "compression": "^1.7.4",
     "express": "^4.17.1",
     "minify-xml": "^2.5.0",
     "mongodb": "^3.6.4",
-    "node-fetch": "^2.6.1",
-    "node-html-parser": "^2.1.0",
-    "svg2img": "^0.9.1"
+    "node-html-parser": "^2.1.0"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",

@@ -1,13 +1,14 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const render = require('./app/renderer');
+const render = require("./app/renderer");
+const {Resvg} = require("@resvg/resvg-js");
 
-const SIZE_DEFAULT = 500;
+const SIZE_DEFAULT = 1200;
 const FORMAT_DEFAULT = "svg";
 const SHIELD_DEFAULT = "heater";
 
 // claim route: name, coa, password [optional]
-router.get('/claim/:seed/:coa/:key?', async function(req, res, next) {
+router.get("/claim/:seed/:coa/:key?", async function (req, res, next) {
   const seed = parseSeed(req.params.seed);
 
   // Not allowed to claims numeric names
@@ -48,8 +49,8 @@ router.get('/claim/:seed/:coa/:key?', async function(req, res, next) {
     const svg = await render(seed, coa, size, colors);
     const link = `https://armoria.herokuapp.com/svg/${size}/${seed}`;
 
-    if (claim) await reclaim(collection, {name:seed, coa, key});
-    else await setClaim(collection, {name:seed, coa, key});
+    if (claim) await reclaim(collection, {name: seed, coa, key});
+    else await setClaim(collection, {name: seed, coa, key});
 
     res.status(200).send(`<h1>Armoria API: <i>${seed}</i> is ${claim ? "reclaimed" : "claimed"}</h1>
     <p>Now use it like <a href=${link}>${link}</a></p>
@@ -63,7 +64,7 @@ router.get('/claim/:seed/:coa/:key?', async function(req, res, next) {
 });
 
 // unclaim route: name, password [optional]
-router.get('/unclaim/:seed/:key?', async function(req, res, next) {
+router.get("/unclaim/:seed/:key?", async function (req, res, next) {
   const seed = parseSeed(req.params.seed);
   const key = req.params.key;
 
@@ -106,7 +107,7 @@ router.get('/unclaim/:seed/:key?', async function(req, res, next) {
 });
 
 // basic route: format, size, seed [optional]
-router.get('/:format/:size/:seed?', async function(req, res, next) {
+router.get("/:format/:size/:seed?", async function (req, res, next) {
   const format = req.params.format || FORMAT_DEFAULT;
   const size = parseInt(req.params.size) || SIZE_DEFAULT;
   const seed = req.params.seed ? parseSeed(req.params.seed) : Math.floor(Math.random() * 1e9);
@@ -127,7 +128,7 @@ router.get('/:format/:size/:seed?', async function(req, res, next) {
 });
 
 // extended route: queries
-router.get('/', async function(req, res, next) {
+router.get("/", async function (req, res, next) {
   const format = req.query.get || req.query.format || FORMAT_DEFAULT;
   const size = parseInt(req.query.size) || SIZE_DEFAULT;
   const seed = req.query.seed ? parseSeed(req.query.seed) : Math.floor(Math.random() * 1e9);
@@ -149,7 +150,7 @@ router.get('/', async function(req, res, next) {
 });
 
 // exception route: error
-router.use(function(req, res) {
+router.use(function (req, res) {
   res.status(404).send(`<h1>Armoria API</h1>
   <p>API for generating and retrieving heraldry images from server.</p>
   <img src="https://raw.githubusercontent.com/Azgaar/Armoria/master/public/preview.png" alt="preview"/>
@@ -157,9 +158,9 @@ router.use(function(req, res) {
 });
 
 function getColors(query) {
-  const getColor = color => query[color] && query[color].length === 6 ? "#" + query[color] : null;
-  const {colors} = require('./app/dataModel');
-  Object.keys(colors).forEach(color => colors[color] = getColor(color) || colors[color]);
+  const getColor = color => (query[color] && query[color].length === 6 ? "#" + query[color] : null);
+  const {colors} = require("./app/dataModel");
+  Object.keys(colors).forEach(color => (colors[color] = getColor(color) || colors[color]));
   return colors;
 }
 
@@ -169,10 +170,10 @@ function parseSeed(query) {
 
 async function getCOA(collection, seed) {
   const numeric = Number.isInteger(+seed);
-  if (numeric) return require('./app/generator')(seed);
+  if (numeric) return require("./app/generator")(seed);
 
-  const claimed = collection && await getClaim(collection, seed);
-  return claimed && claimed.coa ? claimed.coa : require('./app/generator')(seed);
+  const claimed = collection && (await getClaim(collection, seed));
+  return claimed && claimed.coa ? claimed.coa : require("./app/generator")(seed);
 }
 
 async function getClaim(collection, name) {
@@ -196,14 +197,16 @@ function send(format, svg, res) {
     const svgMinified = require("minify-xml").minify(svg);
     res.status(200).type("image/svg+xml").send(svgMinified);
   } else {
-    const svg2img = require('svg2img');
-    const content = format !== "png" ? "image/jpeg" : "image/png";
-    const options = format !== "png" ? {format: "jpeg", quality: 75} : {format: "png"};
+    const opts = {
+      font: {loadSystemFonts: false},
+      logLevel: "debug"
+    };
+    const resvg = new Resvg(svg, opts);
+    const pngData = resvg.render();
+    const pngBuffer = pngData.asPng();
 
-    svg2img(svg, options, function(error, buffer) {
-      res.writeHead(200, {"Content-Type": content, "Content-Length": buffer.length});
-      res.end(buffer);
-    });
+    res.writeHead(200, {"Content-Type": "image/png", "Content-Length": pngBuffer.length});
+    res.end(pngBuffer);
   }
 }
 

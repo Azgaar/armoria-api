@@ -22,16 +22,11 @@ async function draw(id, coa, size, colors) {
     ? `<clipPath id="divisionClip_${id}">${getTemplate(division.division, division.line)}</clipPath>`
     : "";
   const field = `<rect x="0" y="0" width="200" height="200" fill="${clr(coa.t1)}"/>`;
-  const style = `<style>
-    g.secondary,path.secondary {fill: var(--secondary);}
-    g.tertiary,path.tertiary {fill: var(--tertiary);}
-  </style>`;
-
   const divisionGroup = division ? templateDivision() : "";
   const overlay = `<path d="${shieldPath}" fill="url(#backlight)" stroke="#333"/>`;
 
   return `<svg id="${id}" width="${size}" height="${size}" viewBox="${viewBox}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-      <defs>${shieldClip}${divisionClip}${loadedCharges}${loadedPatterns}${blacklight}${style}</defs>
+      <defs>${shieldClip}${divisionClip}${loadedCharges}${loadedPatterns}${blacklight}</defs>
       <g clip-path="url(#${shield}_${id})">${field}${divisionGroup}${templateAboveAll()}</g>
       ${overlay}</svg>`;
 
@@ -120,9 +115,11 @@ async function draw(id, coa, size, colors) {
 
     const chargePositions = [...new Set(charge.p)].filter(position => positions[position]);
 
-    let svg = `<g fill="${primary}" style="--secondary: ${secondary}; --tertiary: ${tertiary}" stroke="${stroke}"${tr(
-      transform(charge)
-    )}>`;
+    let svg = `<g fill="${primary}" stroke="${stroke}"${tr(transform(charge))}>`;
+    svg += `<style>
+      g.secondary,path.secondary {fill: ${secondary};}
+      g.tertiary,path.tertiary {fill: ${tertiary};}
+    </style>`;
 
     for (const p of chargePositions) {
       const transformAttr = tr(getElTransform(charge, p, sizeModifier, positions));
