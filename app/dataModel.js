@@ -1,5 +1,5 @@
 const tinctures = {
-  field: {metals: 35, colours: 49, stains: 1, patterns: 14},
+  field: {metals: 32, colours: 49, stains: 1, patterns: 14},
   division: {metals: 35, colours: 49, stains: 1, patterns: 8},
   charge: {metals: 16, colours: 24, stains: 1, patterns: 0},
   metals: {argent: 3, or: 2},
@@ -54,15 +54,15 @@ const colors = {
 };
 
 const shields = {
-  types: {basic: 10, regional: 2, historical: 1, specific: 1, banner: 1, simple: 2, fantasy: 1, middleEarth: 1},
+  types: {basic: 10, regional: 2, historical: 1, specific: 1, banner: 1, simple: 2, fantasy: 1, middleEarth: 0},
   basic: {heater: 12, spanish: 6, french: 1},
   regional: {horsehead: 1, horsehead2: 1, polish: 1, hessen: 1, swiss: 1},
   historical: {boeotian: 1, roman: 2, kite: 1, oldFrench: 5, renaissance: 2, baroque: 2},
   specific: {targe: 1, targe2: 0, pavise: 5, wedged: 10},
   banner: {flag: 1, pennon: 0, guidon: 0, banner: 0, dovetail: 1, gonfalon: 5, pennant: 0},
   simple: {round: 12, oval: 6, vesicaPiscis: 1, square: 1, diamond: 2, no: 0},
-  fantasy: {fantasy1: 2, fantasy2: 2, fantasy3: 1, fantasy4: 1, fantasy5: 3},
-  middleEarth: {noldor: 1, gondor: 1, easterling: 1, erebor: 1, ironHills: 1, urukHai: 1, moriaOrc: 1}
+  middleEarth: {noldor: 1, gondor: 1, easterling: 1, erebor: 1, ironHills: 1, urukHai: 1, moriaOrc: 1},
+  fantasy: {fantasy1: 2, fantasy2: 2, fantasy3: 1, fantasy4: 1, fantasy5: 3}
 };
 
 const positions = {
@@ -96,99 +96,7 @@ const positions = {
     perSaltire: {bhdf: 8, e: 3, abcdefgzi: 1, bh: 1, df: 1, ABCDEFGHIJKL: 1},
     perPile: {ee: 3, be: 2, abceh: 1, abcabc: 1, jleh: 1}
   },
-  ordinariesOn: {
-    pale: {ee: 12, beh: 10, kn: 3, bb: 1},
-    fess: {ee: 1, def: 3},
-    bar: {defdefdef: 1},
-    fessCotissed: {ee: 1, def: 3},
-    fessDoubleCotissed: {ee: 1, defdef: 3},
-    bend: {ee: 2, jo: 1, joe: 1},
-    bendSinister: {ee: 1, lm: 1, lem: 4},
-    bendlet: {joejoejoe: 1},
-    bendletSinister: {lemlemlem: 1},
-    bordure: {ABCDEFGHIJKL: 1},
-    chief: {abc: 5, bbb: 1},
-    quarter: {jjj: 1},
-    canton: {yyyy: 1},
-    cross: {eeee: 1, behdfbehdf: 3, behbehbeh: 2},
-    crossParted: {e: 5, ee: 1},
-    saltire: {ee: 5, jlemo: 1},
-    saltireParted: {e: 5, ee: 1},
-    pall: {ee: 1, jleh: 5, jlhh: 3},
-    pallReversed: {ee: 1, bemo: 5},
-    pile: {bbb: 1},
-    pileInBend: {eeee: 1, eeoo: 1},
-    pileInBendSinister: {eeee: 1, eemm: 1}
-  },
-  ordinariesOff: {
-    pale: {yyy: 1},
-    fess: {abc: 3, abcz: 1},
-    bar: {abc: 2, abcgzi: 1, jlh: 5, bgi: 2, ach: 1},
-    gemelle: {abc: 1},
-    bend: {ccg: 2, ccc: 1},
-    bendSinister: {aai: 2, aaa: 1},
-    bendlet: {ccg: 2, ccc: 1},
-    bendletSinister: {aai: 2, aaa: 1},
-    bordure: {e: 4, jleh: 2, kenken: 1, peqpeq: 1},
-    orle: {e: 4, jleh: 1, kenken: 1, peqpeq: 1},
-    chief: {emo: 2, emoz: 1, ez: 2},
-    terrace: {e: 5, def: 1, bdf: 3},
-    mount: {e: 5, def: 1, bdf: 3},
-    point: {e: 2, def: 1, bdf: 3, acbdef: 1},
-    flaunches: {e: 3, kn: 1, beh: 3},
-    gyron: {bh: 1},
-    quarter: {e: 1},
-    canton: {e: 5, beh: 1, def: 1, bdefh: 1, kn: 1},
-    cross: {acgi: 1},
-    pall: {BCKFEILGJbdmfo: 1},
-    pallReversed: {aczac: 1},
-    chevron: {ach: 3, hhh: 1},
-    chevronReversed: {bbb: 1},
-    pile: {acdfgi: 1, acac: 1},
-    pileInBend: {cg: 1},
-    pileInBendSinister: {ai: 1},
-    label: {defgzi: 2, eh: 3, defdefhmo: 1, egiegi: 1, pqn: 5}
-  },
-  // charges
-  inescutcheon: {e: 4, jln: 1},
-  mascle: {
-    e: 15,
-    abcdefgzi: 3,
-    beh: 3,
-    bdefh: 4,
-    acegi: 1,
-    kn: 3,
-    joe: 2,
-    abc: 3,
-    jlh: 8,
-    jleh: 1,
-    df: 3,
-    abcpqh: 4,
-    pqe: 3,
-    eknpq: 3
-  },
-  lionRampant: {e: 10, def: 2, abc: 2, bdefh: 1, kn: 1, jlh: 2, abcpqh: 1},
-  lionPassant: {e: 10, def: 1, abc: 1, bdefh: 1, jlh: 1, abcpqh: 1},
-  wolfPassant: {e: 10, def: 1, abc: 1, bdefh: 1, jlh: 1, abcpqh: 1},
-  greyhoundСourant: {e: 10, def: 1, abc: 1, bdefh: 1, jlh: 1, abcpqh: 1},
-  greyhoundSejant: {e: 10, def: 1, abc: 1, bdefh: 1, jlh: 1, abcpqh: 1},
-  griffinRampant: {e: 10, def: 2, abc: 2, bdefh: 1, kn: 1, jlh: 2, abcpqh: 1},
-  griffinPassant: {e: 10, def: 1, abc: 1, bdefh: 1, jlh: 1, abcpqh: 1},
-  boarRampant: {e: 12, beh: 1, kn: 1, jln: 2},
-  eagle: {e: 15, beh: 1, kn: 1, abc: 1, jlh: 2, def: 2, pq: 1},
-  raven: {e: 15, beh: 1, kn: 1, jeo: 1, abc: 3, jln: 3, def: 1},
-  wyvern: {e: 10, jln: 1},
-  garb: {e: 1, def: 3, abc: 2, beh: 1, kn: 1, jln: 3, jleh: 1, abcpqh: 1, joe: 1, lme: 1},
-  crown: {e: 10, abcdefgzi: 1, beh: 3, behdf: 2, acegi: 1, kn: 1, pq: 2, abc: 1, jln: 4, jleh: 1, def: 2, abcpqh: 3},
-  crown2: {e: 10, abcdefgzi: 1, beh: 3, behdf: 2, acegi: 1, kn: 1, pq: 2, abc: 1, jln: 4, jleh: 1, def: 2, abcpqh: 3},
-  hand: {e: 10, jln: 2, kn: 1, jeo: 1, abc: 2, pqe: 1},
-  armillarySphere: {e: 1},
-  tree: {e: 1},
-  lymphad: {e: 1},
-  head: {e: 1},
-  headWreathed: {e: 1},
-  cavalier: {e: 1},
-  angel: {e: 1}
+  inescutcheon: {e: 4, jln: 1}
 };
 
 const lines = {
@@ -311,87 +219,1405 @@ const ordinaries = {
     piles: 1,
     pilesInPoint: 2,
     label: 1
+  },
+  data: {
+    bar: {
+      positionsOn: {defdefdef: 1},
+      positionsOff: {abc: 2, abcgzi: 1, jlh: 5, bgi: 2, ach: 1}
+    },
+    bend: {
+      positionsOn: {ee: 2, jo: 1, joe: 1},
+      positionsOff: {ccg: 2, ccc: 1}
+    },
+    bendSinister: {
+      positionsOn: {ee: 1, lm: 1, lem: 4},
+      positionsOff: {aai: 2, aaa: 1}
+    },
+    bendlet: {
+      positionsOn: {joejoejoe: 1},
+      positionsOff: {ccg: 2, ccc: 1}
+    },
+    bendletSinister: {
+      positionsOn: {lemlemlem: 1},
+      positionsOff: {aai: 2, aaa: 1}
+    },
+    bordure: {
+      positionsOn: {ABCDEFGHIJKL: 1},
+      positionsOff: {e: 4, jleh: 2, kenken: 1, peqpeq: 1}
+    },
+    canton: {
+      positionsOn: {yyyy: 1},
+      positionsOff: {e: 5, beh: 1, def: 1, bdefh: 1, kn: 1}
+    },
+    chevron: {
+      positionsOn: {ach: 3, hhh: 1}
+    },
+    chevronReversed: {
+      positionsOff: {bbb: 1}
+    },
+    chief: {
+      positionsOn: {abc: 5, bbb: 1},
+      positionsOff: {emo: 2, emoz: 1, ez: 2}
+    },
+    cross: {
+      positionsOn: {eeee: 1, behdfbehdf: 3, behbehbeh: 2},
+      positionsOff: {acgi: 1}
+    },
+    crossParted: {
+      positionsOn: {e: 5, ee: 1}
+    },
+    fess: {
+      positionsOn: {ee: 1, def: 3},
+      positionsOff: {abc: 3, abcz: 1}
+    },
+    fessCotissed: {
+      positionsOn: {ee: 1, def: 3}
+    },
+    fessDoubleCotissed: {
+      positionsOn: {ee: 1, defdef: 3}
+    },
+    flaunches: {
+      positionsOff: {e: 3, kn: 1, beh: 3}
+    },
+    gemelle: {
+      positionsOff: {abc: 1}
+    },
+    gyron: {
+      positionsOff: {bh: 1}
+    },
+    label: {
+      positionsOff: {defgzi: 2, eh: 3, defdefhmo: 1, egiegi: 1, pqn: 5}
+    },
+    mount: {
+      positionsOff: {e: 5, def: 1, bdf: 3}
+    },
+    orle: {
+      positionsOff: {e: 4, jleh: 1, kenken: 1, peqpeq: 1}
+    },
+    pale: {
+      positionsOn: {ee: 12, beh: 10, kn: 3, bb: 1},
+      positionsOff: {yyy: 1}
+    },
+    pall: {
+      positionsOn: {ee: 1, jleh: 5, jlhh: 3},
+      positionsOff: {BCKFEILGJbdmfo: 1}
+    },
+    pallReversed: {
+      positionsOn: {ee: 1, bemo: 5},
+      positionsOff: {aczac: 1}
+    },
+    pile: {
+      positionsOn: {bbb: 1},
+      positionsOff: {acdfgi: 1, acac: 1}
+    },
+    pileInBend: {
+      positionsOn: {eeee: 1, eeoo: 1},
+      positionsOff: {cg: 1}
+    },
+    pileInBendSinister: {
+      positionsOn: {eeee: 1, eemm: 1},
+      positionsOff: {ai: 1}
+    },
+    point: {
+      positionsOff: {e: 2, def: 1, bdf: 3, acbdef: 1}
+    },
+    quarter: {
+      positionsOn: {jjj: 1},
+      positionsOff: {e: 1}
+    },
+    saltire: {
+      positionsOn: {ee: 5, jlemo: 1}
+    },
+    saltireParted: {
+      positionsOn: {e: 5, ee: 1}
+    },
+    terrace: {
+      positionsOff: {e: 5, def: 1, bdf: 3}
+    }
+  }
+};
+
+const chargeData = {
+  agnusDei: {
+    colors: 2,
+    sinister: true
+  },
+  angel: {
+    colors: 2,
+    positions: {e: 1}
+  },
+  anvil: {
+    sinister: true
+  },
+  apple: {
+    colors: 2
+  },
+  arbalest: {
+    colors: 3,
+    reversed: true
+  },
+  archer: {
+    colors: 3,
+    sinister: true
+  },
+  armEmbowedHoldingSabre: {
+    colors: 3,
+    sinister: true
+  },
+  armEmbowedVambraced: {
+    sinister: true
+  },
+  armEmbowedVambracedHoldingSword: {
+    colors: 3,
+    sinister: true
+  },
+  armillarySphere: {
+    positions: {e: 1}
+  },
+  arrow: {
+    colors: 3,
+    reversed: true
+  },
+  arrowsSheaf: {
+    colors: 3,
+    reversed: true
+  },
+  axe: {
+    colors: 2,
+    sinister: true
+  },
+  badgerStatant: {
+    colors: 2,
+    sinister: true
+  },
+  banner: {
+    colors: 2
+  },
+  basilisk: {
+    colors: 3,
+    sinister: true
+  },
+  bearPassant: {
+    colors: 3,
+    sinister: true
+  },
+  bearRampant: {
+    colors: 3,
+    sinister: true
+  },
+  bee: {
+    colors: 3,
+    reversed: true
+  },
+  bell: {
+    colors: 2
+  },
+  boarHeadErased: {
+    colors: 3,
+    sinister: true
+  },
+  boarRampant: {
+    colors: 3,
+    sinister: true,
+    positions: {e: 12, beh: 1, kn: 1, jln: 2}
+  },
+  boat: {
+    colors: 2
+  },
+  bookClosed: {
+    colors: 3,
+    sinister: true
+  },
+  bookClosed2: {
+    sinister: true
+  },
+  bookOpen: {
+    colors: 3
+  },
+  bow: {
+    sinister: true
+  },
+  bowWithArrow: {
+    colors: 3,
+    reversed: true
+  },
+  bowWithThreeArrows: {
+    colors: 3
+  },
+  bucket: {
+    colors: 2
+  },
+  bugleHorn: {
+    colors: 2
+  },
+  bugleHorn2: {
+    colors: 2
+  },
+  bullHeadCaboshed: {
+    colors: 2
+  },
+  bullPassant: {
+    colors: 3,
+    sinister: true
+  },
+  butterfly: {
+    colors: 3,
+    reversed: true
+  },
+  camel: {
+    colors: 2,
+    sinister: true
+  },
+  cancer: {
+    reversed: true
+  },
+  cannon: {
+    colors: 2,
+    sinister: true
+  },
+  caravel: {
+    colors: 3,
+    sinister: true
+  },
+  castle: {
+    colors: 2
+  },
+  castle2: {
+    colors: 3
+  },
+  catPassantGuardant: {
+    colors: 2,
+    sinister: true
+  },
+  cavalier: {
+    colors: 3,
+    sinister: true,
+    positions: {e: 1}
+  },
+  centaur: {
+    colors: 3,
+    sinister: true
+  },
+  chalice: {
+    colors: 2
+  },
+  cinquefoil: {
+    reversed: true
+  },
+  cock: {
+    colors: 3,
+    sinister: true
+  },
+  comet: {
+    reversed: true
+  },
+  cowStatant: {
+    colors: 3,
+    sinister: true
+  },
+  cossack: {
+    colors: 3,
+    sinister: true
+  },
+  crescent: {
+    reversed: true
+  },
+  crocodile: {
+    colors: 2,
+    sinister: true
+  },
+  crosier: {
+    sinister: true
+  },
+  crossbow: {
+    colors: 3,
+    sinister: true
+  },
+  crossGamma: {
+    sinister: true
+  },
+  crossLatin: {
+    reversed: true
+  },
+  crossTau: {
+    reversed: true
+  },
+  crossTriquetra: {
+    reversed: true
+  },
+  crown: {
+    colors: 2,
+    positions: {
+      e: 10,
+      abcdefgzi: 1,
+      beh: 3,
+      behdf: 2,
+      acegi: 1,
+      kn: 1,
+      pq: 2,
+      abc: 1,
+      jln: 4,
+      jleh: 1,
+      def: 2,
+      abcpqh: 3
+    }
+  },
+  crown2: {
+    colors: 3,
+    positions: {
+      e: 10,
+      abcdefgzi: 1,
+      beh: 3,
+      behdf: 2,
+      acegi: 1,
+      kn: 1,
+      pq: 2,
+      abc: 1,
+      jln: 4,
+      jleh: 1,
+      def: 2,
+      abcpqh: 3
+    }
+  },
+  deerHeadCaboshed: {
+    colors: 2
+  },
+  dolphin: {
+    colors: 2,
+    sinister: true
+  },
+  donkeyHeadCaboshed: {
+    colors: 2
+  },
+  dove: {
+    colors: 2,
+    natural: "argent",
+    sinister: true
+  },
+  doveDisplayed: {
+    colors: 2,
+    natural: "argent",
+    sinister: true
+  },
+  dragonfly: {
+    colors: 2,
+    reversed: true
+  },
+  dragonPassant: {
+    colors: 3,
+    sinister: true
+  },
+  dragonRampant: {
+    colors: 3,
+    sinister: true
+  },
+  drakkar: {
+    colors: 3,
+    sinister: true
+  },
+  drawingCompass: {
+    sinister: true
+  },
+  drum: {
+    colors: 3
+  },
+  duck: {
+    colors: 3,
+    sinister: true
+  },
+  eagle: {
+    colors: 3,
+    sinister: true,
+    positions: {e: 15, beh: 1, kn: 1, abc: 1, jlh: 2, def: 2, pq: 1}
+  },
+  eagleTwoHeads: {
+    colors: 3
+  },
+  elephant: {
+    colors: 2,
+    sinister: true
+  },
+  elephantHeadErased: {
+    colors: 2,
+    sinister: true
+  },
+  falchion: {
+    colors: 2,
+    reversed: true
+  },
+  falcon: {
+    colors: 3,
+    sinister: true
+  },
+  fan: {
+    colors: 2,
+    reversed: true
+  },
+  fasces: {
+    colors: 3,
+    sinister: true
+  },
+  feather: {
+    sinister: true
+  },
+  flamberge: {
+    colors: 2,
+    reversed: true
+  },
+  flangedMace: {
+    reversed: true
+  },
+  fly: {
+    colors: 3,
+    reversed: true
+  },
+  foot: {
+    sinister: true
+  },
+  fountain: {
+    natural: "azure"
+  },
+  frog: {
+    reversed: true
+  },
+  garb: {
+    colors: 2,
+    natural: "or",
+    positions: {e: 1, def: 3, abc: 2, beh: 1, kn: 1, jln: 3, jleh: 1, abcpqh: 1, joe: 1, lme: 1}
+  },
+  gauntlet: {
+    sinister: true,
+    reversed: true
+  },
+  goat: {
+    colors: 3,
+    sinister: true
+  },
+  goutte: {
+    reversed: true
+  },
+  grapeBunch: {
+    colors: 3,
+    sinister: true
+  },
+  grapeBunch2: {
+    colors: 3,
+    sinister: true
+  },
+  grenade: {
+    colors: 2
+  },
+  greyhoundCourant: {
+    colors: 3,
+    sinister: true,
+    positions: {e: 10, def: 1, abc: 1, bdefh: 1, jlh: 1, abcpqh: 1}
+  },
+  greyhoundRampant: {
+    colors: 2,
+    sinister: true,
+    positions: {e: 10, def: 1, abc: 1, bdefh: 1, jlh: 1, abcpqh: 1}
+  },
+  greyhoundSejant: {
+    colors: 3,
+    sinister: true
+  },
+  griffinPassant: {
+    colors: 3,
+    sinister: true,
+    positions: {e: 10, def: 2, abc: 2, bdefh: 1, kn: 1, jlh: 2, abcpqh: 1}
+  },
+  griffinRampant: {
+    colors: 3,
+    sinister: true,
+    positions: {e: 10, def: 1, abc: 1, bdefh: 1, jlh: 1, abcpqh: 1}
+  },
+  hand: {
+    sinister: true,
+    reversed: true,
+    positions: {e: 10, jln: 2, kn: 1, jeo: 1, abc: 2, pqe: 1}
+  },
+  harp: {
+    colors: 2,
+    sinister: true
+  },
+  hatchet: {
+    colors: 2,
+    sinister: true
+  },
+  head: {
+    colors: 2,
+    sinister: true,
+    positions: {e: 1}
+  },
+  headWreathed: {
+    colors: 3,
+    sinister: true,
+    positions: {e: 1}
+  },
+  hedgehog: {
+    colors: 3,
+    sinister: true
+  },
+  helmet: {
+    sinister: true
+  },
+  helmetCorinthian: {
+    colors: 3,
+    sinister: true
+  },
+  helmetGreat: {
+    sinister: true
+  },
+  helmetZischagge: {
+    sinister: true
+  },
+  heron: {
+    colors: 2,
+    sinister: true
+  },
+  hindStatant: {
+    colors: 2,
+    sinister: true
+  },
+  hook: {
+    sinister: true
+  },
+  horseHeadCouped: {
+    sinister: true
+  },
+  horsePassant: {
+    colors: 2,
+    sinister: true
+  },
+  horseRampant: {
+    colors: 3,
+    sinister: true
+  },
+  horseSalient: {
+    colors: 2,
+    sinister: true
+  },
+  horseshoe: {
+    reversed: true
+  },
+  hourglass: {
+    colors: 3
+  },
+  ladybird: {
+    colors: 3,
+    reversed: true
+  },
+  lamb: {
+    colors: 2,
+    sinister: true
+  },
+  lambPassantReguardant: {
+    colors: 2,
+    sinister: true
+  },
+  lanceWithBanner: {
+    colors: 3,
+    sinister: true
+  },
+  laurelWreath: {
+    colors: 2
+  },
+  lighthouse: {
+    colors: 3
+  },
+  lionHeadCaboshed: {
+    colors: 2
+  },
+  lionHeadErased: {
+    colors: 2,
+    sinister: true
+  },
+  lionPassant: {
+    colors: 3,
+    sinister: true,
+    positions: {e: 10, def: 1, abc: 1, bdefh: 1, jlh: 1, abcpqh: 1}
+  },
+  lionPassantGuardant: {
+    colors: 3,
+    sinister: true
+  },
+  lionRampant: {
+    colors: 3,
+    sinister: true,
+    positions: {e: 10, def: 2, abc: 2, bdefh: 1, kn: 1, jlh: 2, abcpqh: 1}
+  },
+  lionSejant: {
+    colors: 3,
+    sinister: true
+  },
+  lizard: {
+    reversed: true
+  },
+  lochaberAxe: {
+    colors: 2,
+    sinister: true
+  },
+  log: {
+    sinister: true
+  },
+  lute: {
+    colors: 2,
+    sinister: true
+  },
+  lymphad: {
+    colors: 3,
+    sinister: true,
+    positions: {e: 1}
+  },
+  mace: {
+    colors: 2
+  },
+  maces: {
+    colors: 2
+  },
+  mallet: {
+    colors: 2
+  },
+  mantle: {
+    colors: 3
+  },
+  martenCourant: {
+    colors: 3,
+    sinister: true
+  },
+  mascle: {
+    positions: {
+      e: 15,
+      abcdefgzi: 3,
+      beh: 3,
+      bdefh: 4,
+      acegi: 1,
+      kn: 3,
+      joe: 2,
+      abc: 3,
+      jlh: 8,
+      jleh: 1,
+      df: 3,
+      abcpqh: 4,
+      pqe: 3,
+      eknpq: 3
+    }
+  },
+  mastiffStatant: {
+    colors: 3,
+    sinister: true
+  },
+  mitre: {
+    colors: 3
+  },
+  monk: {
+    sinister: true
+  },
+  moonInCrescent: {
+    sinister: true
+  },
+  mullet: {
+    reversed: true
+  },
+  mullet7: {
+    reversed: true
+  },
+  oak: {
+    colors: 3
+  },
+  orb: {
+    colors: 3
+  },
+  ouroboros: {
+    sinister: true
+  },
+  owl: {
+    colors: 2,
+    sinister: true
+  },
+  owlDisplayed: {
+    colors: 2
+  },
+  palmTree: {
+    colors: 3
+  },
+  parrot: {
+    colors: 2,
+    sinister: true
+  },
+  peacock: {
+    colors: 3,
+    sinister: true
+  },
+  peacockInPride: {
+    colors: 3,
+    sinister: true
+  },
+  pear: {
+    colors: 2
+  },
+  pegasus: {
+    colors: 3,
+    sinister: true
+  },
+  pike: {
+    colors: 2,
+    sinister: true
+  },
+  pineTree: {
+    colors: 2
+  },
+  plaice: {
+    colors: 2,
+    sinister: true
+  },
+  plough: {
+    colors: 2,
+    sinister: true
+  },
+  ploughshare: {
+    sinister: true
+  },
+  porcupine: {
+    colors: 2,
+    sinister: true
+  },
+  portcullis: {
+    colors: 2
+  },
+  rabbitSejant: {
+    colors: 2,
+    sinister: true
+  },
+  rake: {
+    reversed: true
+  },
+  rapier: {
+    colors: 2,
+    sinister: true,
+    reversed: true
+  },
+  ramHeadErased: {
+    colors: 3,
+    sinister: true
+  },
+  ramPassant: {
+    colors: 3,
+    sinister: true
+  },
+  ratRampant: {
+    colors: 2,
+    sinister: true
+  },
+  raven: {
+    colors: 2,
+    natural: "sable",
+    sinister: true,
+    positions: {e: 15, beh: 1, kn: 1, jeo: 1, abc: 3, jln: 3, def: 1}
+  },
+  rhinoceros: {
+    colors: 2,
+    sinister: true
+  },
+  rose: {
+    colors: 3
+  },
+  sabre: {
+    colors: 2,
+    sinister: true
+  },
+  sabre2: {
+    colors: 2,
+    sinister: true,
+    reversed: true
+  },
+  sabresCrossed: {
+    colors: 2,
+    reversed: true
+  },
+  sagittarius: {
+    colors: 3,
+    sinister: true
+  },
+  salmon: {
+    colors: 2,
+    sinister: true
+  },
+  saw: {
+    colors: 2
+  },
+  scale: {
+    colors: 2
+  },
+  scaleImbalanced: {
+    colors: 2,
+    sinister: true
+  },
+  scissors: {
+    reversed: true
+  },
+  scorpion: {
+    reversed: true
+  },
+  scrollClosed: {
+    colors: 2,
+    sinister: true
+  },
+  scythe: {
+    colors: 2,
+    sinister: true,
+    reversed: true
+  },
+  scythe2: {
+    sinister: true
+  },
+  serpent: {
+    colors: 2,
+    sinister: true
+  },
+  shield: {
+    colors: 2,
+    sinister: true
+  },
+  sickle: {
+    colors: 2,
+    sinister: true,
+    reversed: true
+  },
+  snail: {
+    colors: 2,
+    sinister: true
+  },
+  snake: {
+    colors: 2,
+    sinister: true
+  },
+  spear: {
+    colors: 2,
+    reversed: true
+  },
+  spiral: {
+    sinister: true,
+    reversed: true
+  },
+  squirrel: {
+    sinister: true
+  },
+  stagLodgedRegardant: {
+    colors: 3,
+    sinister: true
+  },
+  stagPassant: {
+    colors: 2,
+    sinister: true
+  },
+  stirrup: {
+    colors: 2
+  },
+  swallow: {
+    colors: 2,
+    sinister: true
+  },
+  swan: {
+    colors: 3,
+    sinister: true
+  },
+  swanErased: {
+    colors: 3,
+    sinister: true
+  },
+  sword: {
+    colors: 2,
+    reversed: true
+  },
+  talbotPassant: {
+    colors: 3,
+    sinister: true
+  },
+  talbotSejant: {
+    colors: 3,
+    sinister: true
+  },
+  tower: {
+    colors: 2
+  },
+  tree: {
+    positions: {e: 1}
+  },
+  trefoil: {
+    reversed: true
+  },
+  trowel: {
+    colors: 2,
+    sinister: true,
+    reversed: true
+  },
+  unicornRampant: {
+    colors: 3,
+    sinister: true
+  },
+  wasp: {
+    colors: 3,
+    reversed: true
+  },
+  wheatStalk: {
+    colors: 2
+  },
+  windmill: {
+    colors: 3,
+    sinister: true
+  },
+  wing: {
+    sinister: true
+  },
+  wingSword: {
+    colors: 3,
+    sinister: true
+  },
+  wolfHeadErased: {
+    colors: 2,
+    sinister: true
+  },
+  wolfPassant: {
+    colors: 3,
+    sinister: true,
+    positions: {e: 10, def: 1, abc: 1, bdefh: 1, jlh: 1, abcpqh: 1}
+  },
+  wolfRampant: {
+    colors: 3,
+    sinister: true
+  },
+  wolfStatant: {
+    colors: 3,
+    sinister: true
+  },
+  wyvern: {
+    colors: 3,
+    sinister: true,
+    positions: {e: 10, jln: 1}
+  },
+  wyvernWithWingsDisplayed: {
+    colors: 3,
+    sinister: true
   }
 };
 
 const charges = {
   types: {
-    conventional: 30,
-    crosses: 10,
-    animals: 2,
-    animalHeads: 1,
-    birds: 2,
-    aquatic: 1,
-    seafaring: 1,
-    fantastic: 3,
-    plants: 1,
-    agriculture: 1,
-    arms: 3,
-    bodyparts: 1,
-    people: 1,
-    architecture: 1,
-    miscellaneous: 3,
-    inescutcheon: 3,
+    conventional: 33, // 40 charges
+    crosses: 13, // 30 charges
+    beasts: 7, // 41 charges
+    beastHeads: 3, // 10 charges
+    birds: 3, // 16 charges
+    reptiles: 2, // 5 charges
+    bugs: 2, // 8 charges
+    fishes: 1, // 3 charges
+    molluscs: 1, // 2 charges
+    plants: 3, // 18 charges
+    fantastic: 5, // 14 charges
+    agriculture: 2, // 8 charges
+    arms: 5, // 32 charges
+    bodyparts: 2, // 12 charges
+    people: 2, // 4 charges
+    architecture: 3, // 11 charges
+    seafaring: 3, // 9 charges
+    tools: 3, // 15 charges
+    miscellaneous: 5, // 30 charges
+    inescutcheon: 3, // 43 charges
+    ornaments: 0, // 9 charges
     uploaded: 0
   },
   single: {
-    conventional: 12,
+    conventional: 10,
     crosses: 8,
-    plants: 2,
-    animals: 10,
-    animalHeads: 2,
-    birds: 4,
-    aquatic: 2,
-    seafaring: 2,
-    fantastic: 7,
-    agriculture: 1,
-    arms: 6,
-    bodyparts: 1,
+    beasts: 7,
+    beastHeads: 3,
+    birds: 3,
+    reptiles: 2,
+    bugs: 2,
+    fishes: 1,
+    molluscs: 1,
+    plants: 3,
+    fantastic: 5,
+    agriculture: 2,
+    arms: 5,
+    bodyparts: 2,
     people: 2,
-    architecture: 1,
-    miscellaneous: 10,
-    inescutcheon: 5,
-    uploaded: 0
+    architecture: 3,
+    seafaring: 3,
+    tools: 3,
+    miscellaneous: 5,
+    inescutcheon: 1
   },
-  semy: {conventional: 4, crosses: 1},
+  semy: {
+    conventional: 4,
+    crosses: 1
+  },
   conventional: {
-    lozenge: 2,
-    fusil: 4,
-    mascle: 4,
-    rustre: 2,
-    lozengeFaceted: 3,
-    lozengePloye: 1,
-    roundel: 4,
-    roundel2: 3,
     annulet: 4,
-    mullet: 5,
-    mulletPierced: 1,
-    mulletFaceted: 1,
-    mullet4: 3,
-    mullet6: 4,
-    mullet6Pierced: 1,
-    mullet6Faceted: 1,
-    mullet7: 1,
-    mullet8: 1,
-    mullet10: 1,
-    estoile: 1,
-    compassRose: 1,
     billet: 5,
+    carreau: 1,
+    comet: 1,
+    compassRose: 1,
+    crescent: 5,
     delf: 0,
-    triangle: 3,
-    trianglePierced: 1,
+    estoile: 1,
+    fleurDeLis: 6,
+    fountain: 1,
+    fusil: 4,
+    gear: 1,
     goutte: 4,
     heart: 4,
+    lozenge: 2,
+    lozengeFaceted: 3,
+    lozengePloye: 1,
+    mascle: 4,
+    moonInCrescent: 1,
+    mullet: 5,
+    mullet10: 1,
+    mullet4: 3,
+    mullet6: 4,
+    mullet6Faceted: 1,
+    mullet6Pierced: 1,
+    mullet7: 1,
+    mullet8: 1,
+    mulletFaceted: 1,
+    mulletPierced: 1,
     pique: 2,
-    carreau: 1,
-    trefle: 2,
-    fleurDeLis: 6,
+    roundel: 4,
+    roundel2: 3,
+    rustre: 2,
+    spiral: 1,
     sun: 3,
     sunInSplendour: 1,
     sunInSplendour2: 1,
-    moonInCrescent: 1,
-    crescent: 5,
-    fountain: 1
+    trefle: 2,
+    triangle: 3,
+    trianglePierced: 1
+  },
+  crosses: {
+    crossHummetty: 15,
+    crossVoided: 1,
+    crossPattee: 2,
+    crossPatteeAlisee: 1,
+    crossFormee: 1,
+    crossFormee2: 2,
+    crossPotent: 2,
+    crossJerusalem: 1,
+    crosslet: 1,
+    crossClechy: 3,
+    crossBottony: 1,
+    crossFleury: 3,
+    crossPatonce: 1,
+    crossPommy: 1,
+    crossGamma: 1,
+    crossArrowed: 1,
+    crossFitchy: 1,
+    crossCercelee: 1,
+    crossMoline: 2,
+    crossFourchy: 1,
+    crossAvellane: 1,
+    crossErminee: 1,
+    crossBiparted: 1,
+    crossMaltese: 3,
+    crossTemplar: 2,
+    crossCeltic: 1,
+    crossCeltic2: 1,
+    crossTriquetra: 1,
+    crossCarolingian: 1,
+    crossOccitan: 1,
+    crossSaltire: 3,
+    crossBurgundy: 1,
+    crossLatin: 3,
+    crossPatriarchal: 1,
+    crossOrthodox: 1,
+    crossCalvary: 1,
+    crossDouble: 1,
+    crossTau: 1,
+    crossSantiago: 1,
+    crossAnkh: 1
+  },
+  beasts: {
+    agnusDei: 1,
+    badgerStatant: 1,
+    bearPassant: 1,
+    bearRampant: 3,
+    boarRampant: 1,
+    bullPassant: 1,
+    camel: 1,
+    catPassantGuardant: 1,
+    cowStatant: 1,
+    dolphin: 1,
+    elephant: 1,
+    goat: 1,
+    greyhoundCourant: 1,
+    greyhoundRampant: 1,
+    greyhoundSejant: 1,
+    hedgehog: 1,
+    hindStatant: 1,
+    horsePassant: 1,
+    horseRampant: 2,
+    horseSalient: 1,
+    lamb: 1,
+    lambPassantReguardant: 1,
+    lionPassant: 3,
+    lionPassantGuardant: 2,
+    lionRampant: 7,
+    lionSejant: 2,
+    martenCourant: 1,
+    mastiffStatant: 1,
+    porcupine: 1,
+    rabbitSejant: 1,
+    ramPassant: 1,
+    ratRampant: 1,
+    rhinoceros: 1,
+    squirrel: 1,
+    stagLodgedRegardant: 1,
+    stagPassant: 1,
+    talbotPassant: 1,
+    talbotSejant: 1,
+    wolfPassant: 1,
+    wolfRampant: 1,
+    wolfStatant: 1
+  },
+  beastHeads: {
+    wolfHeadErased: 2,
+    bullHeadCaboshed: 1,
+    deerHeadCaboshed: 1,
+    donkeyHeadCaboshed: 1,
+    lionHeadCaboshed: 2,
+    lionHeadErased: 2,
+    boarHeadErased: 1,
+    horseHeadCouped: 1,
+    ramHeadErased: 1,
+    elephantHeadErased: 1
+  },
+  birds: {
+    eagle: 9,
+    falcon: 2,
+    raven: 2,
+    cock: 3,
+    parrot: 1,
+    swan: 2,
+    swanErased: 1,
+    heron: 1,
+    owl: 1,
+    owlDisplayed: 1,
+    dove: 2,
+    doveDisplayed: 1,
+    duck: 1,
+    peacock: 1,
+    peacockInPride: 1,
+    swallow: 1
+  },
+  reptiles: {
+    crocodile: 1,
+    frog: 1,
+    lizard: 1,
+    ouroboros: 1,
+    snake: 1
+  },
+  bugs: {
+    bee: 1,
+    butterfly: 1,
+    cancer: 1,
+    dragonfly: 1,
+    fly: 1,
+    ladybird: 1,
+    scorpion: 1,
+    wasp: 1
+  },
+  fishes: {
+    pike: 1,
+    plaice: 1,
+    salmon: 1
+  },
+  molluscs: {
+    escallop: 4,
+    snail: 1
+  },
+  plants: {
+    apple: 1,
+    cinquefoil: 1,
+    earOfWheat: 1,
+    grapeBunch: 1,
+    grapeBunch2: 1,
+    mapleLeaf: 1,
+    oak: 1,
+    palmTree: 1,
+    pear: 1,
+    pineCone: 1,
+    pineTree: 1,
+    quatrefoil: 1,
+    rose: 1,
+    sextifoil: 1,
+    thistle: 1,
+    tree: 1,
+    trefoil: 1,
+    wheatStalk: 1
+  },
+  fantastic: {
+    angel: 3,
+    basilisk: 1,
+    centaur: 1,
+    dragonPassant: 3,
+    dragonRampant: 2,
+    eagleTwoHeads: 2,
+    griffinPassant: 1,
+    griffinRampant: 2,
+    pegasus: 1,
+    sagittarius: 1,
+    serpent: 1,
+    unicornRampant: 1,
+    wyvern: 1,
+    wyvernWithWingsDisplayed: 1
+  },
+  agriculture: {
+    garb: 2,
+    millstone: 1,
+    plough: 1,
+    ploughshare: 1,
+    rake: 1,
+    scythe: 1,
+    scythe2: 1,
+    sickle: 1
+  },
+  arms: {
+    arbalest: 1,
+    arbalest2: 1,
+    arrow: 1,
+    arrowsSheaf: 1,
+    axe: 3,
+    bow: 1,
+    bowWithArrow: 2,
+    bowWithThreeArrows: 1,
+    cannon: 1,
+    falchion: 1,
+    flamberge: 1,
+    flangedMace: 1,
+    gauntlet: 1,
+    grenade: 1,
+    hatchet: 3,
+    helmet: 2,
+    helmetCorinthian: 1,
+    helmetGreat: 2,
+    helmetZischagge: 1,
+    lanceHead: 1,
+    lanceWithBanner: 1,
+    lochaberAxe: 1,
+    mace: 1,
+    maces: 1,
+    mallet: 1,
+    rapier: 1,
+    sabre: 1,
+    sabre2: 1,
+    sabresCrossed: 1,
+    shield: 1,
+    spear: 1,
+    sword: 4
+  },
+  bodyparts: {
+    armEmbowedHoldingSabre: 1,
+    armEmbowedVambraced: 1,
+    armEmbowedVambracedHoldingSword: 1,
+    bone: 1,
+    crossedBones: 2,
+    foot: 1,
+    hand: 4,
+    head: 1,
+    headWreathed: 1,
+    skeleton: 2,
+    skull: 2,
+    skull2: 1
+  },
+  people: {
+    cavalier: 3,
+    cossack: 1,
+    archer: 1,
+    monk: 1
+  },
+  architecture: {
+    bridge: 1,
+    bridge2: 1,
+    castle: 2,
+    castle2: 1,
+    column: 1,
+    lighthouse: 1,
+    palace: 1,
+    pillar: 1,
+    portcullis: 1,
+    tower: 2,
+    windmill: 1
+  },
+  seafaring: {
+    anchor: 6,
+    armillarySphere: 1,
+    boat: 2,
+    boat2: 1,
+    caravel: 1,
+    drakkar: 1,
+    lymphad: 2,
+    raft: 1,
+    shipWheel: 1
+  },
+  tools: {
+    anvil: 2,
+    drawingCompass: 2,
+    fan: 1,
+    hook: 1,
+    ladder: 1,
+    ladder2: 1,
+    pincers: 1,
+    saw: 1,
+    scale: 1,
+    scaleImbalanced: 1,
+    scalesHanging: 1,
+    scissors: 1,
+    scissors2: 1,
+    shears: 1,
+    trowel: 1
+  },
+  miscellaneous: {
+    attire: 2,
+    banner: 2,
+    bell: 3,
+    bookClosed: 1,
+    bookClosed2: 1,
+    bookOpen: 1,
+    bucket: 1,
+    buckle: 1,
+    bugleHorn: 2,
+    bugleHorn2: 1,
+    chain: 2,
+    chalice: 2,
+    cowHorns: 3,
+    crosier: 1,
+    crown: 3,
+    crown2: 2,
+    drum: 1,
+    fasces: 1,
+    feather: 3,
+    harp: 2,
+    horseshoe: 3,
+    hourglass: 2,
+    key: 3,
+    laurelWreath: 2,
+    laurelWreath2: 1,
+    log: 1,
+    lute: 2,
+    lyre: 1,
+    mitre: 1,
+    orb: 1,
+    pot: 2,
+    ramsHorn: 1,
+    sceptre: 1,
+    scrollClosed: 1,
+    snowflake: 1,
+    stagsAttires: 1,
+    stirrup: 2,
+    wheel: 3,
+    wing: 2,
+    wingSword: 1
   },
   inescutcheon: {
     inescutcheonHeater: 1,
@@ -438,565 +1664,22 @@ const charges = {
     inescutcheonUrukHai: 1,
     inescutcheonMoriaOrc: 1
   },
-  crosses: {
-    crossHummetty: 15,
-    crossVoided: 1,
-    crossPattee: 2,
-    crossPatteeAlisee: 1,
-    crossFormee: 1,
-    crossFormee2: 2,
-    crossPotent: 2,
-    crossJerusalem: 1,
-    crosslet: 1,
-    crossClechy: 3,
-    crossBottony: 1,
-    crossFleury: 3,
-    crossPatonce: 1,
-    crossPommy: 1,
-    crossGamma: 1,
-    crossArrowed: 1,
-    crossFitchy: 1,
-    crossCercelee: 1,
-    crossMoline: 2,
-    crossFourchy: 1,
-    crossAvellane: 1,
-    crossErminee: 1,
-    crossBiparted: 1,
-    crossMaltese: 3,
-    crossTemplar: 2,
-    crossCeltic: 1,
-    crossCeltic2: 1,
-    crossTriquetra: 1,
-    crossCarolingian: 1,
-    crossOccitan: 1,
-    crossSaltire: 3,
-    crossBurgundy: 1,
-    crossLatin: 3,
-    crossPatriarchal: 1,
-    crossOrthodox: 1,
-    crossCalvary: 1,
-    crossDouble: 1,
-    crossTau: 1,
-    crossSantiago: 1,
-    crossAnkh: 1
-  },
-  animals: {
-    lionRampant: 6,
-    lionPassant: 2,
-    lionPassantGuardant: 1,
-    lionSejant: 1,
-    wolfRampant: 1,
-    wolfPassant: 1,
-    wolfStatant: 1,
-    greyhoundCourant: 1,
-    greyhoundRampant: 1,
-    greyhoundSejant: 1,
-    mastiffStatant: 1,
-    talbotPassant: 1,
-    talbotSejant: 1,
-    martenCourant: 1,
-    boarRampant: 1,
-    stagPassant: 1,
-    hindStatant: 1,
-    horseRampant: 2,
-    horseSalient: 1,
-    horsePassant: 1,
-    bearRampant: 2,
-    bearPassant: 1,
-    bullPassant: 1,
-    cowStatant: 1,
-    goat: 1,
-    lamb: 1,
-    lambPassantReguardant: 1,
-    agnusDei: 1,
-    ramPassant: 1,
-    badgerStatant: 1,
-    elephant: 1,
-    rhinoceros: 1,
-    camel: 1,
-    porcupine: 1,
-    hedgehog: 1,
-    catPassantGuardant: 1,
-    rabbitSejant: 1,
-    ratRampant: 1,
-    squirrel: 1,
-    frog: 1,
-    snake: 1,
-    crocodile: 1,
-    lizard: 1,
-    scorpion: 1,
-    butterfly: 1,
-    bee: 1,
-    fly: 1
-  },
-  animalHeads: {
-    wolfHeadErased: 2,
-    bullHeadCaboshed: 1,
-    deerHeadCaboshed: 1,
-    donkeyHeadCaboshed: 1,
-    lionHeadCaboshed: 2,
-    lionHeadErased: 2,
-    boarHeadErased: 1,
-    horseHeadCouped: 1,
-    ramHeadErased: 1,
-    elephantHeadErased: 1
-  },
-  fantastic: {
-    dragonPassant: 2,
-    dragonRampant: 2,
-    wyvern: 1,
-    wyvernWithWingsDisplayed: 1,
-    griffinPassant: 1,
-    griffinRampant: 1,
-    eagleTwoHeads: 2,
-    unicornRampant: 1,
-    pegasus: 1,
-    serpent: 1,
-    basilisk: 1,
-    sagittarius: 1
-  },
-  birds: {
-    eagle: 9,
-    falcon: 2,
-    raven: 2,
-    cock: 3,
-    parrot: 1,
-    swan: 2,
-    swanErased: 1,
-    heron: 1,
-    owl: 1,
-    owlDisplayed: 1,
-    dove: 2,
-    doveDisplayed: 1,
-    duck: 1,
-    peacock: 1,
-    peacockInPride: 1,
-    swallow: 1
-  },
-  plants: {
-    tree: 1,
-    oak: 1,
-    pineTree: 1,
-    palmTree: 1,
-    trefoil: 1,
-    quatrefoil: 1,
-    cinquefoil: 1,
-    sextifoil: 1,
-    mapleLeaf: 1,
-    rose: 1,
-    apple: 1,
-    pear: 1,
-    grapeBunch: 1,
-    wheatStalk: 1,
-    pineCone: 1
-  },
-  aquatic: {escallop: 5, pike: 1, plaice: 1, salmon: 1, cancer: 1, dolphin: 1},
-  seafaring: {anchor: 6, boat: 2, boat2: 1, lymphad: 2, caravel: 1, armillarySphere: 1},
-  agriculture: {garb: 2, sickle: 1, scythe: 1, rake: 1, plough: 2},
-  arms: {
-    sword: 4,
-    falchion: 1,
-    sabre: 1,
-    sabresCrossed: 1,
-    sabre2: 1,
-    hatchet: 3,
-    axe: 3,
-    lochaberAxe: 1,
-    spear: 1,
-    mallet: 1,
-    bowWithArrow: 3,
-    bow: 1,
-    arrow: 1,
-    arrowsSheaf: 1,
-    arbalest: 1,
-    helmet: 2,
-    gauntlet: 1,
-    shield: 1,
-    cannon: 1
-  },
-  bodyparts: {hand: 4, head: 1, headWreathed: 1, foot: 1, skull: 1},
-  people: {cavalier: 3, monk: 1, angel: 2},
-  architecture: {tower: 1, castle: 1, bridge: 1, column: 1},
-  miscellaneous: {
-    crown: 2,
-    crown2: 1,
-    laurelWreath: 1,
-    mitre: 1,
-    orb: 1,
-    chalice: 1,
-    key: 1,
-    buckle: 1,
-    bugleHorn: 1,
-    bugleHorn2: 1,
-    bell: 2,
-    pot: 1,
-    bucket: 1,
-    horseshoe: 3,
-    stirrup: 1,
-    attire: 1,
-    stagsAttires: 1,
-    ramsHorn: 1,
-    cowHorns: 2,
-    wing: 1,
-    wingSword: 1,
-    lute: 1,
-    harp: 1,
-    drum: 1,
-    wheel: 2,
-    crosier: 1,
-    sceptre: 1,
-    fasces: 1,
-    log: 1,
-    chain: 1,
-    anvil: 1,
-    ladder: 1,
-    banner: 1,
-    bookClosed: 1,
-    bookOpen: 1,
-    scissors: 1
+  ornaments: {
+    mantle: 0,
+    ribbon1: 3,
+    ribbon2: 2,
+    ribbon3: 1,
+    ribbon4: 1,
+    ribbon8: 1,
+    ribbon7: 1,
+    ribbon6: 1,
+    ribbon5: 1
   },
   uploaded: {},
-  natural: {
-    fountain: "azure",
-    garb: "or",
-    raven: "sable",
-    dove: "argent",
-    doveDisplayed: "argent",
-    fly: "sable"
-  }, // charges to mainly use predefined colours
-  multicolor: {
-    // charges that can have several tinctures
-    agnusDei: 2,
-    angel: 2,
-    apple: 2,
-    arbalest: 3,
-    arrow: 3,
-    arrowsSheaf: 3,
-    axe: 2,
-    badgerStatant: 2,
-    banner: 2,
-    basilisk: 3,
-    bearPassant: 3,
-    bearRampant: 3,
-    bee: 3,
-    bell: 2,
-    boarHeadErased: 3,
-    boarRampant: 3,
-    boat: 2,
-    bookClosed: 3,
-    bookOpen: 3,
-    bowWithArrow: 3,
-    bucket: 2,
-    bugleHorn: 2,
-    bugleHorn2: 2,
-    bullHeadCaboshed: 2,
-    bullPassant: 3,
-    butterfly: 3,
-    camel: 2,
-    cannon: 2,
-    caravel: 3,
-    castle: 2,
-    catPassantGuardant: 2,
-    chalice: 2,
-    cock: 3,
-    cowStatant: 3,
-    crocodile: 2,
-    crown: 2,
-    crown2: 3,
-    deerHeadCaboshed: 2,
-    dolphin: 2,
-    donkeyHeadCaboshed: 2,
-    dove: 2,
-    doveDisplayed: 2,
-    dragonPassant: 3,
-    dragonRampant: 3,
-    drum: 3,
-    duck: 3,
-    eagle: 3,
-    eagleTwoHeads: 3,
-    elephant: 2,
-    elephantHeadErased: 2,
-    falchion: 2,
-    falcon: 3,
-    fasces: 3,
-    fly: 3,
-    garb: 2,
-    goat: 3,
-    grapeBunch: 3,
-    greyhoundCourant: 3,
-    greyhoundRampant: 2,
-    greyhoundSejant: 3,
-    griffinPassant: 3,
-    griffinRampant: 3,
-    harp: 2,
-    hatchet: 2,
-    head: 2,
-    headWreathed: 3,
-    hedgehog: 3,
-    heron: 2,
-    hindStatant: 2,
-    horsePassant: 2,
-    horseRampant: 3,
-    horseSalient: 2,
-    lamb: 2,
-    lambPassantReguardant: 2,
-    laurelWreath: 2,
-    lionHeadCaboshed: 2,
-    lionHeadErased: 2,
-    lionPassant: 3,
-    lionPassantGuardant: 3,
-    lionRampant: 3,
-    lionSejant: 3,
-    lochaberAxe: 2,
-    lute: 2,
-    lymphad: 3,
-    mallet: 2,
-    martenCourant: 3,
-    mastiffStatant: 3,
-    mitre: 3,
-    oak: 3,
-    orb: 3,
-    owl: 2,
-    owlDisplayed: 2,
-    palmTree: 3,
-    parrot: 2,
-    peacock: 3,
-    peacockInPride: 3,
-    pear: 2,
-    pegasus: 3,
-    pike: 2,
-    pineTree: 2,
-    plaice: 2,
-    plough: 2,
-    porcupine: 2,
-    rabbitSejant: 2,
-    ramHeadErased: 3,
-    ramPassant: 3,
-    ratRampant: 2,
-    raven: 2,
-    rhinoceros: 2,
-    rose: 3,
-    sabre: 2,
-    sabre2: 2,
-    sabresCrossed: 2,
-    sagittarius: 3,
-    salmon: 2,
-    scythe: 2,
-    serpent: 2,
-    shield: 2,
-    sickle: 2,
-    snake: 2,
-    spear: 2,
-    squirrel: 2,
-    stagPassant: 2,
-    stirrup: 2,
-    swallow: 2,
-    swan: 3,
-    swanErased: 3,
-    sword: 2,
-    talbotPassant: 3,
-    talbotSejant: 3,
-    tower: 2,
-    unicornRampant: 3,
-    wheatStalk: 2,
-    wingSword: 3,
-    wolfHeadErased: 2,
-    wolfPassant: 3,
-    wolfRampant: 3,
-    wolfStatant: 3,
-    wyvern: 3,
-    wyvernWithWingsDisplayed: 3
-  },
-  sinister: [
-    // charges that can be sinister
-    "moonInCrescent",
-    "crossGamma",
-    "lionRampant",
-    "lionPassant",
-    "lionSejant",
-    "wolfRampant",
-    "wolfPassant",
-    "wolfStatant",
-    "wolfHeadErased",
-    "greyhoundСourant",
-    "greyhoundRampant",
-    "greyhoundSejant",
-    "mastiffStatant",
-    "talbotPassant",
-    "talbotSejant",
-    "martenCourant",
-    "boarRampant",
-    "badgerStatant",
-    "stagPassant",
-    "hindStatant",
-    "horseRampant",
-    "horseSalient",
-    "horsePassant",
-    "bullPassant",
-    "bearRampant",
-    "bearPassant",
-    "cowStatant",
-    "boarHeadErased",
-    "horseHeadCouped",
-    "lionHeadErased",
-    "ramHeadErased",
-    "elephantHeadErased",
-    "ramPassant",
-    "goat",
-    "lamb",
-    "lambPassantReguardant",
-    "agnusDei",
-    "dove",
-    "doveDisplayed",
-    "duck",
-    "peacock",
-    "peacockInPride",
-    "swallow",
-    "elephant",
-    "rhinoceros",
-    "eagle",
-    "falcon",
-    "raven",
-    "cock",
-    "parrot",
-    "swan",
-    "swanErased",
-    "heron",
-    "pike",
-    "plaice",
-    "salmon",
-    "dragonPassant",
-    "dragonRampant",
-    "wyvern",
-    "wyvernWithWingsDisplayed",
-    "griffinPassant",
-    "griffinRampant",
-    "unicornRampant",
-    "pegasus",
-    "serpent",
-    "sagittarius",
-    "hatchet",
-    "lochaberAxe",
-    "hand",
-    "wing",
-    "wingSword",
-    "lute",
-    "harp",
-    "bow",
-    "head",
-    "headWreathed",
-    "knight",
-    "lymphad",
-    "caravel",
-    "log",
-    "crosier",
-    "dolphin",
-    "sabre",
-    "monk",
-    "owl",
-    "axe",
-    "camel",
-    "fasces",
-    "lionPassantGuardant",
-    "helmet",
-    "gauntlet",
-    "shield",
-    "foot",
-    "sickle",
-    "scythe",
-    "plough",
-    "sabre2",
-    "cannon",
-    "porcupine",
-    "hedgehog",
-    "catPassantGuardant",
-    "rabbitSejant",
-    "ratRampant",
-    "squirrel",
-    "basilisk",
-    "snake",
-    "crocodile",
-    "anvil"
-  ],
-  reversed: [
-    // charges that can be reversed
-    "goutte",
-    "mullet",
-    "mullet7",
-    "crescent",
-    "cancer",
-    "frog",
-    "lizard",
-    "scorpion",
-    "butterfly",
-    "bee",
-    "fly",
-    "trefoil",
-    "cinquefoil",
-    "sword",
-    "falchion",
-    "sabresCrossed",
-    "spear",
-    "gauntlet",
-    "hand",
-    "horseshoe",
-    "bowWithArrow",
-    "arrow",
-    "arrowsSheaf",
-    "arbalest",
-    "rake",
-    "sickle",
-    "scythe",
-    "scissors",
-    "crossTriquetra",
-    "crossLatin",
-    "crossTau",
-    "sabre2"
-  ],
-  patternable: [
-    // charges that can have pattern tincture when counterchanged
-    "lozengePloye",
-    "roundel",
-    "annulet",
-    "mullet4",
-    "mullet8",
-    "delf",
-    "triangle",
-    "trianglePierced",
-    "sun",
-    "fountain",
-    "inescutcheonRound",
-    "inescutcheonSquare",
-    "inescutcheonNo",
-    "crossHummetty",
-    "crossVoided",
-    "crossPattee",
-    "crossPatteeAlisee",
-    "crossFormee",
-    "crossFormee2",
-    "crossPotent",
-    "crossJerusalem",
-    "crosslet",
-    "crossClechy",
-    "crossBottony",
-    "crossFleury",
-    "crossPatonce",
-    "crossPommy",
-    "crossGamma",
-    "crossArrowed",
-    "crossFitchy",
-    "crossCercelee",
-    "crossMoline",
-    "crossAvellane",
-    "crossErminee",
-    "crossBiparted",
-    "crossMaltese",
-    "crossTemplar",
-    "crossCeltic",
-    "crossCeltic2",
-    "crossTau"
-  ]
+  data: chargeData
 };
+
+const patternSize = {standard: 154, small: 20, smaller: 20, big: 5, smallest: 1};
 
 const shieldPositions = {
   // shield-specific position: [x, y] (relative to center)
@@ -2346,7 +3029,6 @@ const shieldPositions = {
   }
 };
 
-// size modifier applied for charges, default is 1
 const shieldSize = {
   horsehead: 0.9,
   horsehead2: 0.9,
@@ -2444,5 +3126,6 @@ module.exports = {
   shields,
   shieldPositions,
   shieldSize,
-  shieldBox
+  shieldBox,
+  patternSize
 };
