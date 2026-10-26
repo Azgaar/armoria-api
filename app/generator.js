@@ -377,4 +377,13 @@ const P = function (probability) {
   return Math.random() < probability;
 };
 
-module.exports = generate;
+// Generation is synchronous. Restore the host RNG before any rendering awaits,
+// so warm function invocations do not inherit the previous request's seeded RNG.
+module.exports = function (seed) {
+  const random = Math.random;
+  try {
+    return generate(seed);
+  } finally {
+    Math.random = random;
+  }
+};

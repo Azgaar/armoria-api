@@ -4,17 +4,45 @@ _API for **[Armoria](https://github.com/Azgaar/Armoria)** — procedural heraldr
 
 The API allows to `GET` random or predefined vector and raster heraldic images of a given size in a given format. It also allows to assign a specific coat of arms to a seed value (so called _claiming_).
 
-API is hosted on _Heroku_. Please [contact me directly](mailto:maxganiev@yandex.com) if you want to use this API.
+This branch runs the image API and a Discord `/armoria` command on Netlify. Images are rendered locally, without calls to Heroku or Vercel. Both `/api?format=png&size=400&seed=example` and the original `/png/400/example` routes are supported.
 
-![example1](https://armoria.herokuapp.com/png/120.0001)
-![example2](https://armoria.herokuapp.com/png/120.0002)
-![example3](https://armoria.herokuapp.com/png/120.0003)
-![example4](https://armoria.herokuapp.com/png/120.0004)
-![example5](https://armoria.herokuapp.com/png/120.0005)
+Try it: [YOUR-SITE.netlify.app/?size=500&format=svg&seed=123](https://YOUR-SITE.netlify.app/?size=500&format=svg&seed=123).
 
-Try it: [armoria.herokuapp.com/?size=500&format=svg&seed=123](https://armoria.herokuapp.com/?size=500&format=svg&seed=123).
+Remove seed to generate a random coat or arms: [YOUR-SITE.netlify.app/?size=500&format=svg](https://YOUR-SITE.netlify.app/?size=500&format=svg)
 
-Remove seed to generate a random coat or arms: [armoria.herokuapp.com/?size=500&format=svg](https://armoria.herokuapp.com/?size=500&format=svg)
+## Netlify deployment
+
+Use the **armoria-api repository root** as the Netlify project root.
+
+1. Use Node 24 and run `npm ci`, `npm test`, then `npm run build:functions` to validate and bundle the functions.
+2. Connect this repository to Netlify and select the branch to deploy. A fork can be used to preview changes before they are merged upstream. `netlify.toml` supplies the build command, functions directory, publish directory and routing. The build runs the tests. The image function includes the SVG charges and native PNG renderer.
+3. Set `DISCORD_PUBLIC_KEY` in Netlify's environment variables with Functions scope. This is the public key from the Discord application's **General Information** page. Redeploy after changing runtime variables.
+4. Optionally set `ARMORIA_API_URL` to `https://YOUR-SITE.netlify.app/api` (or a custom domain). Otherwise the command uses `/api` on Netlify's canonical `URL`.
+5. Test `https://YOUR-SITE.netlify.app/api?format=png&size=400&seed=barrulus`. It should return a 400×400 PNG. Also check `/svg/400/barrulus`.
+
+For local API development, run `npm run dev`; the API listens on port 3000 and reads an optional `.env`. `npm start` runs the same API without watch mode. The Discord endpoint is a Netlify Function at `/discord` (also available at `/.netlify/functions/discord`).
+
+Cold starts still need to be measured after deployment. The command returns the image URL immediately, without waiting for PNG generation. Responses are not cached, so omitted seeds remain random and claims remain fresh. Supported formats are SVG and PNG, with sizes from 1 to 2048 pixels. In the examples below, replace `YOUR-SITE.netlify.app` with the actual deployment hostname.
+
+## Discord application setup
+
+The endpoint can serve the existing Discord application if access becomes available, or a new application created at the [Discord Developer Portal](https://discord.com/developers/applications).
+
+1. Create or open the application and copy its **Application ID** and **Public Key**. Set the public key on Netlify as described above.
+2. Once deployed, set the application's **Interactions Endpoint URL** to `https://YOUR-SITE.netlify.app/discord`. The handler verifies Discord's Ed25519 signatures, answers its PING, and rejects invalid signatures.
+3. Copy `.env.example` to `.env` locally. Set `DISCORD_APPLICATION_ID` and `DISCORD_BOT_TOKEN`. The token is needed only to register the command; the running functions do not need it. Optionally set `DISCORD_GUILD_ID` to register in a test server first.
+4. Run `npm run discord:register`. This creates or updates only `/armoria`, preserving other commands. The script prints the installation URL. Open it with an account allowed to add applications to the target server; the `applications.commands` scope is sufficient.
+5. Invoke `/armoria seed:barrulus` in Discord. The public response is a direct PNG link using that seed. Seeds must contain 1–100 characters without spaces; punctuation and Unicode are URL-encoded. Discord's image preview may load later or be disabled by client/server settings.
+
+For a global command, omit `DISCORD_GUILD_ID` when registering. If you first registered a guild test command, remove that command through Discord's API when finished so it does not shadow the global command in that server.
+
+There is no persistent Gateway connection and no privileged message-content intent. Registration is a separate manual step, not part of a Netlify build. Do not commit `.env`; the bot token belongs only in your local environment.
+
+References: [Discord interactions](https://docs.discord.com/developers/interactions/overview), [application commands](https://docs.discord.com/developers/interactions/application-commands), and [Express on Netlify](https://docs.netlify.com/build/frameworks/framework-setup-guides/express/).
+
+## Existing claims
+
+Procedural generation works with no credentials. To preserve previously claimed emblems, set `MONGODB_URI` to the existing database connection string; the existing `armoria_api.claims` collection is used. Legacy `MONGO_ID`/`MONGO_PASS` variables remain supported. A configured but unavailable database returns 503 instead of substituting a generated emblem. Existing claims need the original database or a migration; they are not included in this repository. Database migration and live Discord installation are not covered by the local tests.
 
 ## Basic usage
 
@@ -22,15 +50,15 @@ Remove seed to generate a random coat or arms: [armoria.herokuapp.com/?size=500&
 
 Basic usage is to request coat of arms generation with URL parameters:
 
-> armoria.herokuapp.com/`format`/`size`/`seed`
+> YOUR-SITE.netlify.app/`format`/`size`/`seed`
 
 - **format:** `svg` | `png` | <small>default:</small> `svg`
 
 Armoria generates all images in `svg` by default. But as there are cases where `svg` cannot be used, the tool can convert images to `png`. Raster images quality depends on size, but relatively big images may be slow to get. There can be conversion issues, so `svg` is always preferable.
 
-- **size:** `number` | <small>default:</small> `500`
+- **size:** `number` | <small>default:</small> `1200`
 
-Size in pixels. Can be any number set as `200` or `200px`. For `svg` it just sets `width` and `height`, raster images are getting actually rescaled and size defines their quality.
+Size in pixels, an integer from 1 to 2048, written as `200` or `200px`. For `svg` it sets `width` and `height`; raster images are rescaled and size defines their quality.
 
 - **seed:** `string` | <small>optional</small>
 
@@ -44,7 +72,7 @@ If `seed` is not provided, the tool generates random 9-digits value. Omit `seed`
 
 The same parameters (`format`, `size`, `seed`) can be used as query attributes. In this case parameters are not required:
 
-> armoria.herokuapp.com/?`format=svg`&`size=200`&`seed=123456789`
+> YOUR-SITE.netlify.app/?`format=svg`&`size=200`&`seed=123456789`
 
 Attributes that are supported only in query format are `coa`, `shield` and colors.
 
@@ -70,22 +98,22 @@ Armoria has 10 [tinctures](<https://en.wikipedia.org/wiki/Tincture_(heraldry)>) 
 
 | Tincture | Type   | Represents | Chance | Color                                                                                        |
 | -------- | ------ | ---------- | ------ | -------------------------------------------------------------------------------------------- |
-| argent   | metal  | silver     | ~25%   | ![argent](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"argent"}) #fafafa     |
-| or       | metal  | gold       | ~16%   | ![or](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"or"}) #ffe066             |
-| gules    | colour | red        | ~17%   | ![gules](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"gules"}) #d7374a       |
-| sable    | colour | black      | ~14%   | ![sable](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"sable"}) #333333       |
-| azure    | colour | blue       | ~14%   | ![azure](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"azure"}) #377cd7       |
-| vert     | colour | green      | ~7%    | ![vert](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"vert"}) #26c061         |
-| purpure  | colour | purple     | ~13%   | ![purpure](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"purpure"}) #522d5b   |
-| murrey   | stain  | mulberry   | ~1%    | ![murrey](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"murrey"}) #85185b     |
-| sanguine | stain  | blood red  | ~1%    | ![sanguine](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"sanguine"}) #b63a3a |
-| tenné    | stain  | tawny      | ~1%    | ![tenné](https://armoria.herokuapp.com/?format=png&size=16&coa={"t1":"tenné"}) #cc7f19       |
+| argent   | metal  | silver     | ~25%   | ![argent](https://YOUR-SITE.netlify.app/?format=png&size=16&coa={"t1":"argent"}) #fafafa     |
+| or       | metal  | gold       | ~16%   | ![or](https://YOUR-SITE.netlify.app/?format=png&size=16&coa={"t1":"or"}) #ffe066             |
+| gules    | colour | red        | ~17%   | ![gules](https://YOUR-SITE.netlify.app/?format=png&size=16&coa={"t1":"gules"}) #d7374a       |
+| sable    | colour | black      | ~14%   | ![sable](https://YOUR-SITE.netlify.app/?format=png&size=16&coa={"t1":"sable"}) #333333       |
+| azure    | colour | blue       | ~14%   | ![azure](https://YOUR-SITE.netlify.app/?format=png&size=16&coa={"t1":"azure"}) #377cd7       |
+| vert     | colour | green      | ~7%    | ![vert](https://YOUR-SITE.netlify.app/?format=png&size=16&coa={"t1":"vert"}) #26c061         |
+| purpure  | colour | purple     | ~13%   | ![purpure](https://YOUR-SITE.netlify.app/?format=png&size=16&coa={"t1":"purpure"}) #522d5b   |
+| murrey   | stain  | mulberry   | ~1%    | ![murrey](https://YOUR-SITE.netlify.app/?format=png&size=16&coa={"t1":"murrey"}) #85185b     |
+| sanguine | stain  | blood red  | ~1%    | ![sanguine](https://YOUR-SITE.netlify.app/?format=png&size=16&coa={"t1":"sanguine"}) #b63a3a |
+| tenné    | stain  | tawny      | ~1%    | ![tenné](https://YOUR-SITE.netlify.app/?format=png&size=16&coa={"t1":"tenné"}) #cc7f19       |
 
 It is possible to use custom tinctures or redefine default colors using query attributes.
 
-Exact color can be set as a part of `coa` attribute. You can replace tincture name with color hex code, e.g. turn `{"t1": "azure"}` into hurting-eyes blue with `{"t1": "#0000ff"}`. URL must be encoded, so the link would be like [armoria.herokuapp.com/?coa={%22t1%22:%22%230000ff%22}](https://armoria.herokuapp.com/?coa={%22t1%22:%22%230000ff%22}).
+Exact color can be set as a part of `coa` attribute. You can replace tincture name with color hex code, e.g. turn `{"t1": "azure"}` into hurting-eyes blue with `{"t1": "#0000ff"}`. URL must be encoded, so the link would be like [YOUR-SITE.netlify.app/?coa={%22t1%22:%22%230000ff%22}](https://YOUR-SITE.netlify.app/?coa={%22t1%22:%22%230000ff%22}).
 
-The resulting link is not readable, so you can also define colors using specific attributes for each of them like [armoria.herokuapp.com/svg/500/1?gules=bb1100&or=FFD700&azure=00aaff](https://armoria.herokuapp.com/svg/500/1?gules=bb1100&or=FFD700&azure=00aaff). Hash symbol must be dropped.
+The resulting link is not readable, so you can also define colors using specific attributes for each of them like [YOUR-SITE.netlify.app/svg/500/1?gules=bb1100&or=FFD700&azure=00aaff](https://YOUR-SITE.netlify.app/svg/500/1?gules=bb1100&or=FFD700&azure=00aaff). Hash symbol must be dropped.
 
 ## Claiming
 
@@ -95,7 +123,7 @@ This functional can be used to set up a specific heraldic image for your name, c
 
 ### Claim
 
-> armoria.herokuapp.com/claim/`name`/`coa`/`key`
+> YOUR-SITE.netlify.app/claim/`name`/`coa`/`key`
 
 - **name:** `string` | <small>non-numerical</small>
 
@@ -111,13 +139,13 @@ User-defined password. If omitted, no password will be set and anyone will be ab
 
 ### Reclaim
 
-> armoria.herokuapp.com/claim/`name`/`coa`/`key`
+> YOUR-SITE.netlify.app/claim/`name`/`coa`/`key`
 
 Raclaim updates the record in the database. If the current claim is password-protected, `key` value should be set. If not, it will accept any value or no value.
 
 ### Unclaim
 
-> armoria.herokuapp.com/unclaim/`name`/`key`
+> YOUR-SITE.netlify.app/unclaim/`name`/`key`
 
 Unclaim removes the record from the database. For unclaim you need `name` and `key` (if was set on claim), but `coa` is not required.
 
@@ -125,35 +153,35 @@ Unclaim removes the record from the database. For unclaim you need `name` and `k
 
 Coat of arms generated for seed `123456789`, rendered in `svg`, size is `400px`:
 
-> [armoria.herokuapp.com/svg/400px/123456789](https://armoria.herokuapp.com/svg/400px/123456789)
+> [YOUR-SITE.netlify.app/svg/400px/123456789](https://YOUR-SITE.netlify.app/svg/400px/123456789)
 
 Coat of arms generated for seed `Armortown`, rendered in `png`, size is `800`px:
 
-> [armoria.herokuapp.com/png/800/Armortown](https://armoria.herokuapp.com/png/800/Armortown)
+> [YOUR-SITE.netlify.app/png/800/Armortown](https://YOUR-SITE.netlify.app/png/800/Armortown)
 
 Random coat of arms in `png`, size `200`px:
 
-> [armoria.herokuapp.com/png/200](https://armoria.herokuapp.com/png/200)
+> [YOUR-SITE.netlify.app/png/200](https://YOUR-SITE.netlify.app/png/200)
 
-Coat of arms manually created in Armoria GUI, default format (`svg`) and size (`500px`):
+Coat of arms manually created in Armoria GUI, default format (`svg`) and size (`1200px`):
 
-> [armoria.herokuapp.com/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]}](https://armoria.herokuapp.com/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]})
+> [YOUR-SITE.netlify.app/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]}](https://YOUR-SITE.netlify.app/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]})
 
 Coat of arms manually created in Armoria GUI, rendered in `png` with size `200`px:
 
-> [armoria.herokuapp.com/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]}&format=png&size=200](https://armoria.herokuapp.com/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]}&format=png&size=200)
+> [YOUR-SITE.netlify.app/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]}&format=png&size=200](https://YOUR-SITE.netlify.app/?coa={"t1":"semy_of_lozengePloye-sable-argent-small","division":{"division":"perPale","line":"straight","t":"semy_of_mullet4-sable-argent-small"},"ordinaries":[{"ordinary":"mount","t":"azure"}],"charges":[{"charge":"lymphad","t":"or","p":"e","size":1.7}]}&format=png&size=200)
 
 Claim or reclaim name `test` (no password protection):
 
-> [armoria.herokuapp.com/claim/test/{"t1":"gules","charges":[{"charge":"fusil","t":"argent","p":"e","size":1.5}],"shield":"heater"}](https://armoria.herokuapp.com/claim/test/{"t1":"gules","charges":[{"charge":"fusil","t":"argent","p":"e","size":1.5}],"shield":"heater"})
+> [YOUR-SITE.netlify.app/claim/test/{"t1":"gules","charges":[{"charge":"fusil","t":"argent","p":"e","size":1.5}],"shield":"heater"}](https://YOUR-SITE.netlify.app/claim/test/{"t1":"gules","charges":[{"charge":"fusil","t":"argent","p":"e","size":1.5}],"shield":"heater"})
 
 Claim or reclaim name `test2` with password `secret123`:
 
-> [armoria.herokuapp.com/claim/test2/{"t1":"ermine-sable-or","division":{"division":"chevronny","t":"argent"},"shield":"spanish"}/secret123](https://armoria.herokuapp.com/claim/test2/{"t1":"ermine-sable-or","division":{"division":"chevronny","t":"argent"},"shield":"spanish"}/secret123)
+> [YOUR-SITE.netlify.app/claim/test2/{"t1":"ermine-sable-or","division":{"division":"chevronny","t":"argent"},"shield":"spanish"}/secret123](https://YOUR-SITE.netlify.app/claim/test2/{"t1":"ermine-sable-or","division":{"division":"chevronny","t":"argent"},"shield":"spanish"}/secret123)
 
 Unclaim name `test2` using password `secret123`:
 
-> [armoria.herokuapp.com/unclaim/test2/secret123](https://armoria.herokuapp.com/unclaim/test2/secret123)
+> [YOUR-SITE.netlify.app/unclaim/test2/secret123](https://YOUR-SITE.netlify.app/unclaim/test2/secret123)
 
 ## License
 

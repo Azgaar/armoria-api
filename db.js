@@ -1,14 +1,25 @@
-const MongoClient = require("mongodb").MongoClient;
+let connection;
 
-function initialize(app, dbName, collectionName) {
-  const MONGO_ID = process.env.MONGO_ID;
-  const MONGO_PASS = process.env.MONGO_PASS;
-  const MONGO_URL = `mongodb+srv://${MONGO_ID}:${MONGO_PASS}@cluster0.auhmw.mongodb.net/armoria_api?retryWrites=true&w=majority`;
+async function initialize(app, dbName, collectionName) {
+  const {MONGODB_URI, MONGO_ID, MONGO_PASS} = process.env;
+  if (!MONGODB_URI && (!MONGO_ID || !MONGO_PASS)) return;
+  if (app.locals.collection) return;
 
-  MongoClient.connect(MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true}, function (err, client) {
-    if (err) return console.error(err);
-    app.locals.collection = client.db(dbName).collection(collectionName);
-  });
+  const uri = MONGODB_URI ||
+    `mongodb+srv://${encodeURIComponent(MONGO_ID)}:${encodeURIComponent(MONGO_PASS)}@cluster0.auhmw.mongodb.net/armoria_api?retryWrites=true&w=majority`;
+  if (!connection) {
+    const {MongoClient} = require("mongodb");
+    connection = MongoClient.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 3000
+    }).catch(error => {
+      connection = undefined;
+      throw error;
+    });
+  }
+  const client = await connection;
+  app.locals.collection = client.db(dbName).collection(collectionName);
 }
 
 module.exports = {initialize};

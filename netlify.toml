@@ -1,0 +1,24 @@
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+  command = "npm test"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+[functions]
+  node_bundler = "zisi"
+
+[functions.api]
+  included_files = ["public/charges/**"]
+  external_node_modules = ["@resvg/resvg-js"]
+
+[[redirects]]
+  from = "/discord"
+  to = "/.netlify/functions/discord"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200

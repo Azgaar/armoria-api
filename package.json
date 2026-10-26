@@ -3,13 +3,15 @@
   "version": "1.0.0",
   "description": "Heraldry generator API",
   "engines": {
-    "node": "v18.0.0",
-    "npm": "9.5.1"
+    "node": ">=24"
   },
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production&NODE_VERBOSE=true&node index.js",
-    "dev": "NODE_ENV=development&node-dev index.js"
+    "start": "node index.js",
+    "dev": "node --env-file-if-exists=.env --watch index.js",
+    "test": "node --test --test-isolation=none test/*.test.js",
+    "build:functions": "node scripts/build-functions.mjs",
+    "discord:register": "node --env-file-if-exists=.env scripts/register-discord.mjs"
   },
   "keywords": [
     "heraldry",
@@ -24,9 +26,11 @@
     "express": "^4.17.1",
     "minify-xml": "^2.5.0",
     "mongodb": "^3.6.4",
-    "node-html-parser": "^2.1.0"
+    "node-html-parser": "^2.1.0",
+    "serverless-http": "^4.0.0"
   },
   "devDependencies": {
+    "@netlify/zip-it-and-ship-it": "^16.5.1",
     "dotenv": "^8.2.0",
     "node-dev": "^6.2.0"
   }

@@ -1,11 +1,12 @@
 const HTMLParser = require("node-html-parser");
 const fs = require("fs");
+const path = require("node:path");
 const {shieldPositions, shieldSize, shieldBox} = require("./dataModel");
 const {shieldPaths, blacklight} = require("./templates");
 
 async function draw(id, coa, size, colors) {
   const {division, ordinaries = [], charges = [], shield} = coa;
-  logCOAdetails(coa, shield, division, ordinaries, charges);
+  if (process.env.DEBUG_RENDER === "1") logCOAdetails(coa, shield, division, ordinaries, charges);
 
   const ordinariesRegular = ordinaries.filter(o => !o.above);
   const ordinariesAboveCharges = ordinaries.filter(o => o.above);
@@ -180,7 +181,8 @@ async function getCharges(coa, id, shieldPath) {
 }
 
 async function fetchCharge(charge, id) {
-  const text = fs.readFileSync("public/charges/" + charge + ".svg", "utf8");
+  if (!/^[a-zA-Z][a-zA-Z0-9]*$/.test(charge)) throw new Error("Invalid charge name");
+  const text = fs.readFileSync(path.join(__dirname, "../public/charges", charge + ".svg"), "utf8");
   const root = HTMLParser.parse(text);
   const g = root.querySelector("g");
   g.setAttribute("id", charge + "_" + id);

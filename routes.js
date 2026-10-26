@@ -2,19 +2,32 @@ const express = require("express");
 const router = express.Router();
 const render = require("./app/renderer");
 const {Resvg} = require("@resvg/resvg-js");
+const {createHash, randomInt} = require("node:crypto");
+const {shieldPaths} = require("./app/templates");
 
 const SIZE_DEFAULT = 1200;
 const FORMAT_DEFAULT = "svg";
 const SHIELD_DEFAULT = "heater";
+const get = (path, handler) => router.get(path, (req, res, next) =>
+  Promise.resolve().then(() => handler(req, res, next)).catch(next));
+
+router.use((req, res, next) => {
+  if (!["GET", "HEAD"].includes(req.method)) return res.status(405).set("Allow", "GET, HEAD").end();
+  if (req.url.length > 16000) return res.status(414).json({error: "Image URL is too long"});
+  if (Object.values(req.query).some(value => typeof value !== "string")) {
+    return res.status(400).json({error: "Each query parameter must have a single value"});
+  }
+  next();
+});
 
 // claim route: name, coa, password [optional]
-router.get("/claim/:seed/:coa/:key?", async function (req, res, next) {
+get("/claim/:seed/:coa/:key?", async function (req, res, next) {
   const seed = parseSeed(req.params.seed);
 
   // Not allowed to claims numeric names
   if (Number.isInteger(+seed)) {
     res.status(403).send(`<h1>Armoria API</h1>
-    <p>Numeric name <code>${seed}</code> cannot be claimed. Please provide alphabetic or alphanumerical name.</p>
+    <p>Numeric name <code>${html(seed)}</code> cannot be claimed. Please provide alphabetic or alphanumerical name.</p>
     <p>See <a href="https://github.com/Azgaar/armoria-api#readme" target="_blank">README</a> for guidance.</p>`);
     console.error(`Cannot claim numerical name ${seed}`);
     return;
@@ -32,39 +45,40 @@ router.get("/claim/:seed/:coa/:key?", async function (req, res, next) {
   const claim = await getClaim(collection, seed);
 
   // No rights to update exising claim
-  if (claim && claim.key && claim.key !== key && key !== process.env.MASTER_KEY) {
+  if (claim && claim.key && claim.key !== key && (!process.env.MASTER_KEY || key !== process.env.MASTER_KEY)) {
     res.status(403).send(`<h1>Armoria API</h1>
-    <p>Name <code>${seed}</code> is already claimed. Please provide correct password to update the claim.</p>
+    <p>Name <code>${html(seed)}</code> is already claimed. Please provide correct password to update the claim.</p>
     <p>See <a href="https://github.com/Azgaar/armoria-api#readme" target="_blank">README</a> for guidance.</p>`);
-    console.error(`Cannot reclaim ${seed}. Key expected: ${claim.key}. Key provided: ${key}`);
+    console.error(`Cannot reclaim ${seed}: incorrect key`);
     return;
   }
 
   try {
     const coaString = req.params.coa;
-    const coa = JSON.parse(coaString);
+    const coa = parseCoa(coaString);
 
-    const size = parseInt(req.query.size) || SIZE_DEFAULT;
+    const size = parseSize(req.query.size);
     const colors = getColors(req.query);
-    const svg = await render(seed, coa, size, colors);
-    const link = `https://armoria.herokuapp.com/svg/${size}/${seed}`;
+    coa.shield = coa.shield || SHIELD_DEFAULT;
+    const svg = await render(imageId(seed), coa, size, colors);
+    const link = `${req.baseUrl}/svg/${size}/${encodeURIComponent(seed)}`;
 
     if (claim) await reclaim(collection, {name: seed, coa, key});
     else await setClaim(collection, {name: seed, coa, key});
 
-    res.status(200).send(`<h1>Armoria API: <i>${seed}</i> is ${claim ? "reclaimed" : "claimed"}</h1>
-    <p>Now use it like <a href=${link}>${link}</a></p>
-    ${svg}${key ? `<p>Password: <code>${key}</code></p>` : ""}
-    <p>COA: <code>${coaString}</code></p>
+    res.status(200).send(`<h1>Armoria API: <i>${html(seed)}</i> is ${claim ? "reclaimed" : "claimed"}</h1>
+    <p>Now use it like <a href="${html(link)}">${html(link)}</a></p>
+    ${svg}
+    <p>COA: <code>${html(coaString)}</code></p>
     <p>See <a href="https://github.com/Azgaar/armoria-api#readme" target="_blank">README</a> for guidance.</p>`);
-    console.log(`${seed} is ${claim ? "reclaimed" : "claimed"}. COA: ${coaString}. Key: ${key}`);
+    console.log(`${seed} is ${claim ? "reclaimed" : "claimed"}`);
   } catch (error) {
     return next(error);
   }
 });
 
 // unclaim route: name, password [optional]
-router.get("/unclaim/:seed/:key?", async function (req, res, next) {
+get("/unclaim/:seed/:key?", async function (req, res, next) {
   const seed = parseSeed(req.params.seed);
   const key = req.params.key;
 
@@ -81,24 +95,24 @@ router.get("/unclaim/:seed/:key?", async function (req, res, next) {
   // Nothing to unclaim
   if (!claim) {
     res.status(400).send(`<h1>Armoria API</h1>
-    <p>Cannot unclaim ${seed} as it was not claimed before.</a></p>
+    <p>Cannot unclaim ${html(seed)} as it was not claimed before.</p>
     <p>See <a href="https://github.com/Azgaar/armoria-api#readme" target="_blank">README</a> for guidance.</p>`);
     console.error(`Cannot unclaim as ${seed} is not claimed`);
     return;
   }
 
   // No rights to update exising claim
-  if (claim && claim.key && claim.key !== key && key !== process.env.MASTER_KEY) {
+  if (claim && claim.key && claim.key !== key && (!process.env.MASTER_KEY || key !== process.env.MASTER_KEY)) {
     res.status(403).send(`<h1>Armoria API</h1>
-    <p><code>${seed}</code> claim is password protected. Please provide correct password to unclaim.</p>
+    <p><code>${html(seed)}</code> claim is password protected. Please provide correct password to unclaim.</p>
     <p>See <a href="https://github.com/Azgaar/armoria-api#readme" target="_blank">README</a> for guidance.</p>`);
-    console.error(`Cannot unclaim ${seed}. Key expected: ${claim.key}. Key provided: ${key}`);
+    console.error(`Cannot unclaim ${seed}: incorrect key`);
     return;
   }
 
   try {
     await unclaim(collection, seed);
-    res.status(200).send(`<h1>Armoria API: <i>${seed}</i> is unclaimed</h1>
+    res.status(200).send(`<h1>Armoria API: <i>${html(seed)}</i> is unclaimed</h1>
     <p>See <a href="https://github.com/Azgaar/armoria-api#readme" target="_blank">README</a> for guidance.</p>`);
     console.log(`${seed} is unclaimed`);
   } catch (error) {
@@ -107,19 +121,19 @@ router.get("/unclaim/:seed/:key?", async function (req, res, next) {
 });
 
 // basic route: format, size, seed [optional]
-router.get("/:format/:size/:seed?", async function (req, res, next) {
-  const format = req.params.format || FORMAT_DEFAULT;
-  const size = parseInt(req.params.size) || SIZE_DEFAULT;
-  const seed = req.params.seed ? parseSeed(req.params.seed) : Math.floor(Math.random() * 1e9);
+get("/:format/:size/:seed?", async function (req, res, next) {
+  const format = parseFormat(req.params.format);
+  const size = parseSize(req.params.size);
+  const seed = req.params.seed ? parseSeed(req.params.seed) : String(randomInt(1e9));
   const colors = getColors(req.query);
 
   try {
     const collection = req.app.locals.collection;
     const coa = await getCOA(collection, seed);
     if (req.query.shield) coa.shield = req.query.shield;
-    if (!coa.shield) coa.shield = SHIELD_DEFAULT;
+    coa.shield = parseShield(coa.shield);
 
-    const id = "coa" + seed;
+    const id = imageId(seed);
     const svg = await render(id, coa, size, colors);
     send(format, svg, res);
   } catch (error) {
@@ -128,20 +142,20 @@ router.get("/:format/:size/:seed?", async function (req, res, next) {
 });
 
 // extended route: queries
-router.get("/", async function (req, res, next) {
-  const format = req.query.get || req.query.format || FORMAT_DEFAULT;
-  const size = parseInt(req.query.size) || SIZE_DEFAULT;
-  const seed = req.query.seed ? parseSeed(req.query.seed) : Math.floor(Math.random() * 1e9);
+get("/", async function (req, res, next) {
+  const format = parseFormat(req.query.get || req.query.format);
+  const size = parseSize(req.query.size);
+  const seed = req.query.seed ? parseSeed(req.query.seed) : String(randomInt(1e9));
   const colors = getColors(req.query);
   const coaString = req.query.coa;
 
   try {
     const collection = req.app.locals.collection;
-    const coa = coaString ? JSON.parse(coaString) : await getCOA(collection, seed);
+    const coa = coaString ? parseCoa(coaString) : await getCOA(collection, seed);
     if (req.query.shield) coa.shield = req.query.shield;
-    if (!coa.shield) coa.shield = SHIELD_DEFAULT;
+    coa.shield = parseShield(coa.shield);
 
-    const id = "coa" + (seed || Math.floor(Math.random() * 1e6));
+    const id = imageId(coaString || seed);
     const svg = await render(id, coa, size, colors);
     send(format, svg, res);
   } catch (error) {
@@ -158,14 +172,58 @@ router.use(function (req, res) {
 });
 
 function getColors(query) {
-  const getColor = color => (query[color] && query[color].length === 6 ? "#" + query[color] : null);
-  const {colors} = require("./app/dataModel");
+  const getColor = color => (/^[0-9a-f]{6}$/i.test(query[color]) ? "#" + query[color] : null);
+  const colors = {...require("./app/dataModel").colors};
   Object.keys(colors).forEach(color => (colors[color] = getColor(color) || colors[color]));
   return colors;
 }
 
 function parseSeed(query) {
+  if (query.length > 256 || /[\x00-\x1f]/.test(query)) throw new Error("Invalid seed");
   return query.toLowerCase().replace(/#| |'/g, "_");
+}
+
+function parseSize(value) {
+  if (value === undefined) return SIZE_DEFAULT;
+  if (!/^\d+(?:px)?$/.test(value)) throw new Error("Invalid size");
+  const size = parseInt(value, 10);
+  if (size < 1 || size > 2048) throw new Error("Size must be between 1 and 2048");
+  return size;
+}
+
+function parseFormat(value = FORMAT_DEFAULT) {
+  if (!["svg", "png"].includes(value)) throw new Error("Format must be svg or png");
+  return value;
+}
+
+function parseShield(value = SHIELD_DEFAULT) {
+  if (!Object.hasOwn(shieldPaths, value)) throw new Error("Unknown shield");
+  return value;
+}
+
+function imageId(seed) {
+  return "coa" + createHash("sha256").update(String(seed)).digest("hex").slice(0, 16);
+}
+
+function html(value) {
+  return String(value).replace(/[&<>"']/g, char => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"})[char]);
+}
+
+function parseCoa(value) {
+  const coa = JSON.parse(value);
+  function validate(item, depth = 0) {
+    if (depth > 16) throw new Error("COA is too deeply nested");
+    if (typeof item === "string" && /[<>"'&\x00-\x1f]/.test(item)) throw new Error("Invalid COA text");
+    if (typeof item === "number" && (!Number.isFinite(item) || Math.abs(item) > 10000)) throw new Error("Invalid COA number");
+    if (item && typeof item === "object") {
+      if (Object.keys(item).length > 256) throw new Error("COA is too complex");
+      Object.values(item).forEach(child => validate(child, depth + 1));
+    }
+  }
+  validate(coa);
+  if (!coa || typeof coa.t1 !== "string") throw new Error("Missing field tincture");
+  if (coa.shield) parseShield(coa.shield);
+  return coa;
 }
 
 async function getCOA(collection, seed) {
@@ -199,7 +257,7 @@ function send(format, svg, res) {
   } else {
     const opts = {
       font: {loadSystemFonts: false},
-      logLevel: "debug"
+      logLevel: "off"
     };
     const resvg = new Resvg(svg, opts);
     const pngData = resvg.render();
